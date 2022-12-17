@@ -1,0 +1,20 @@
+<?php
+$has_session = session_status() == PHP_SESSION_ACTIVE;
+if (!$has_session && (!isset($_SESSION['auth']))) {
+    session_start();
+}
+?>
+
+<?php if (isset((($_SESSION['auth'])['firstName']))) : ?>
+
+    <P>Bienvenu à toi,
+        <?php echo (($_SESSION['auth'])['firstName']); ?>
+        <a href="?page=User&action=logout"> *** LogOut ***</a>
+    </P>
+
+<?php else : ?>
+    Si tu n'as pas de compte : <a href="?view=register">register </a> , sinon
+    <a href="?view=login"> login </a>
+<?php endif ?>
+
+<h1>Welcome on board </h1>
