@@ -5,8 +5,7 @@ namespace App\Models;
 
 abstract class DbConnect // ne doit pas être instanciée 
 {
-    private static $pdo; // représente l'instance de connexion à la DB
-
+    private  $pdo;
     /******************************************************************
      * création d'un instance PDO pour connextion à la base de données
      */

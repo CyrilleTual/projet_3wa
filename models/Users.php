@@ -4,25 +4,32 @@ namespace App\Models;
 
 class Users extends Model
 {
-    public $table;
-    public $lastName;
-    public $firstName;
+    protected $table; // nom de la table 
+    protected $idName;  // nom du champ d'identifiant pour les methodes se servant de l'id
+    protected $lastName;
+    protected $firstName;
 
     public function __construct()
     {
         parent::__construct();  // ne pas oublier sinon destruction de l'instance PDO !
-        $this->table = "users";  // nom de la table 
+        $this->table = "users";
+        $this->idName = "id";
     }
 
-    public function setName($lastName)
+    public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    }
-    public function setFirtsName($firstName)
-    {
-        $this->firstName = $firstName;
+        // var_dump($this->lastName);
+        // die;
+        return $this;
     }
 
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
     public function getName()
     {
         return $this->lastname;
@@ -30,59 +37,23 @@ class Users extends Model
 
 
 
-
     /************************************************
      * récupération d' utilisateur(s) selon critère(s)'
      */
-    public function testo($model)
+    public function testo($datas)
     {
-        //return $this->create($model);
-        $valID = 35;
-        return $this->update("id", $valID, $model);
-    }
+        // return $this->findAll();
+        // $params = [
+        //     'id' => 28,
+        //     'lastName' => "*BRAVO mon gars! **"
+        // ];
+        // return $this->findBy($params);
+        // return $this->delete(32);
+        // return $this->create($model);
+        // $valID = 26;
+        // return $this->update($valID, $model);
 
-
-
-
-
-
-    // /************************************************
-    //  * récupération d' utilisateur(s) selon critère(s)'
-    //  */
-    // public function getAllUsers()
-    // {
-    //     $table = "users";
-    //     $params = [
-    //         'id' => 117,
-    //     ];
-    //     return $this->findBy($table, $params);
-    // }
-    // //findBy(string $table, array $params = []): array
-
-
-
-
-
-
-
-    /************************************************
-     * récupération de toutes les données d'un user
-     */
-    public function getUserByEmail($email)
-    {
-        $laRequeteAExecuter = "SELECT * FROM user WHERE user_mail = ? ";
-        return $this->findOne($laRequeteAExecuter, [$email]);
-    }
-    /******************************************************************************
-     * Ajout d'un nouvel user suite à la validation puis au controle du formulaire
-     */
-    public function addNewUser($data)
-    {
-        $this->addOne(
-            'user', // nom table
-            'user_lastname, user_firstname, user_mail, user_avatar, user_password', // nom des colonnes
-            '?,?,?,?,?', // param fictifs ( même nomber que de colonnes)
-            $data // le tableau des données 
-        );
+        //$this->hydrate($datas);
+        $this->create($this->hydrate($datas));
     }
 }

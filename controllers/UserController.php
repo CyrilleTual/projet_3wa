@@ -9,11 +9,18 @@ class UserController
     {
 
         $model = new \App\Models\Users();
-        $model->setName("**sdfsdfdsf****");
-        $model->setFirtsName("loloy");
+        // $model->setName("bernardo");
+        // $model->setFirtsName("zoro");
 
-        $result =  $model->testo($model);
-        //var_dump($result);
+        $datas = [
+            'lastName' => 'bon',
+            'firstName' => 'Jean',
+        ];
+
+        $result = $model->testo($datas);
+
+
+        var_dump($result);
 
         new RendersController('formConnect');
     }
