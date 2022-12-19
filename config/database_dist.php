@@ -9,7 +9,7 @@ return [
     'host'     => 'localhost',
     'port'     => '3306',
     'db_utf'   => 'utf8',
-    'dbname'   => 'test2',
+    'dbname'   => 'honey',
     'username' => 'root',
     'password' => ''
 ];

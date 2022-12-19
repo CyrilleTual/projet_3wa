@@ -1,5 +1,6 @@
 
 <?php
+session_start();
 
 /**
  * lancement de l'autoload
