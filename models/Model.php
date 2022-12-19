@@ -20,10 +20,10 @@ class Model
     }
 
     /***********************************************************************************
-     * Définition de méthodes génériques pour les manupulations de la base de données
-     */
+     * Définition de méthodes génériques pour les manupulations de la base de données *
+     *********************************************************************************/
 
-    /****************************************************************
+    /********************************************************************************
      * findAll -> retourne tous les enregistrements d'une tabble  (READ)
      * @param : aucun, se sert de l'objet sur lequel la méthode est utilisée
      * @return array Tableau des enregistrements trouvés  
@@ -35,6 +35,21 @@ class Model
         return $query->fetchAll();
     }
     // utilisation : return $this->findAll(); 
+
+    /********************************************************************************************************
+     * findByQuery -> Methode permettant des requêtes complexe car attend en paramètre une requète sql et un tableau de paramètres
+     * @param:  string $sdl -> requète préparée 
+     * @param:  array $datas -> tableau de clés/valeurs éventuel (pour les contraintes sur le WHERE)
+     * @return: tableau comprenant les enregistrements trouvés
+     */
+    protected function findByQuery(string $sql, array $datas = []): array
+    {
+        $query = $this->pdo->prepare($sql);
+        $query->execute($datas);
+        return $query->fetchAll();
+    }
+    // utilisation -> voir le README
+
 
     /***********************************************************************************
      * findBY -> Sélection les enregistrements repondants à un ou plusieurs critères  (READ)
@@ -48,8 +63,8 @@ class Model
         $champs = [];
         $valeurs = [];
         foreach ($params as $champ => $valeur) {
-            $champs[] = "$champ = ?";
-            $valeurs[] = $valeur;
+            $champs[]   = "$champ = ?";
+            $valeurs[]  = $valeur;
         }
         // On transforme les tableaux en une chaîne de caractères séparés par des AND
         $liste_champs = implode(' AND ', $champs);   //  ex : "user_id = ? AND user_lastName = ?"
@@ -130,7 +145,7 @@ class Model
         // On transforme le tableau "champs" en une chaine de caractères
         $liste_champs = implode(', ', $champs);
         // Requête
-        $query = $this->pdo->prepare("UPDATE $this->table SET $liste_champs  WHERE $this->idName = ?");
+        $query =  $this->pdo->prepare("UPDATE $this->table SET $liste_champs  WHERE $this->idName = ?");
         $query->execute($valeurs);
         return $query;
         // ex d'utilisation :  $valID = 33; return $this->update($valID, $model);

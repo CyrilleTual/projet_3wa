@@ -32,15 +32,7 @@ class UserController
 
         $token_post = ($_POST['token']);
         $token_session = ($_SESSION['auth']);
-
-
         var_dump($token_post, $token_session);
-        die;
-
-
-
-
-
 
         $datas = [
             'firstName' => trim(ucfirst($_POST['firstName'])),
@@ -54,32 +46,29 @@ class UserController
     }
 
 
-
-
-
-
-    // fonction test de la Bv
+    /*****************************************************************************
+     ***************************************************************************** 
+     */
+    /**
+     * TEST  de la selection selon plusieurs critères sur une table 
+     */
     public function test()
     {
 
-        $model = new \App\Models\Users();
-        // $model->setName("bernardo");
-        // $model->setFirtsName("zoro");
+        $model = new \Models\Users();
+
         $errors = []; // initialisation du tableau des erreurs 
-        $errorsArray = new \App\Models\ErrorMessages(); // 
+        $errorsArray = new \Models\ErrorMessages(); // 
         $messagesErrors = $errorsArray->getMessages();
+
         $datas = [
-            'lastName' => 'bon',
+            'lastName' => 'bonez',
             'firstName' => 'Jean',
         ];
-        // $result = $model->testo($datas);
-        $result = $model->addNewUser();
-        var_dump($errors);
+        $result = $model->getUsersByQueryArray($datas, "id_user DESC ", 5);
+        var_dump($result);
 
-        $errors[] = $messagesErrors[1];
-
-        // var_dump($result);
-        var_dump($errors);
+        //$errors[] = $messagesErrors[1];
 
         new RendersController('formConnect');
     }

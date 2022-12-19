@@ -112,11 +112,88 @@ class Users extends Model
 
     /******************************************************************************
      * Ajout d'un nouvel user suite à la validation puis au controle du formulaire
+     * @param array $datas => tableau des propriétés / valeurs du noubel user
      */
-    public function addNewUser($datas)
+    public function addNewUser(array $datas)
     {
         return $this->create($this->hydrate($datas));
     }
+
+    /****************************************************************************************
+     * Exemple de methode de sélection complexe utilisant une requête préparée 
+     * @param string $byColum : liste sous forme de string des clés des colonnes du WHERE
+     * @param string $datas : listes des valeurs correspondantes aux clés de $byColumn
+     * @param string $order :  ordre du tri 
+     * @param int $ limit : nombre maxi d'enregistrements retournés
+     * @return array : tableau des enregistrements trouvés 
+     */
+
+    public function getUsersByQuery(string $byColumn = '1', string $datas = '1', string $order = "id_user DESC ", int $limit = 500): array
+    {
+        $sql = 'SELECT
+                    *
+                FROM `users`
+                WHERE ' . $byColumn . ' = ? ORDER BY users.' . $order . ' LIMIT ' . $limit;
+        return $this->findByQuery($sql, [$datas]);
+    }
+
+    /****************************************************************************************
+     * Exemple de methode de sélection complexe utilisant une requête préparée 
+     * @param array $params : tableau critères/valeurs du WHERE
+     * @param string $order :  ordre du tri 
+     * @param int $ limit : nombre maxi d'enregistrements retournés
+     * @return array : tableau des enregistrements trouvés 
+     */
+    public function getUsersByQueryArray(array $params, string $order = "id_user DESC ", int $limit = 500): array
+    {
+        // On boucle pour éclater $params -> stockage des champs et des values indépendament
+        $champs = [];
+        $valeurs = [];
+        foreach ($params as $champ => $valeur) {
+            $champs[]   = "$champ = ?";
+            $valeurs[]  = $valeur;
+        }
+        // On transforme le tableau des champs en une chaîne de caractères séparés par des AND
+        $liste_champs = implode(' AND ', $champs);   //  ex : "user_id = ? AND user_lastName = ?"
+        // var_dump($liste_champs, $valeurs);  donne : string(30) "lastName = ? AND firstName = ?" array(2) { [0]=> string(5) "bonez" [1]=> string(4) "Jean" }
+        $sql = 'SELECT
+                    *
+                FROM `users`
+                WHERE ' . $liste_champs . '  ORDER BY users.' . $order . ' LIMIT ' . $limit;
+        return $this->findByQuery($sql, $valeurs);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // /************************************************
