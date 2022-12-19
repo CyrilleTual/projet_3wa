@@ -63,3 +63,10 @@ Méthodes disponibles à travers la classe 'MODEL' :
    Il est important de déclarer les propriétés dans le bon ordre
 
 Remarque : on peut appmliquer en une seule ligne " $this->create($this->hydrate($datas));" ce qui aura pour conséquence d'inserer en base de donnée un nouvel enregistrement en même temps que l'hydratation.
+
+---
+
+Gestion des erreurs : on dispose d'un model permetant de gérer le texte des messages d'erreur.
+Voir dans models/ErrorMessages.php pour mode d'emploi
+
+---

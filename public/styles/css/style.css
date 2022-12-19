@@ -1,0 +1,268 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: none;
+}
+
+footer,
+header,
+nav,
+section,
+main {
+  display: block;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  line-height: 1;
+  font-size: 1.6rem;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input {
+  border-radius: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+body {
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+  min-height: 100vh;
+}
+
+header {
+  min-width: 100%;
+  min-height: 20px;
+  background-color: #36b781;
+  padding: 20px;
+  text-align: center;
+}
+
+footer {
+  min-width: 100%;
+  background-color: #36b781;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  display: block;
+  position: relative;
+  max-width: 1100px;
+  background-color: #ebe5df;
+}
+
+.page_login {
+  display: block;
+  flex-direction: column;
+  background-color: rgb(47, 232, 146);
+}
+
+/* ============FORMULAIRE============= */
+form {
+  min-width: 50%;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+form input {
+  padding: 10px;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(229, 237, 240);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  gap: 5px;
+}
+
+form button:hover {
+  background-color: rgb(68, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+.col {
+  display: flex;
+  flex-direction: row;
+}
+
+.col .flex-row {
+  flex-direction: row;
+}
+
+.col .flex-column {
+  flex-direction: column;
+}
+
+.mt {
+  margin: 10px;
+}
+
+.gap {
+  gap: 10px;
+}
+
+/* ============ Tables administration ============= */
+img {
+  height: 70px;
+  object-fit: contain;
+}
+
+table {
+  table-layout: auto;
+  max-width: 100%;
+}
+
+tr,
+td {
+  border: solid;
+}
+
+td {
+  border: 1px solid blue;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  padding: 5px;
+}
+
+/*# sourceMappingURL=style.css.map */

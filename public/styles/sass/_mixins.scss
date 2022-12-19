@@ -1,0 +1,7 @@
+@mixin bgi($url) {
+  background-image: url($url);
+  background-size: cover;
+  background-position: center bottom;
+}
+
+// utilisation : @include bgi(url);

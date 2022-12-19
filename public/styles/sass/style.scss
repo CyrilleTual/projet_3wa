@@ -1,0 +1,116 @@
+@import "../sass/_reset";
+@import "../sass/_variables";
+@import "../sass/_placeholders";
+@import "../sass/_mixins";
+
+body {
+  @extend %flex-center;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+
+  min-height: 100vh;
+}
+
+header {
+  min-width: 100%;
+  min-height: 20px;
+  background-color: #36b781;
+  padding: 20px;
+  text-align: center;
+}
+
+footer {
+  min-width: 100%;
+  background-color: #36b781;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  display: block;
+  position: relative;
+  max-width: 1100px;
+  background-color: #ebe5df;
+}
+
+.page_login {
+  display: block;
+
+  flex-direction: column;
+  background-color: rgb(47, 232, 146);
+}
+/* ============FORMULAIRE============= */
+
+form {
+  min-width: 50%;
+  padding: 20px;
+  border-radius: 4px;
+}
+form input {
+  padding: 10px;
+}
+form button {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(229, 237, 240);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  gap: 5px;
+}
+
+form button:hover {
+  background-color: rgb(68, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+.col {
+  display: flex;
+  flex-direction: row;
+}
+
+.col .flex-row {
+  flex-direction: row;
+}
+.col .flex-column {
+  flex-direction: column;
+}
+
+.mt {
+  margin: 10px;
+}
+.gap {
+  gap: 10px;
+}
+
+/* ============ Tables administration ============= */
+
+img {
+  height: 70px;
+  object-fit: contain;
+}
+
+table {
+  table-layout: auto;
+  max-width: 100%;
+}
+tr,
+td {
+  border: solid;
+}
+
+td {
+  border: 1px solid blue;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  padding: 5px;
+}

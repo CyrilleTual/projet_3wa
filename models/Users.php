@@ -43,17 +43,17 @@ class Users extends Model
     public function testo($datas)
     {
         // return $this->findAll();
-        // $params = [
-        //     'id' => 28,
-        //     'lastName' => "*BRAVO mon gars! **"
-        // ];
-        // return $this->findBy($params);
+        $params = [
+            'id' => 41,
+            //'lastName' => "*BRAVO mon gars! **"
+        ];
+        return $this->findBy($params);
         // return $this->delete(32);
         // return $this->create($model);
         // $valID = 26;
         // return $this->update($valID, $model);
 
         //$this->hydrate($datas);
-        $this->create($this->hydrate($datas));
+        //$this->create($this->hydrate($datas));
     }
 }

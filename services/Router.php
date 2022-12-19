@@ -29,27 +29,15 @@ class Router
         if (!empty($this->route) && $this->route !== null) {
             $strReplaceUp = ucfirst($this->route); // passe en majuscule la premiere lettre 
 
-
-
-
-
-
-
-
             $nomfichier = str_replace("\\", "/", "controllers\\$strReplaceUp" . 'Controller.php'); // pour en vérifier l'existence
 
-
-
             if (file_exists($nomfichier)) {
-
 
 
                 $controller = "App\\Controllers\\$strReplaceUp" . "Controller";
 
                 // var_dump($controller);
                 // die;
-
-
 
                 $classFinal = new $controller();
 

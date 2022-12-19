@@ -1,0 +1,16 @@
+$policeSize: (
+  // body: 1.6rem, // déja déclarée dans le reset
+  noel: 4rem,
+  grosTitre: 3.2rem,
+  moyenTitre: 2.5rem,
+  petitTitre: 2rem
+);
+
+$breakPoints: (
+  mobile: 768px,
+  // mode mobile jusqu'à 768px
+  tablet: 1025px,
+  // mode tablet jusqu'à 1024 px
+);
+
+// utilisation :  font-size: map-get($policeSize, body);
