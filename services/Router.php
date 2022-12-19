@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace Services;
 
-use App\Controllers\RendersController;
+use Controllers\RendersController;
 
 class Router
 {
@@ -14,9 +14,6 @@ class Router
         $this->route = isset($_GET['route']) ? $_GET['route'] : null;
         $this->action = isset($_GET['action']) ? $_GET['action'] : null;
         $this->router();
-
-        var_dump('toto');
-        die;
     }
 
     public function getAction(): ?string
@@ -29,19 +26,22 @@ class Router
         if (!empty($this->route) && $this->route !== null) {
             $strReplaceUp = ucfirst($this->route); // passe en majuscule la premiere lettre 
 
+            // var_dump($strReplaceUp);
+            // die;
+
             $nomfichier = str_replace("\\", "/", "controllers\\$strReplaceUp" . 'Controller.php'); // pour en vérifier l'existence
 
             if (file_exists($nomfichier)) {
 
 
-                $controller = "App\\Controllers\\$strReplaceUp" . "Controller";
+                $controller = "controllers\\$strReplaceUp" . "Controller";
 
-                // var_dump($controller);
-                // die;
+
 
                 $classFinal = new $controller();
 
                 if (!empty($this->getAction()) && $this->getAction() !== null) {
+
                     $_action = $this->getAction();
                     if (\method_exists($classFinal, $this->getAction())) $classFinal->$_action();
                     else new RendersController();

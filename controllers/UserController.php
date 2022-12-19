@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace Controllers;
 
 class UserController
 {
@@ -11,7 +11,7 @@ class UserController
     public function displayFormRegister()
     {
         // mise en place d'un token pour sécuriser la soumission du formulaire 
-        $model = new \App\Models\Tools();
+        $model = new \Models\Tools();
         $token = $model->randomChain(20);
         $_SESSION['auth'] = $token;
 
@@ -24,7 +24,7 @@ class UserController
      */
     public function register()
     {
-        $model = new \App\Models\Users();
+        $model = new \Models\Users();
 
         /**
          * Controle du token 

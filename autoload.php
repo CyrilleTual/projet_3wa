@@ -1,7 +1,5 @@
 <?php
 
-namespace App;
-
 class Autoload
 {
     /**
@@ -21,11 +19,9 @@ class Autoload
     {
         /**
          * transforme le namespace (de la classe $className)en chemin valide vers la classe
-         * __NAMESPACE__ renvoie le namespace courant pour (APP) l'enlever 
          */
-
-        $className = str_replace(__NAMESPACE__ . '\\', '', $className . ".php");
-
-        require_once __DIR__ . "/" . $className;
+        // require_once __DIR__ . "/" . str_replace("\\", "/", $className . ".php");
+        //require_once __DIR__ . "/" . lcfirst(str_replace("\\", "/", $className . ".php"));
+        require_once lcfirst(str_replace("\\", "/", $className . ".php"));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Models;
 
 
 class Model
@@ -85,22 +85,22 @@ class Model
      */
     protected function create(Model $model): object // rq: idem addone
     {
-        $champs = []; // colonnes du tableau
-        $inter = [];  // signes ? pour préparer la requête
-        $valeurs = []; // tableau des valeurs à insérer 
+        $champs     = []; // colonnes du tableau
+        $inter      = [];  // signes ? pour préparer la requête
+        $valeurs    = []; // tableau des valeurs à insérer 
 
         // Boucle sur l'objet pour recupérer les propriétés/valeurs mais on enlève les propriétés "pdo" et "table" 
         foreach ($model as $champ => $valeur) {
-            if ($valeur !== null && $champ != 'pdo' && $champ != 'table' && $champ != 'idName') {
-                $champs[] = $champ;
-                $inter[] = "?";
-                $valeurs[] = $valeur;  // ex: array(2) { [0]=> string(4) "tutu" [1]=> string(4) "lolo" }
+            if ($valeur     !== null && $champ != 'pdo' && $champ != 'table' && $champ != 'idName') {
+                $champs[]   = $champ;
+                $inter[]    = "?";
+                $valeurs[]  = $valeur;  // ex: array(2) { [0]=> string(4) "tutu" [1]=> string(4) "lolo" }
             }
         }
         // preparation des éléments à insérer dans la requête
-        $table = $this->table; // nom de la table 
-        $liste_champs = implode(',',  $champs); // ex: string(19) "lastName, firstName"
-        $liste_inter = implode(',', $inter);  // ex:  "?, ?"
+        $table          = $this->table; // nom de la table 
+        $liste_champs   = implode(',',  $champs); // ex: string(19) "lastName, firstName"
+        $liste_inter    = implode(',', $inter);  // ex:  "?, ?"
         // requête 
         $query = $this->pdo->prepare('INSERT INTO ' . $table . '(' . $liste_champs . ') values (' . $liste_inter . ')');
         $query->execute($valeurs);
@@ -115,8 +115,8 @@ class Model
      */
     public function update(int $id, Model $model)
     {
-        $champs = [];
-        $valeurs = [];
+        $champs     = [];
+        $valeurs    = [];
         // Boucle pour recupérer les propriétés/valeurs mais on enlève les propriétés "pdo" et "table" 
         // on va réassigner tous les champs avec les valeurs issues de $model
         foreach ($model as $champ => $valeur) {

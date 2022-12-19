@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 
 /// variables de connexion à adapter selon la configuration 
 // utilisées par Models/Model 
