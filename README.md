@@ -70,3 +70,11 @@ Gestion des erreurs : on dispose d'un model permetant de gérer le texte des mes
 Voir dans models/ErrorMessages.php pour mode d'emploi
 
 ---
+
+Securisation des formulaires
+
+-> au niveau de la saisie, dans le HTML formulaire d'enregistrement:
+Champs nom et premom : entre 2 et 30 caractères - patern : lettres, espaces, tirets et apostrophes
+email :  type email (plus de valeur semantique que pattern)
+Mot de passe au mini 6 caractères 1 Maj, 1Min, 1 chiffre
+Tous les champs sont Required

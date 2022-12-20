@@ -7,7 +7,7 @@
     <legend>Connexion</legend>
 
     <label for="email">Entrez votre email</label>
-    <input type="text" name="email" size="30" value="<?php echo (isset($authUser['email'])) ?  $authUser['email'] : ""; ?>">
+    <input type="text" name="email" size="30" value="<?php echo htmlspecialchars(isset($_POST['email'])) ?  $_POST['email'] : ""; ?>">
 
 
     <label for="email">Entrez votre mot de passe</label>

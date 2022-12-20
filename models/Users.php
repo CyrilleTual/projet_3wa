@@ -10,7 +10,7 @@ class Users extends Model
     protected int $id_user;
     protected string $firstname;
     protected string $lastname;
-    protected string $sex;
+
     protected string $email;
     protected string $password;
     protected string $role;
@@ -57,15 +57,7 @@ class Users extends Model
     {
         $this->lastname = $value;
     }
-    public function getSex(): string
-    {
-        return $this->sex;
-    }
 
-    public function setSex(string $value)
-    {
-        $this->sex = $value;
-    }
 
     public function getEmail(): string
     {
