@@ -51,27 +51,6 @@ class Model
     // utilisation -> voir le README
 
 
-    /*************************************************************************************************
-     *  Fonction split  : pour eclater un tableau de type [champs:valeurs] en une sring de champs incluant " =?" et un tableau de valeurs à passer en paramètres
-     *  @param array $ tableau ['champ1'=>'value1', 'champ2=>value2' etc...]
-     *  @return array Tableau  ['string de champs','tableau des valeurs']
-     */
-    protected function split(array $toSplit): array
-    {
-        // On boucle pour éclater $params -> stockage des champs et des values indépendament
-        $champs = [];
-        $valeurs = [];
-        foreach ($toSplit as $champ => $valeur) {
-            $champs[]   = "$champ = ?";
-            $valeurs[]  = $valeur;
-        }
-        // On transforme les tableaux en une chaîne de caractères séparés par des AND
-        $liste_champs = implode(' AND ', $champs);   //  ex : "user_id = ? AND user_lastName = ?"
-        return [$liste_champs, $valeurs];
-    }
-    // utilisation [$liste_champs, $valeurs] = $this->split($params)
-
-
     /***********************************************************************************
      * findBY -> Sélection les enregistrements repondants à un ou plusieurs critères  (READ)
      * @param array $ tableau de critères ['champ1'=>'value1', 'champ2=>value2' etc...]
@@ -80,12 +59,17 @@ class Model
 
     protected function findBy(array $params = []): array
     {
-        // on appel la methode split pour  transformer le tableau de critère 
-        [$liste_champs, $valeurs] = $this->split($params);
+        // On boucle pour éclater $params -> stockage des champs et des values indépendament
+        $champs = [];
+        $valeurs = [];
+        foreach ($params as $champ => $valeur) {
+            $champs[]   = "$champ = ?";
+            $valeurs[]  = $valeur;
+        }
+        // On transforme les tableaux en une chaîne de caractères séparés par des AND
+        $liste_champs = implode(' AND ', $champs);   //  ex : "user_id = ? AND user_lastName = ?"
         // preparation de la requête
-        $query = $this->pdo->prepare("SELECT * 
-                                        FROM    $this->table 
-                                        WHERE   $liste_champs", $valeurs);
+        $query = $this->pdo->prepare("SELECT * FROM $this->table WHERE $liste_champs", $valeurs);
         // execution  de la requête
         $query->execute($valeurs);
         return $query->fetchAll();
@@ -104,9 +88,7 @@ class Model
      */
     public function delete(int $idValue): bool
     {
-        $query = $this->pdo->prepare("DELETE    
-                                        FROM    $this->table 
-                                        WHERE   $this->idName = ?");
+        $query = $this->pdo->prepare("DELETE FROM $this->table WHERE  $this->idName = ?");
         return $query->execute([$idValue]);
     }
     // ex :  return $this->delete(32);

@@ -66,6 +66,9 @@ class UserController
             'firstName' => 'Jean',
         ];
         $result = $model->getUsersByQueryArray($datas, "id_user DESC ", 5);
+
+        // $result = $model->testo();
+
         var_dump($result);
 
         //$errors[] = $messagesErrors[1];

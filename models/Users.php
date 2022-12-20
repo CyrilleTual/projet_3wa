@@ -8,8 +8,8 @@ class Users extends Model
     protected string $idName;  // nom du champ d'identifiant pour les methodes se servant de l'id
     // 
     protected int $id_user;
-    protected string $firstName;
-    protected string $lastName;
+    protected string $firstname;
+    protected string $lastname;
     protected string $sex;
     protected string $email;
     protected string $password;
@@ -38,24 +38,24 @@ class Users extends Model
         $this->id_user = $value;
     }
 
-    public function getFirstName(): string
+    public function getFirstname(): string
     {
-        return $this->firstName;
+        return $this->firstname;
     }
 
-    public function setFirstName(string $value)
+    public function setFirstname(string $value)
     {
-        $this->firstName = $value;
+        $this->firstname = $value;
     }
 
-    public function getLastName(): string
+    public function getLastname(): string
     {
-        return $this->lastName;
+        return $this->lastname;
     }
 
-    public function setLastName(string $value)
+    public function setLastname(string $value)
     {
-        $this->lastName = $value;
+        $this->lastname = $value;
     }
     public function getSex(): string
     {
@@ -146,16 +146,9 @@ class Users extends Model
      */
     public function getUsersByQueryArray(array $params, string $order = "id_user DESC ", int $limit = 500): array
     {
-        // On boucle pour éclater $params -> stockage des champs et des values indépendament
-        $champs = [];
-        $valeurs = [];
-        foreach ($params as $champ => $valeur) {
-            $champs[]   = "$champ = ?";
-            $valeurs[]  = $valeur;
-        }
-        // On transforme le tableau des champs en une chaîne de caractères séparés par des AND
-        $liste_champs = implode(' AND ', $champs);   //  ex : "user_id = ? AND user_lastName = ?"
-        // var_dump($liste_champs, $valeurs);  donne : string(30) "lastName = ? AND firstName = ?" array(2) { [0]=> string(5) "bonez" [1]=> string(4) "Jean" }
+        // on appel la methode split pour  transformer le tableau de critère (méthode du model Model)
+        [$liste_champs, $valeurs] = $this->split($params);
+        // var_dump($liste_champs, $valeurs);  donne : string(30) "lastname = ? AND firstname = ?" array(2) { [0]=> string(5) "bonez" [1]=> string(4) "Jean" }
         $sql = 'SELECT
                     *
                 FROM `users`
@@ -196,23 +189,24 @@ class Users extends Model
 
 
 
-    // /************************************************
-    //  * récupération d' utilisateur(s) selon critère(s)'
-    //  */
-    // public function testo($datas)
-    // {
-    //     // return $this->findAll();
-    //     $params = [
-    //         $this->idName => 26,
-    //         //'lastName' => "*BRAVO mon gars! **"
-    //     ];
-    //     return $this->findBy($params);
-    //     return $this->delete(32);
-    //     return $this->create($model);
-    //     $valID = 26;
-    //     return $this->update($valID, $model);
+    /************************************************
+     * récupération d' utilisateur(s) selon critère(s)'
+     */
+    public function testo()
+    {
+        // return $this->findAll();
+        $params = [
+            $this->idName => 12,
+            //'lastname' => "*BRAVO mon gars! **"
+        ];
+        return $this->findBy($params);
 
-    //     //$this->hydrate($datas);
-    //     //$this->create($this->hydrate($datas));
-    // }
+        // return $this->delete(32);
+        // return $this->create($model);
+        // $valID = 26;
+        // return $this->update($valID, $model);
+
+        //$this->hydrate($datas);
+        //$this->create($this->hydrate($datas));
+    }
 }
