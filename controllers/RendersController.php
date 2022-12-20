@@ -8,11 +8,12 @@ class RendersController
 {
     private ?string $view;
 
-    public function __construct($view = null, $data = null)
+    public function __construct($view = null, $data = null, $errors = null)
     {
 
         $this->view = isset($_GET['view']) ? $_GET['view'] : $view;
         $this->data = $data;
+        $this->errors = $errors;
         $this->handleRequest();
     }
 
@@ -33,7 +34,7 @@ class RendersController
         } else {
             switch ($this->PageNotFound()) {
                 case true:
-                    $this->render($this->view, $this->data);
+                    $this->render($this->view, $this->data, $this->errors);
                     break;
                 case false:
                     $this->render('page404');
@@ -45,7 +46,7 @@ class RendersController
         }
     }
 
-    private function render($view, $data = null): void
+    private function render($view, $data = null, $errors = null): void
     {
 
         require "public/template/layout.phtml";

@@ -3,18 +3,18 @@
 <?php require_once('errors.inc.phtml'); ?>
 <!-- ?php require_once('_valids.phtml'); ?-->
 
-<form class="tablo" enctype="multipart/form-data" action="?route=user&action=register" method="POST">
+<form class="tablo" action="?route=user&action=register" method="POST">
 
     <fieldset>
         <legend>Merci de renseigner les information suivantes :</legend>
 
         <input id="token" name="token" type="hidden" value="<?= $data ?>">
 
-        <label for="firtName">Entrez votre nom</label>
-        <input type="text" name="firstName" size="30" value="<?php echo (isset($addUser['addNom'])) ? $addUser['addNom'] : ""; ?>"><br>
+        <label for="firstname">Entrez votre prénom</label>
+        <input type="text" name="firstname" size="30" value="<?php echo (isset($addUser['addPrenom'])) ? $addUser['addPrenom'] : ""; ?>"><br>
 
-        <label for="lastName">Entrez votre prénom</label>
-        <input type="text" name="lastName" size="30" value="<?php echo (isset($addUser['addPrenom'])) ? $addUser['addPrenom'] : ""; ?>"><br>
+        <label for="lastname">Entrez votre nom</label>
+        <input type="text" name="lastname" size="30" value="<?php echo (isset($addUser['addNom'])) ? $addUser['addNom'] : ""; ?>"><br>
 
         <span>Renseignez votre sexe : </span>
         <label for="sex">Feminin</label>

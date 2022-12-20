@@ -35,12 +35,17 @@ class UserController
         var_dump($token_post, $token_session);
 
         $datas = [
-            'firstName' => trim(ucfirst($_POST['firstName'])),
-            'lastName'  => trim(strtoupper($_POST['lastName'])),
+            'firstname' => trim(ucfirst($_POST['firstname'])),
+            'lastname'  => trim(strtoupper($_POST['lastname'])),
             'sex'       => trim(($_POST['sex'])),
             'email'     => trim(($_POST['email'])),
             'password'  => trim($_POST['password']),
         ];
+        //$password = password_hash($addUser['addPassword'], PASSWORD_DEFAULT);
+
+        $datas['password'] = password_hash($datas['password'], PASSWORD_DEFAULT);
+
+
 
         $result = $model->addNewUser($datas);
     }
@@ -118,41 +123,51 @@ class UserController
                     $pwdForm = $authUser['password'];
                     $pwdDataBase = $userExist["password"];
                     //$passwordOK = password_verify($authUser['password'], $userExist['password']);
-                    $passwordOK = ($pwdForm === $pwdDataBase); //
+                    $passwordOK = password_verify($pwdForm, $pwdDataBase);
+
+                    //$passwordOK = ($pwdForm === $pwdDataBase); // pour test pwd non cryptés
 
                     if ($userExist !== false && $passwordOK) {
 
-                        // creationde session
-                        $_SESSION['user'] = [
-                            'id'            => $userExist['id_user'],
-                            'firstName'     => $userExist['firstname'],
-                            'lastName'      => $userExist['lastname'],
-                            'sex'           => $userExist['sex'],
-                            'email'         => $userExist['email'],
-                            'role'          => $userExist['role'],
-                            'status'        => $userExist['status'],
-                        ];
+                        //verification du statut actif de l'utilisateur
+                        $status = $userExist["status"];
 
-                        new RendersController('homePage');
+                        if ($status !== 'actif') {
+                            $_SESSION['message']  = "Vous n'êtes pas autorisé à vous connecter";
+                            new RendersController('homePage');
+                            exit();
+                        } else {
+                            // creationde session
+                            $_SESSION['user'] = [
+                                'id'            => $userExist['id_user'],
+                                'firstName'     => $userExist['firstname'],
+                                'lastName'      => $userExist['lastname'],
+                                'sex'           => $userExist['sex'],
+                                'email'         => $userExist['email'],
+                                'role'          => $userExist['role'],
+                                'status'        => $userExist['status'],
+                            ];
 
-                        $_SESSION['message']  = "bien connecté ! ";
-
-                        exit();
+                            $_SESSION['message']  = "bien connecté ! ";
+                            new RendersController('homePage');
+                            exit();
+                        }
                     } else {
                         $errors[] = $messagesErrors[8];
                     }
 
                     //////////////////////////////////////////////////////////////////////////////////
                 }
-            } else {
-                var_dump($errors);
             }
         }
 
-        var_dump("on est ici avec des erreurs    ", $errors);
 
-
-        $this->displayFormConnect();
+        // reaffichage de la vue avec regeration du token et passge du tableau d'erreurs
+        $model = new \Models\Tools();
+        $token = $model->randomChain(20);
+        $_SESSION['auth'] = $token;
+        // affichage de la vue d'affichage en passant $token 
+        new RendersController('formConnect', $token, $errors);
     }
 
     /**
