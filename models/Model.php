@@ -73,6 +73,30 @@ class Model
 
 
     /***********************************************************************************
+     * findOne -> un enregisterment par son id  (READ)
+     * @param int : valeur de l'id 
+     * @return array Tableau de l'enregistrement trouvé
+     */
+
+    protected function findOne(int $id): array
+    {
+
+        // preparation de la requête
+        $query = $this->pdo->prepare("SELECT * 
+                                        FROM    $this->table 
+                                        WHERE   $this->idName = ?");
+
+        $query->execute([$id]);
+        return $query->fetch();
+        /**
+         * Exemple d'utilisation : 
+         *  $params = ['id' => 28,'lastName' => "*BRAVO mon gars! **"];
+         *  return $this->findBy($params);
+         */
+    }
+
+
+    /***********************************************************************************
      * findBY -> Sélection les enregistrements repondants à un ou plusieurs critères  (READ)
      * @param array $ tableau de critères ['champ1'=>'value1', 'champ2=>value2' etc...]
      * @return array Tableau des enregistrements trouvés  

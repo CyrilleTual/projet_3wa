@@ -8,10 +8,20 @@ class ErrorMessages
     public function getMessages()
     {
         $messagesErrors = [
+
             /* 0 */
-            "Erreur lors de l'envoie du formulaire",
+            "Une erreur est apparue lors de l'envoi du formulaire !",
             /* 1 */ "Ce message indique que quelque chose pose un p'tit problème",
             /* 2 */ "Veuillez renseigner votre date de naissance",
+            /* 3 */ "erreur",
+            /* 4 */ "erreur",
+            /* 5 */ "erreur",
+            /* 6 */ 'Veuillez renseigner un email valide SVP !',
+            /* 7 */ 'Veuillez renseigner un email valide SVP !',
+            /* 8 */ 'Erreur identification',
+            /* 9 */
+
+
 
         ];
         return $messagesErrors;
@@ -26,7 +36,7 @@ class ErrorMessages
  * $errors = []; // initialisation du tableau des erreurs 
  * 
  * $errorsArray = NEW \Models\ErrorMessages(); // 
- * $messagesErrors = $errorsArray->getMessage();
+ * $messagesErrors = $errorsArray->getMessages();
  * 
  * et quand une erreur se produit on alimente le tableau des erreurs :
  * 

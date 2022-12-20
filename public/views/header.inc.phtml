@@ -1,20 +1,20 @@
 <?php
 $has_session = session_status() == PHP_SESSION_ACTIVE;
-if (!$has_session && (!isset($_SESSION['auth']))) {
+if (!$has_session && (!isset($_SESSION['user']))) {
     session_start();
 }
 ?>
 
-<?php if (isset((($_SESSION['auth'])['firstName']))) : ?>
+<?php if (isset((($_SESSION['user'])['firstName']))) : ?>
 
     <P>Bienvenu à toi,
-        <?php echo (($_SESSION['auth'])['firstName']); ?>
-        <a href="?page=User&action=logout"> *** LogOut ***</a>
+        <?php echo (($_SESSION['user'])['firstName']); ?>
+        <a href="?route=User&action=logoutUser"> *** LogOut ***</a>
     </P>
 
 <?php else : ?>
-    Si tu n'as pas de compte : <a href="?view=register">register </a> , sinon
-    <a href="?view=login"> login </a>
+    Si tu n'as pas de compte : <a href="?route=user&action=displayFormRegister">register </a> , sinon
+    <a href="?route=user&action=displayFormConnect"> login </a>
 <?php endif ?>
 
 <h1>Welcome on board </h1>

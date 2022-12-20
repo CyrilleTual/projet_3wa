@@ -1,12 +1,12 @@
 <h1>Se connecter !</h1>
 
-<form action="index.php?route=verifAndConnect" method="POST">
+<?php require_once('errors.inc.phtml'); ?>
+
+<form action="index.php?route=user&action=checkAndConnect" method="POST">
     <legend>Connexion</legend>
 
     <label for="email">Entrez votre email</label>
     <input type="text" name="email" size="30" value="<?php echo (isset($authUser['email'])) ?  $authUser['email'] : ""; ?>">
-
-
 
 
     <label for="email">Entrez votre mot de passe</label>
@@ -18,7 +18,9 @@
     </div>
 
     <!-- ajout du token -->
-    <input id="token" name="token" type="hidden" value="<?= $token ?>">
+    <input id="token" name="token" type="hidden" value="<?= $data ?>">
+
+    <?= "token   ->  " . $data ?>
 
 
     <input type="submit" value="Valider" />

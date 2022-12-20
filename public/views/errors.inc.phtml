@@ -1,0 +1,23 @@
+<?php
+
+var_dump("$errors : ", $errors);
+
+
+?>
+
+
+
+<?php if (isset($errors) && count($errors) > 0) : ?>
+    <div id="messagesErrors">
+        <div>
+            <img src="public/img/warning.gif" alt="Warning" class="" />
+        </div>
+        <div>
+            <ul>
+                <?php foreach ($errors as $error) : ?>
+                    <li class="fsz2"><?= $error; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>

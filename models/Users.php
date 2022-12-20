@@ -119,6 +119,14 @@ class Users extends Model
         return $this->create($this->hydrate($datas));
     }
 
+
+
+    public function getUserByEmail($email)
+    {
+        $params = ['email' => $email];
+        return ($this->findBy($params));
+    }
+
     /****************************************************************************************
      * Exemple de methode de sélection complexe utilisant une requête préparée 
      * @param string $byColum : liste sous forme de string des clés des colonnes du WHERE
