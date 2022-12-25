@@ -6,9 +6,10 @@
 <form class="tablo" action="?route=user&action=register" method="POST">
 
     <fieldset>
+
         <legend>Merci de renseigner les information suivantes :</legend>
 
-        <input id="token" name="token" type="hidden" value="<?= $data ?>">
+        <input id="token" name="token" type="hidden" value="<?= $data ?>" />
 
         <label for="firstname">Entrez votre prénom</label>
         <input type="text" name="firstname" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['firstname'])) ? ($_POST['firstname']) : ""; ?>"><br>
@@ -29,4 +30,8 @@
 
 
     </fieldset>
+
+
+
+
 </form>

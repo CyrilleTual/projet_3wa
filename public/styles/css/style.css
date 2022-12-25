@@ -88,22 +88,16 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  text-size-adjust: none;
 }
 
 footer,
 header,
 nav,
 section,
-main {
-  display: block;
-}
-
 html {
   font-size: 62.5%;
 }
@@ -144,7 +138,7 @@ img {
   max-width: 100%;
 }
 
-body {
+main {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,117 +146,245 @@ body {
 }
 
 body {
-  flex-direction: column;
-  justify-content: space-between;
   margin: 0;
   min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  font-size: 1.6rem;
 }
 
-header {
+a {
+  text-decoration: none;
+  color: rgb(214, 239, 252);
+}
+
+header, footer {
+  font-size: 1.8rem;
   min-width: 100%;
   min-height: 20px;
-  background-color: #36b781;
-  padding: 20px;
-  text-align: center;
-}
-
-footer {
-  min-width: 100%;
-  background-color: #36b781;
-  padding: 20px;
+  background-color: rgb(96, 124, 25);
+  color: rgb(214, 239, 252);
+  padding: 10px;
   text-align: center;
 }
 
 main {
-  display: block;
   position: relative;
-  max-width: 1100px;
-  background-color: #ebe5df;
-}
-
-.page_login {
-  display: block;
+  margin: 0 auto;
+  position: 0, 0;
+  max-width: 1000px;
   flex-direction: column;
-  background-color: rgb(47, 232, 146);
 }
 
-/* ============FORMULAIRE============= */
-form {
-  min-width: 50%;
-  padding: 20px;
-  border-radius: 4px;
+/*******************************************************
+** Mise en Forme de la Nav bar
+**/
+ul.nav {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  max-width: 70%;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  background: rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
-
-form input {
-  padding: 10px;
+ul.nav a {
+  color: rgb(214, 239, 252);
+  /* This flexbox code stretches the link's clickable 
+   	* area to fit its parent block. */
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  justify-content: center;
 }
-
-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: rgb(229, 237, 240);
-  border: none;
-  border-radius: 4px;
+ul.nav li {
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 0;
+  height: 30px;
+  font-size: 1.8rem;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 30px;
+  letter-spacing: 1px;
+  color: rgb(41, 87, 9);
   cursor: pointer;
-  font-size: 20px;
 }
-
-.form-group {
+ul.nav li:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+ul.nav li:hover ul.dropdown {
+  visibility: visible;
+  z-index: 10;
+}
+ul.nav li:first-child {
+  border-top-left-radius: 10px;
+}
+ul.nav li:last-child {
+  border-top-right-radius: 10 px;
+}
+ul.nav ul.dropdown {
+  visibility: hidden;
   display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   flex-direction: column;
-  margin-bottom: 20px;
-  gap: 5px;
+  margin: 0;
+  padding: 5px 0 30px;
+  list-style: none;
+  color: black;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  opacity: 1;
+  z-index: 10;
+}
+ul.nav ul.dropdown > li {
+  background: rgb(96, 124, 25);
+  font-size: 14px;
+  cursor: pointer;
+}
+ul.nav ul.dropdown > li:hover {
+  background: rgba(0, 0, 0, 0.6);
+  color: #e7e6f1;
 }
 
-form button:hover {
-  background-color: rgb(68, 0, 0);
-  color: rgb(255, 255, 255);
+/*****************************************************
+** Mise en forme Generique pour les Formulaires 
+**
+*/
+form {
+  margin-top: 30px;
+}
+form fieldset {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+form legend {
+  padding: 0px 3px;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+form label {
+  width: 220px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 6px;
+}
+form em {
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}
+form input:focus {
+  background: #eaeaea;
+}
+form input, form textarea {
+  width: 249px;
+}
+form textarea {
+  height: 100px;
+}
+form select {
+  width: 254px;
+}
+form input[type=checkbox] {
+  width: 10px;
+}
+form input[type=submit] {
+  display: block;
+  width: 150px;
+  padding: 10px;
+  border-radius: 20px;
+  margin: auto;
+}
+form .radio {
+  width: 50px;
+}
+form .preview {
+  display: block;
+  background-color: rgb(241, 247, 249);
+}
+form .preview img {
+  margin: auto;
+  height: 200px;
+  width: auto;
 }
 
-.col {
-  display: flex;
-  flex-direction: row;
-}
-
-.col .flex-row {
-  flex-direction: row;
-}
-
-.col .flex-column {
-  flex-direction: column;
-}
-
-.mt {
-  margin: 10px;
-}
-
-.gap {
-  gap: 10px;
-}
-
-/* ============ Tables administration ============= */
-img {
+/*****************************************************
+** Mise en forme Generique pour les tableaux 
+*/
+.catalog img {
+  display: block;
   height: 70px;
   object-fit: contain;
+  margin: auto;
+  cursor: pointer;
 }
-
-table {
+.catalog table {
   table-layout: auto;
   max-width: 100%;
 }
-
-tr,
-td {
+.catalog tr,
+.catalog td {
   border: solid;
 }
-
-td {
+.catalog td {
+  max-width: 400px;
   border: 1px solid blue;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  overflow: auto;
+  white-space: normal;
   vertical-align: middle;
   padding: 5px;
 }
+.catalog input[type=submit] {
+  display: block;
+  width: 80px;
+  padding: 10px;
+  border-radius: 20px;
+  margin: auto;
+}
 
-/*# sourceMappingURL=style.css.map */
+/*****************************************************
+** affichage en grand d'un miniature au click sur la vignette
+*/
+.modal-window {
+  display: block;
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.6s;
+  cursor: pointer;
+}
+.modal-window > img {
+  border-radius: 40px;
+  display: block;
+  border: 4rem ridge thick double #3a1a70;
+  padding: 4rem;
+  height: 80%;
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  background: rgb(96, 124, 25);
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}/*# sourceMappingURL=style.css.map */

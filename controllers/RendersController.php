@@ -11,8 +11,10 @@ class RendersController
     public function __construct($view = null, $data = null, $errors = null)
     {
 
-        $this->view = isset($_GET['view']) ? $_GET['view'] : $view;
-        $this->data = $data;
+        //var_dump("dans le controller", $data);
+
+        $this->view   = isset($_GET['view']) ? $_GET['view'] : $view;
+        $this->data   = $data;
         $this->errors = $errors;
         $this->handleRequest();
     }
@@ -22,6 +24,7 @@ class RendersController
         return $this->view;
     }
     public function getData(): ?string
+
     {
         return $this->data;
     }

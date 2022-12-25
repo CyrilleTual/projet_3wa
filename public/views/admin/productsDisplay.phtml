@@ -1,0 +1,66 @@
+<h1> visualisation des produits</h1>
+
+
+<?php
+
+$token = $data[0];
+$values = $data[1];
+
+?>
+
+
+
+
+<table class='catalog' ">
+    <thead>
+        <tr>
+            <th>Référence</th>
+            <th>Categorie</th>
+            <th>Teaser</th>
+            <th>Description</th>  
+            <th></th>
+            <th></th>
+            <th></th>       
+
+        </tr>
+    </thead>
+
+
+    <tbody>
+
+        <?php foreach ($values as $key => $valeur) : ?>
+            <tr>
+                <td><?= htmlspecialchars($valeur["productRef"]); ?> </td>
+                <td><?= htmlspecialchars($valeur["categoryName"]); ?></td>
+                <td><?= htmlspecialchars($valeur["teaser"]); ?></td>
+                <td><?= htmlspecialchars($valeur["description"]); ?></td>                      
+                <td><img class="vignette" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+</td>
+<div id="<?= htmlspecialchars($valeur['picture']); ?>" class="modal-window">
+    <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+
+    <div>
+
+
+
+    </div>
+    <div>
+
+        <td>
+            <form action=" ?page=Admin&action=delProduct" method="post">
+                <input type="hidden" name="id" value="<?= $valeur['id_product']; ?>">
+                <input type="hidden" name="pathPhoto" value="<?= 'public/photos/' . $valeur['picture']; ?>">
+                <input type="submit" name="submit" value="Delete">
+            </form>
+        </td>
+        <td>
+            <form action=" ?page=Admin&action=EditProduct" method="post">
+                <input type="hidden" name="id" value="<?= $valeur['id_product']; ?>">
+                <input type="submit" name="submit" value="Modifier">
+            </form>
+        </td>
+
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+    </table>

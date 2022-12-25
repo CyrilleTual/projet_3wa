@@ -1,20 +1,36 @@
-<?php
-$has_session = session_status() == PHP_SESSION_ACTIVE;
-if (!$has_session && (!isset($_SESSION['user']))) {
-    session_start();
-}
-?>
+<nav class="navbar">
+    <ul class="nav">
+
+
+        <li><a href="?view=homePage">
+                Home
+            </a></li>
+        <li><a href="?route=user&action=test">** Test **</a>
+            <ul class="dropdown">
+                <li>Menu 1</li>
+                <li>Menu 2</li>
+                <li>Menu 3</li>
+                <li>Menu 4</li>
+                <li>Menu 5</li>
+                <li>Menu 6</li>
+            </ul>
+        </li>
+
+        <?php if (isset((($_SESSION['user'])['firstName'])) && (!empty($_SESSION['user']))) : ?>
+            <li><a href="?route=products&action=displayFormProducts"> Gestion produits </a></li>
+            <li><a href="?route=products&action=displayFormAddProducts">Ajout produit</a></li>
+            <li><a href="?route=User&action=logoutUser">LogOut</a></li>
+        <?php else : ?>
+            <li><a href="?route=user&action=displayFormRegister">register </a></li>
+            <li><a href="?route=user&action=displayFormConnect"> login </a></li>
+        <?php endif ?>
+
+
+    </ul>
+
+</nav>
 
 <?php if (isset((($_SESSION['user'])['firstName']))) : ?>
-
-    <P>Bienvenu à toi,
-        <?php echo (($_SESSION['user'])['firstName']); ?>
-        <a href="?route=User&action=logoutUser"> *** LogOut ***</a>
-    </P>
-
-<?php else : ?>
-    Si tu n'as pas de compte : <a href="?route=user&action=displayFormRegister">register </a> , sinon
-    <a href="?route=user&action=displayFormConnect"> login </a>
+    Bienvenu à toi,
+    <?php echo (($_SESSION['user'])['firstName']); ?>
 <?php endif ?>
-
-<h1>Welcome on board </h1>

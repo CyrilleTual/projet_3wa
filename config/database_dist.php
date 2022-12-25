@@ -5,10 +5,10 @@
 // utilisées par Models/Model 
 
 return [
-    'host'     => 'localhost',
+    'host'     => 'www_mysql_projet',
     'port'     => '3306',
     'db_utf'   => 'utf8',
     'dbname'   => 'honey',
     'username' => 'root',
-    'password' => ''
+    'password' => '78604'
 ];
