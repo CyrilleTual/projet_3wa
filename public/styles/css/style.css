@@ -176,6 +176,14 @@ main {
   flex-direction: column;
 }
 
+.vignette {
+  display: block;
+  height: 100px;
+  object-fit: contain;
+  margin: auto;
+  cursor: pointer;
+}
+
 /*******************************************************
 ** Mise en Forme de la Nav bar
 **/

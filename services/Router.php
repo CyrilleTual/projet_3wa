@@ -8,7 +8,7 @@ class Router
 {
     private ?string $route;
     private ?string $action;
-
+   
     public function __construct()
     {
         $this->route = isset($_GET['route']) ? $_GET['route'] : null;
@@ -23,6 +23,7 @@ class Router
 
     private function router()
     {
+
         if (!empty($this->route) && $this->route !== null) {
             $strReplaceUp = ucfirst($this->route); // passe en majuscule la premiere lettre 
 
@@ -33,10 +34,7 @@ class Router
 
             if (file_exists($nomfichier)) {
 
-
                 $controller = "controllers\\$strReplaceUp" . "Controller";
-
-
 
                 $classFinal = new $controller();
 

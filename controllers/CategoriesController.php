@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class CategoriesController
+class CategoriesController{
 
    /*****************************************************************************************************
      * Affichage du formulaire des Items

@@ -2,13 +2,13 @@
 
 namespace Controllers;
 
-class ProductsController
+class ItemsController
 {
 
     /*****************************************************************************************************
      * Affichage du formulaire des Items
      */
-    public function displayFormProducts()
+    public function displayItems()
     {
         $data = [];
         $valuesToDisplay = []; // pour recevoir les données à afficher sous forme d'un array .
@@ -22,12 +22,17 @@ class ProductsController
 
         $model = new \Models\Items();
 
-        $valuesToDisplay = $model->getItemsByQuery(); // recup d'un tableau à afficher 
+       // $idProduct=$_POST['idProduct'];
+        $idProduct = $_GET["id"];
+
+    
+        $valuesToDisplay = $model->getItemsByQuery("items . id_product",$idProduct); // recup d'un tableau à afficher 
+
 
         $data[0] = $token;
         $data[1] = $valuesToDisplay;
         // affichage de la vue d'affichage en passant $token et $ valuesToDisplay par le render sous $data 
 
-        new RendersController('admin/formItems', $data);
+        new RendersController('admin/itemsDisplay', $data);
     }
 }

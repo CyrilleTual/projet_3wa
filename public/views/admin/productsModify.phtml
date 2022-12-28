@@ -1,0 +1,79 @@
+<?php require_once('public/views/errors.inc.phtml'); ?>
+<h1> Formulaire de Modification du produit </h1>
+
+
+<?php
+// recup des datas 
+
+$token = $data[0];
+$productToModify = $data[1];
+$catAvailable = $data[2];
+$currentCat = $data[3];
+
+?>
+
+
+<form method="post" enctype="multipart/form-data" action=" ?route=Products&action=ModifyProductProcess" enctype="multipart/form-data">
+
+    <fieldset>
+
+        <input id="token" name="token" type="hidden" value="<?= $token ?>">
+        <input id="id" name="id" type="hidden" value="<?= htmlspecialchars($productToModify["id_product"]); ?>">
+
+        <label for="categorie">Categorie</label>
+
+
+        <select name="category" id="category">
+            <?php foreach ($catAvailable as $key => $valeur) : ?>
+                <option value="<?= htmlspecialchars($valeur["id_category"]); ?>" <?php if (($productToModify["id_category"]) === ($valeur["id_category"]))
+                                                                                        echo "selected"; ?>><?= htmlspecialchars($valeur["categoryName"]); ?></option>
+            <?php endforeach; ?>
+        </select><br>
+
+
+        <label for="productName">Nom du produit</label>
+        <input type="text" id="productName" name="productName" value="<?= htmlspecialchars($productToModify["productName"]); ?>" placeholder="le nom du produit"> <br>
+
+        <label for=" reference">Reférence</label>
+        <input type="text" id="reference" name="reference" value="<?= htmlspecialchars($productToModify["productRef"]); ?>" placeholder="la référence de produit"> <br>
+
+        <label for="teaser">Description courte</label>
+        <input type="text" id="teaser" name="teaser" value="<?= htmlspecialchars($productToModify["teaser"]); ?>" placeholder="description courte"> <br><br>
+
+        <label for="description">Description</label>
+        <textarea name="description" id="description" placeholder="la description du produit"><?= htmlspecialchars($productToModify["description"]); ?></textarea><br>
+
+        <label for="infos">Infos</label>
+        <input type="text" id="infos" name="infos" value="<?= htmlspecialchars($productToModify["infos"] ?? ""); ?>" placeholder="infos"> <br>
+
+        <label for="picture">Photo</label>
+        <img class="vignette" src=' public/uploads/<?= htmlspecialchars($productToModify['picture'] ?? ""); ?>' alt=" produit" onclick="toggleClass('oldPic')" />
+
+        <div id="oldPic" class="modal-window">
+            <img src=' public/uploads/<?= htmlspecialchars($productToModify['picture']); ?>' alt="produit" onclick="toggleClass('oldPic')" />
+        </div>
+        <input type="file" id="uploadImage" name="picture" onchange="PreviewImage(event)"><br>
+        <!-- Pour pouvoir recuperer l'ancienne photo si pas de changement -->
+        <input type="hidden" id="photo_recup" name="photo_recup" value="<?= htmlspecialchars($productToModify['picture']); ?>">
+
+
+
+        <fieldset>
+            <legend>Produit actif? </legend>
+            <label class="radio" for=" actif">Actif</label>
+            <input type="radio" id="actif" name="status" value="actif" <?php if (($productToModify["status"]) === ("actif"))                                                                      echo "checked"; ?>>
+            <label class="radio" for="actif">Inactif</label>
+            <input type="radio" id="inactif" name="status" value="inactif" <?php if (($productToModify["status"]) === ("inactif"))
+                                                                                echo "checked"; ?>>
+        </fieldset>
+
+        <div class="preview">
+            <img id="uploadPreview">
+        </div>
+
+        <input type="submit" value="enregistrement">
+
+
+
+
+</form>

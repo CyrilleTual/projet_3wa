@@ -1,0 +1,52 @@
+<?php
+$token = $data[0];
+$valuesToDisplay = $data[1];
+
+
+
+
+?>
+
+<?php if ((isset($valuesToDisplay)) && !empty($valuesToDisplay)) : ?>
+    <h2> Articles de type <?= htmlspecialchars($valuesToDisplay[0]["productName"]); ?></h2>
+    <p> Dans la catégorie <?= htmlspecialchars($valuesToDisplay[0]["categoryName"]); ?></p>
+
+
+<?php endif; ?>
+
+
+
+<table class='catalog'>
+    <thead>
+        <tr>
+            <th>Référence</th>
+            <th>Conditionnement</th>
+            <th>Prix unitaire</th>
+            <th>TVA</th>
+            <th>Stock</th>
+            <th>statut</th>
+        </tr>
+    </thead>
+
+
+
+    <tbody>
+        <?php foreach ($valuesToDisplay as $key => $valeur) : ?>
+            <tr>
+                <td><?= htmlspecialchars($valeur["itemRef"]); ?></td>
+                <td><?= htmlspecialchars($valeur["pack"]); ?></td>
+                <td><?= htmlspecialchars($valeur["price"]); ?></td>
+                <td><?= htmlspecialchars($valeur["name"]); ?></td>
+                <td><?= htmlspecialchars($valeur["stock"]); ?></td>
+                <td><?= htmlspecialchars($valeur["status"]); ?>
+                <td>
+                <td>
+                    <form action=" ?route=Products&action=editProduct" method="post">
+                        <input type="hidden" name="id" value="">
+                        <input type="submit" value="Modifier">
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

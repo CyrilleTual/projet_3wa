@@ -90,8 +90,8 @@ class Model
         return $query->fetch();
         /**
          * Exemple d'utilisation : 
-         *  $params = ['id' => 28,'lastName' => "*BRAVO mon gars! **"];
-         *  return $this->findBy($params);
+         *  $id = 3;
+         *  return $this->findOne($id);
          */
     }
 
@@ -174,6 +174,7 @@ class Model
     {
         $champs     = [];
         $valeurs    = [];
+       
         // Boucle pour recupérer les propriétés/valeurs mais on enlève les propriétés "pdo" et "table" 
         // on va réassigner tous les champs avec les valeurs issues de $model
         foreach ($model as $champ => $valeur) {
@@ -187,8 +188,12 @@ class Model
         // On transforme le tableau "champs" en une chaine de caractères
         $liste_champs = implode(', ', $champs);
         // Requête
-        $query =  $this->pdo->prepare("UPDATE $this->table SET $liste_champs  WHERE $this->idName = ?");
+
+        $query =  $this->pdo->prepare("UPDATE $this->table SET $liste_champs  WHERE $this->idName = ?");        
+
         $query->execute($valeurs);
+        // var_dump($query);
+        // die;
         return $query;
         // ex d'utilisation :  $valID = 33; return $this->update($valID, $model);
     }
