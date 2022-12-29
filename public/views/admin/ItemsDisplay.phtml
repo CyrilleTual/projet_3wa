@@ -1,7 +1,7 @@
 <?php
 $token = $data[0];
 $valuesToDisplay = $data[1];
-
+$idProduct = $data[2];
 
 
 
@@ -10,43 +10,42 @@ $valuesToDisplay = $data[1];
 <?php if ((isset($valuesToDisplay)) && !empty($valuesToDisplay)) : ?>
     <h2> Articles de type <?= htmlspecialchars($valuesToDisplay[0]["productName"]); ?></h2>
     <p> Dans la catégorie <?= htmlspecialchars($valuesToDisplay[0]["categoryName"]); ?></p>
+    <table class='catalog'>
+        <thead>
+            <tr>
+                <th>Référence</th>
+                <th>Conditionnement</th>
+                <th>Prix unitaire</th>
+                <th>TVA</th>
+                <th>Stock</th>
+                <th>statut</th>
+                <th></th>
+            </tr>
+        </thead>
 
+        <tbody>
+            <?php foreach ($valuesToDisplay as $key => $valeur) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($valeur["itemRef"]); ?></td>
+                    <td><?= htmlspecialchars($valeur["pack"]); ?></td>
+                    <td><?= htmlspecialchars($valeur["price"]); ?></td>
+                    <td><?= htmlspecialchars($valeur["name"]); ?></td>
+                    <td><?= htmlspecialchars($valeur["stock"]); ?></td>
+                    <td><?= htmlspecialchars($valeur["status"]); ?>
+                    <td>
+                    <td><a class="bouton" href="?route=Items&action=modifyItems&id=<?= $valeur['id_item']; ?>">Modifier</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
 
+    </table>
+<?php endif; ?>
+
+<?php if ((isset($valuesToDisplay)) && empty($valuesToDisplay)) : ?>
+    <p> Il n'existe encore aucune reférence pour ce produit </p>
 <?php endif; ?>
 
 
-
-<table class='catalog'>
-    <thead>
-        <tr>
-            <th>Référence</th>
-            <th>Conditionnement</th>
-            <th>Prix unitaire</th>
-            <th>TVA</th>
-            <th>Stock</th>
-            <th>statut</th>
-        </tr>
-    </thead>
-
-
-
-    <tbody>
-        <?php foreach ($valuesToDisplay as $key => $valeur) : ?>
-            <tr>
-                <td><?= htmlspecialchars($valeur["itemRef"]); ?></td>
-                <td><?= htmlspecialchars($valeur["pack"]); ?></td>
-                <td><?= htmlspecialchars($valeur["price"]); ?></td>
-                <td><?= htmlspecialchars($valeur["name"]); ?></td>
-                <td><?= htmlspecialchars($valeur["stock"]); ?></td>
-                <td><?= htmlspecialchars($valeur["status"]); ?>
-                <td>
-                <td>
-                    <form action=" ?route=Products&action=editProduct" method="post">
-                        <input type="hidden" name="id" value="">
-                        <input type="submit" value="Modifier">
-                    </form>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+<div>
+    <a class="bouton" href="?route=Items&action=createItem&idProduct=<?= htmlspecialchars($idProduct); ?>">Créer une nouvelle référence </a>
+</div>

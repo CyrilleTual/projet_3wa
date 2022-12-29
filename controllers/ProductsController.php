@@ -259,11 +259,14 @@ class ProductsController
 
     }
 
+    /*********************************************************************************************
+     * Modification d'un produit traitement du formulaire 
+     */
+
     public function ModifyProductProcess(){ 
 
             $errors = []; // tableau des erreurs 
-
-       
+    
 
             $addProduct = [
 
@@ -381,14 +384,6 @@ class ProductsController
                      
 
 
-
-
-
-
-
-
-
-
                     if (count($errors) == 0) {
 
                         // On créé notre tableau de datas à mettre dans la BDD tableau de type cle/valaveur
@@ -457,8 +452,9 @@ class ProductsController
 
             $template = "formRegister.phtml";
             include_once 'views/layout.phtml';
-        }
-
-
     }
+
+  
+
+}
 

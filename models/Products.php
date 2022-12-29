@@ -103,6 +103,7 @@ class Products extends Model
     {
         $this->infos = $value;
     }
+
     public function getProductName(): string
     {
         return $this->productName;
@@ -173,4 +174,12 @@ class Products extends Model
     {
         return $this->update($id_product, ($this->hydrate($datas)));
     }
+
+
+
+
+
+
+
+
 }

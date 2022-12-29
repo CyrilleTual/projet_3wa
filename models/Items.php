@@ -109,6 +109,23 @@ class Items extends Model
         return $this->findByQuery($sql, [$datas]);
     }
 
+	/**
+	 * Verification de l'existance d'un produit en fonction de l'id passé en get 
+	 */
+	public function isProductOk(){
+		
+
+	}
+
+	/******************************************************************************
+	 * Ajout d'un nouvel item suite à la validation puis au controle du formulaire
+	 * @param array $datas => tableau des propriétés / valeurs du noubel item
+	 */
+	public function addNewItem(array $datas)
+	{
+		return $this->create($this->hydrate($datas));
+	}
+
 
 
 

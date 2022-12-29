@@ -75,10 +75,10 @@ class Model
     /***********************************************************************************
      * findOne -> un enregisterment par son id  (READ)
      * @param int : valeur de l'id 
-     * @return array Tableau de l'enregistrement trouvé
+     * @return array Tableau de l'enregistrement trouvé ou false si pas enregistrement 
      */
 
-    protected function findOne(int $id): array
+    protected function findOne(int $id): array |false
     {
 
         // preparation de la requête

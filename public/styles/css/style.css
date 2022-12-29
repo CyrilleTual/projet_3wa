@@ -184,6 +184,24 @@ main {
   cursor: pointer;
 }
 
+/**
+** Mise en forme lien comme un bouton
+**/
+a.bouton {
+  text-decoration: none;
+  padding: 5px 5px;
+  background-color: rgb(96, 124, 25);
+  color: white;
+  border: 1px solid gray;
+  border-style: inset;
+  border-radius: 12px;
+  border: 2px solid #46a28d;
+}
+a.bouton:hover {
+  background-color: yellow;
+  color: red;
+}
+
 /*******************************************************
 ** Mise en Forme de la Nav bar
 **/

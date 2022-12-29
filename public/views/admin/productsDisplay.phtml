@@ -41,12 +41,13 @@ $values = $data[1];
                 </td>
                 <div id="<?= htmlspecialchars($valeur['picture']); ?>" class="modal-window">
                     <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
-                <div>
+                </div>
                 <td>
-                    <a href="?route=Items&action=displayItems&id=<?= $valeur['id_product']; ?>">Items</a>
+                    <a class="bouton" href="?route=Items&action=displayItems&id=<?= $valeur['id_product']; ?>">Items</a>
                 </td>
+
                 <td>
-                    <a href="?route=Products&action=editProduct&id=<?= $valeur['id_product']; ?>">Modifier</a>
+                    <a class="bouton" href="?route=Products&action=editProduct&id=<?= $valeur['id_product']; ?>">Modifier</a>
                 </td>
 
             </tr>
