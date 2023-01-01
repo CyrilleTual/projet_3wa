@@ -77,15 +77,12 @@ class Model
      * @param int : valeur de l'id 
      * @return array Tableau de l'enregistrement trouvé ou false si pas enregistrement 
      */
-
     protected function findOne(int $id): array |false
     {
-
         // preparation de la requête
         $query = $this->pdo->prepare("SELECT * 
                                         FROM    $this->table 
                                         WHERE   $this->idName = ?");
-
         $query->execute([$id]);
         return $query->fetch();
         /**

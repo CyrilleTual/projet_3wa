@@ -16,9 +16,17 @@
             </ul>
         </li>
 
-        <?php if (isset((($_SESSION['user'])['firstName'])) && (!empty($_SESSION['user']))) : ?>
-            <li><a href="?route=products&action=displayFormProducts"> Gestion produits </a></li>
-            <li><a href="?route=products&action=displayFormAddProducts">Ajout produit</a></li>
+
+        <?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user']))&& (($_SESSION['user'])['role'])==='admin') : ?>
+            <li><a href=#>Administration</a>
+                <ul class="dropdown">
+                    <li><a href="?route=products&action=displayFormProducts"> Gestion produits </a></li>
+                    <li><a href="?route=products&action=displayFormAddProducts">Ajout produit</a></li>
+                </ul>
+            </li>       
+
+        <?php endif ?>
+            <?php if (isset((($_SESSION['user'])['firstName'])) && (!empty($_SESSION['user']))) : ?>
             <li><a href="?route=User&action=logoutUser">LogOut</a></li>
         <?php else : ?>
             <li><a href="?route=user&action=displayFormRegister">register </a></li>
@@ -29,6 +37,8 @@
     </ul>
 
 </nav>
+
+
 
 <?php if (isset((($_SESSION['user'])['firstName']))) : ?>
     Bienvenu à toi,

@@ -7,8 +7,10 @@ $token = $data[0];
 $vat = $data[1]; // recup des catégories disponibles 
 $product = $data[2];
 
+if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user']))&& (($_SESSION['user'])['role'])==='admin') : ?>
 
-?>
+
+
 
 <div>
     <h2>Vous voulez créer un item pour le produit <?= htmlspecialchars($product["productName"]); ?></h2>
@@ -67,3 +69,9 @@ $product = $data[2];
 
 
 </form>
+
+<?php else : ?>
+
+    <P>Vous n'avez pas accès à cette page</P>
+
+<?php endif;?>

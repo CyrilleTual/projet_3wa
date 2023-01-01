@@ -317,7 +317,7 @@ class UserController
 
         // $result = $model->testo();
 
-        var_dump($result);
+       
 
         //$errors[] = $messagesErrors[1];
 
