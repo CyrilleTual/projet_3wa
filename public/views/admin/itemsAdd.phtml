@@ -4,74 +4,82 @@
 
 <?php
 $token = $data[0];
-$vat = $data[1]; // recup des catégories disponibles 
+$vat = $data[1]; // recup des tva disponibles 
 $product = $data[2];
+if (isset($data[3]) && (!empty($data[3]))) {
+    $item = $data[3];
+};
 
-if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user']))&& (($_SESSION['user'])['role'])==='admin') : ?>
-
-
-
-
-<div>
-    <h2>Vous voulez créer un item pour le produit <?= htmlspecialchars($product["productName"]); ?></h2>
-</div>
-
-<img class=" vignette" src=' public/uploads/<?= htmlspecialchars($product['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($product['picture']); ?>')" />
-<div id="<?= htmlspecialchars($product['picture']); ?>" class="modal-window">
-    <img src=' public/uploads/<?= htmlspecialchars($product['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($product['picture']); ?>')" />
-</div>
+if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
 
 
 
+    <div>
+        <h2>Vous voulez créer un item pour le produit <?= htmlspecialchars($product["productName"]); ?></h2>
+    </div>
 
-<form class="tablo" action="?route=items&action=createItemProcess" method="POST">
-
-    <input id="token" name="token" type="hidden" value="<?= $token ?>">
-    <input id="idProduct" name="idProduct" type="hidden" value="<?= $product['id_product'] ?>">
-
-    <fieldset>
-
-        <legend>Merci de renseigner les information suivantes :</legend>
-
-        <input id="token" name="token" type="hidden" value="<?= $token ?>" />
-
-        <label for="vatRef">Entrez la référence </label>
-        <input type="text" name="ref" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z0-9 '-]+$" required value="<?php echo (isset($_POST['vatRef'])) ? ($_POST['firstname']) : ""; ?>"><br>
+    <img class=" vignette" src=' public/uploads/<?= htmlspecialchars($product['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($product['picture']); ?>')" />
+    <div id="<?= htmlspecialchars($product['picture']); ?>" class="modal-window">
+        <img src=' public/uploads/<?= htmlspecialchars($product['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($product['picture']); ?>')" />
+    </div>
 
 
-        <label for="pack">Entrez le conditionnement</label>
-        <input type="text" name="pack" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z0-9 '-]+$" required value="<?php echo (isset($_POST['pack'])) ? ($_POST['pack']) : ""; ?>"><br>
+    <form class="tablo" action="?route=items&action=createItemProcess" method="POST">
 
-        <label for="price">Entrez le prix unitaire</label>
-        <input type="text" name="price" size="30" required value="<?php echo (isset($_POST['price'])) ? ($_POST['price']) : ""; ?>"><br>
+        <input id="token" name="token" type="hidden" value="<?= $token ?>">
+        <input id="idProduct" name="idProduct" type="hidden" value="<?= htmlspecialchars($product['id_product']) ?>">
 
-        <label for="stock">Entrez le stock</label>
-        <input type="number" name="stock" size="30" required value="<?php echo (isset($_POST['stock'])) ? ($_POST['stock']) : ""; ?>"><br>
 
-        <label for="vat">Tva applicable </label>
-        <select name="vat" id="vat">
-            <?php foreach ($vat as $key => $valeur) : ?>
-                <option value="<?= htmlspecialchars($valeur["id_vat"]); ?>"><?= htmlspecialchars($valeur["name"]); ?></option>
-            <?php endforeach; ?>
-        </select><br>
-    </fieldset>
-    <fieldset>
-        <legend>Produit actif? </legend>
-        <label class="radio" for=" actif">Actif</label>
-        <input type="radio" id="actif" name="status" value="actif" checked>
-        <label class="radio" for="actif">Inactif</label>
-        <input type="radio" id="inactif" name="status" value="inactif">
-    </fieldset>
-
-    <input type="submit" value="Valider" /> <br>
+        <?php if (isset($item['itemRef'])) : ?>
+            <input id="id" name="id" type="hidden" value="<?= htmlspecialchars($item["id_item"]); ?>">
+        <?php endif; ?>
 
 
 
 
-</form>
+        <fieldset>
+
+            <legend>Merci de renseigner les information suivantes :</legend>
+
+            <input id="token" name="token" type="hidden" value="<?= $token ?>" />
+
+            <label for="vatRef">Entrez la référence </label>
+
+            <input type="text" name="ref" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z0-9 '-]+$" required value="<?php echo (isset($item['itemRef'])) ? htmlspecialchars($item['itemRef']) : ""; ?>"><br>
+
+            <label for="pack">Entrez le conditionnement</label>
+            <input type="text" name="pack" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z0-9 '-]+$" required value="<?php echo (isset($item['pack'])) ? htmlspecialchars($item['pack']) : ""; ?>"><br>
+
+            <label for="price">Entrez le prix unitaire</label>
+            <input type="text" name="price" size="30" required value="<?php echo (isset($item['price'])) ? htmlspecialchars($item['price']) : ""; ?>"><br>
+
+            <label for="stock">Entrez le stock</label>
+            <input type="number" name="stock" size="30" required value="<?php echo (isset($item['stock'])) ? htmlspecialchars($item['stock']) : ""; ?>"><br>
+
+            <label for="vat">Tva applicable </label>
+            <select name="vat" id="vat">
+                <?php foreach ($vat as $key => $valeur) : ?>
+                    <option value="<?= ($valeur["id_vat"]); ?>" <?php if ((isset($item['itemRef'])) && (($item["id_vat"]) === ($valeur["id_vat"]))) echo "selected"; ?>><?= htmlspecialchars($valeur["name"]); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select><br>
+        </fieldset>
+        <fieldset>
+            <legend>Produit actif? </legend>
+            <label class="radio" for=" actif">Actif</label>
+            <input type="radio" id="actif" name="status" value="actif" checked>
+            <label class="radio" for="actif">Inactif</label>
+            <input type="radio" id="inactif" name="status" value="inactif" <?php if ((isset($item['itemRef'])) && ($item["status"]) === ("inactif")) echo "checked"; ?>>
+        </fieldset>
+
+        <input type="submit" value="Valider" /> <br>
+
+
+
+    </form>
 
 <?php else : ?>
 
     <P>Vous n'avez pas accès à cette page</P>
 
-<?php endif;?>
+<?php endif; ?>

@@ -126,6 +126,23 @@ class Items extends Model
 		return $this->create($this->hydrate($datas));
 	}
 
+	/***********************************************************************
+	 * trouve un item par son id
+	 */
+
+	public function findOneItem(int $id)
+	{
+		return $this->findOne($id);
+	}
+
+	/****************************************************************
+	 * Methode composée pour update de items
+	 */
+	public function updateItem(int $id_item, array $datas)
+	{
+		$this->update($id_item, ($this->hydrate($datas)));
+	}
+
 
 
 

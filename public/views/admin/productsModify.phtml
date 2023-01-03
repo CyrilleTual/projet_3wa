@@ -6,14 +6,14 @@
 // recup des datas 
 
 $token = $data[0];
-$productToModify = $data[1];
-$catAvailable = $data[2];
+$catAvailable = $data[1];
+$productToModify = $data[2];
 $currentCat = $data[3];
 
 ?>
 
 
-<form method="post" enctype="multipart/form-data" action=" ?route=Products&action=ModifyProductProcess" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" action=" ?route=Products&action=AddOrModifyProductProcess" enctype="multipart/form-data">
 
     <fieldset>
 
@@ -25,8 +25,7 @@ $currentCat = $data[3];
 
         <select name="category" id="category">
             <?php foreach ($catAvailable as $key => $valeur) : ?>
-                <option value="<?= htmlspecialchars($valeur["id_category"]); ?>" <?php if (($productToModify["id_category"]) === ($valeur["id_category"]))
-                                                                                        echo "selected"; ?>><?= htmlspecialchars($valeur["categoryName"]); ?></option>
+                <option value="<?= htmlspecialchars($valeur["id_category"]); ?>" <?php if (($productToModify["id_category"]) === ($valeur["id_category"])) echo "selected"; ?>><?= htmlspecialchars($valeur["categoryName"]); ?></option>
             <?php endforeach; ?>
         </select><br>
 
@@ -61,15 +60,14 @@ $currentCat = $data[3];
         <fieldset>
             <legend>Produit actif? </legend>
             <label class="radio" for=" actif">Actif</label>
-            <input type="radio" id="actif" name="status" value="actif" <?php if (($productToModify["status"]) === ("actif"))                                                                      echo "checked"; ?>>
+            <input type="radio" id="actif" name="status" value="actif" <?php if (($productToModify["status"]) === ("actif")) echo "checked"; ?>>
             <label class="radio" for="actif">Inactif</label>
-            <input type="radio" id="inactif" name="status" value="inactif" <?php if (($productToModify["status"]) === ("inactif"))
-                                                                                echo "checked"; ?>>
+            <input type="radio" id="inactif" name="status" value="inactif" <?php if (($productToModify["status"]) === ("inactif"))echo "checked"; ?>>
         </fieldset>
 
         <div class="preview">
             <img id="uploadPreview">
-        </div>
+        </div>  
 
         <input type="submit" value="enregistrement">
 

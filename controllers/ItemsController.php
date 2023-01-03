@@ -71,15 +71,49 @@ class ItemsController
 
     }
 
-    /*******************************************************************************************
-     * traitement du formulaire de création d'un nouvel item (article)
+    /*****************************************************************************************************
+     * Préparation et affichage du formulaire de modification d'un item (article)
+     * -> Même formulaire que pour la création 
+     */
+
+    public function modifyItem()
+    {
+
+        //  on recupère l'item à  modifier 
+        $modelItem = new \Models\Items();
+        $item = $modelItem->findOneItem($_GET["id"]);
+
+        // on recupère le produit associé 
+        $model = new \Models\Products();
+        $product = $model->findOneProduct($item['id_product']);
+
+        // mise en place d'un nouveau token pour sécuriser la soumission du formulaire 
+        $model = new \Models\Tools();
+        $token = $model->randomChain(20);
+        $_SESSION['auth'] = $token;
+
+        // on récupère la table des TVA 
+        $model = new \Models\Vat();
+        $vatToDisplay = $model->getVatByQuery('status', 'actif'); // recup d'un tableau à afficher 
+
+        $data[0] = $token;
+        $data[1] = $vatToDisplay;
+        $data[2] = $product;
+        $data[3] = $item;
+        // affichage de la vue d'affichage en passant $token qui sera transmis par le render sous $data 
+        new RendersController('admin/itemsAdd', $data);
+       
+    }
+
+
+
+    /*******************************************************************************
+     * traitement du formulaire de création/ modification d'un item (article)
      */
 
      public function createItemProcess()
     {
        
-   
-    
         // initialisation des variables 
         
         $addItem = [
@@ -108,51 +142,81 @@ class ItemsController
             && array_key_exists('status', $_POST)
         ) {
 
-       
 
             $addItem = [
-                'id_product' => trim($_POST['idProduct']),
+                'id_product'    => trim($_POST['idProduct']),
                 'itemRef'       => trim($_POST['ref']),
-                'pack'      => trim($_POST['pack']),
-                'price'     => trim($_POST['price']),
-                'stock'     => trim($_POST['stock']),
-                'id_vat'       => trim($_POST['vat']),
+                'pack'          => trim($_POST['pack']),
+                'price'         => trim($_POST['price']),
+                'stock'         => trim($_POST['stock']),
+                'id_vat'        => trim($_POST['vat']),
                 'status'        => trim($_POST['status'])
             ];
 
             // Mise en oeuvre des contrôles :
             //1) validité du token 
             if (isset($_SESSION['auth']) && $_SESSION['auth'] != $_POST['token'])
-            $errors[] = "Une erreur est apparue lors de l'envoi du formulaire !";
+                $errors[] = "Une erreur est apparue lors de l'envoi du formulaire !";
 
             //2) validité de la référence
             if($addItem['itemRef'] == '')
                 $errors[] = "Veuillez renseigner une référence SVP !";
 
-
-
-            // si le formulaire est valide on va tester si la référence existe déja : 
-            // $model = new \Models\Users();
-            // $userExist = $model->getUserByEmail($addUser['addEmail']); // retourne un tableau contenant l'user si existe ou tableau vide
-            // if (!empty($userExist)) {
-            //     $errors[] = 'Cette adresse e-mail existe déjà !';
-            // }
-
-
-            /// si tout est ok on traite l'insertion dans la Db
-            if (count($errors) == 0) {
-            
+            // si nouvel item  et pas d'erreur -> création de l'item
+            if ((!isset($_POST['id'])) && (count($errors) == 0)){
                 $model = new \Models\Items();
-
-                $result = $model->addNewItem($addItem); // retoune null si echec du trairement
-
-                    new RendersController('homePage');
-                    exit();
-                }
-                ///////////////////////////////////////////////////////////////////////
-                /////////////////////////////////////////////////////////////////////////
-
+                $model->addNewItem($addItem);
+                new RendersController('homePage');
+                exit();           
             }
+
+            // si il s'agit d'une mise à jour -> methode Update
+            if ((isset($_POST['id'])) && (count($errors) == 0)) {
+                $model = new \Models\Items();
+                $model->updateItem(($_POST['id']),$addItem);
+                new RendersController('homePage');
+                exit();
+            }
+
+        }
+
+
+        /********************************************************************
+         *  si erreurs, régénération de la vue 
+         */
+
+        $model = new \Models\Tools();
+        $token = $model->randomChain(20);
+        $_SESSION['auth'] = $token;
+
+        $idProduct = ($addItem['id_product']);
+        $modelProd = new \Models\Products();
+        $product = $modelProd->findOneProduct($idProduct);
+
+        if ($product == FALSE) {
+            new RendersController();
+            exit;
+        }
+
+        // on récupère la table des TVA 
+        $model = new \Models\Vat();
+        $vatToDisplay = $model->getVatByQuery('status', 'actif'); // recup d'un tableau à afficher 
+
+        $data[0] = $token;
+        $data[1] = $vatToDisplay;
+        $data[2] = $product;
+
+        // si il s' agit d'une MAJ on recupère en plus l'item concerné 
+        if ((isset($_POST['id']))) {
+            $modelItem = new \Models\Items();
+            $item = $modelItem->findOneItem($_POST["id"]);
+            $data[3] = $item;
+        }
+
+        // affichage de la vue d'affichage en passant les valeurs 
+        new RendersController('admin/itemsAdd', $data, $errors);
+
+
         }
 
      

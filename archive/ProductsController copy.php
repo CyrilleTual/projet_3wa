@@ -142,7 +142,7 @@ class ProductsController
 
 
 
-                    $dossier = "img_of_products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
+                    $dossier = "img_of_Products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
 
 
                     $model = new \Models\Uploads(); // on se sert du model Uploads
@@ -154,8 +154,8 @@ class ProductsController
 
                 if (count($errors) == 0) {
 
-                    // On créé notre tableau de datasProdProd à mettre dans la BDD tableau de type cle/valaveur
-                    $datasProd = [
+                    // On créé notre tableau de datas à mettre dans la BDD tableau de type cle/valaveur
+                    $datas = [
                         'id_category'       => $addProduct['addCat'],
                         'productName'       => $addProduct['addName'],
                         'productRef'        => $addProduct['addRef'],
@@ -169,7 +169,7 @@ class ProductsController
                     // On instancie notre model "Product"
                     $model = new \Models\Products();
                     // On appelle la méthode permettant l'INSERT INTO dans la BDD
-                    $model->addNewProduct($datasProd);
+                    $model->addNewProduct($datas);
 
                     // On affiche un ou plusieurs messages de validation.
                     $valids[] = 'Votre demande de création de compte a bien été enregistrée.';
@@ -212,19 +212,24 @@ class ProductsController
     /*********************************************************************************************
      * Modification d'un produit Affichage du formulaire 
      */
-    public function editProduct()
-    {
-
-        //  on recupère le produit à modifier 
+    public function editProduct(){
+    
+       //  on recupère le produit à modifier 
         $model = new \Models\Products();
+
 
         //$productToModify=$model->findOneProduct($_POST["id"]);
 
+      
         $productToModify = $model->findOneProduct($_GET["id"]);
+
+
 
         // recuperation de toutes les  categories (pour affichage de la catégorie actuelle)
         $model = new \Models\Categories();
         $catList = $model->getCategoriesByQuery();
+
+    
 
         // recupération des catégories disponibles 
         $model = new \Models\Categories();
@@ -235,55 +240,55 @@ class ProductsController
         $token = $model->randomChain(20);
         $_SESSION['auth'] = $token;
 
+        
         // nom de la catégorie actuelle  // besion de la liste de toutes les categories
 
-        foreach ($catList as $key => $valeur) {
-            if (($productToModify["id_category"]) === ($valeur["id_category"])) {
-                $currentCat = ($valeur["categoryName"]);
+        foreach ($catList as $key => $valeur){
+            if (($productToModify["id_category"]) === ($valeur["id_category"])){
+                $currentCat=($valeur["categoryName"]);
             }
         }
 
         $data[0] = $token;
-        $data[1] = $catAvailable;
-        $data[2] = $productToModify;
-        $data[3] = $currentCat;
-
+        $data[1] = $productToModify;
+        $data[2] = $catAvailable;
+        $data[3] = $currentCat; 
+  
         // affichage de la vue de la vue de modification de produit 
         new RendersController('admin/productsModify', $data);
+
     }
 
-
-
     /*********************************************************************************************
-     * Création ou Modification d'un produit traitement du formulaire 
+     * Modification d'un produit traitement du formulaire 
      */
 
-    public function AddOrModifyProductProcess()
-    { 
+    public function AddOrModifyProductProcess(){ 
 
-        $errors = []; // tableau des erreurs 
+            $errors = []; // tableau des erreurs 
+    
 
-        $addProduct = [
+            $addProduct = [
 
-            'addCat'            => '',
-            'addName'           => '',
-            'addRef'            => '',
-            'addTeaser'         => '',
-            'addDescription'    => '',
-            'addInfos'          => '',
-            'addPicture'        => '',
-            'addStatus'         => ''
-        ];
+                'addCat'            => '',
+                'addName'           => '',
+                'addRef'            => '',
+                'addTeaser'         => '',
+                'addDescription'    => '',
+                'addInfos'          => '',
+                'addPicture'        => '',
+                'addStatus'         => ''
+            ];
 
-        if (
-            array_key_exists('category', $_POST)
-            && array_key_exists('productName', $_POST)
-            && array_key_exists('reference', $_POST)
-            && array_key_exists('teaser', $_POST)
-            && array_key_exists('description', $_POST)
-            && array_key_exists('infos', $_POST)
-            && array_key_exists('status', $_POST)) 
-            {
+            if (
+                array_key_exists('category', $_POST)
+                && array_key_exists('productName', $_POST)
+                && array_key_exists('reference', $_POST)
+                && array_key_exists('teaser', $_POST)
+                && array_key_exists('description', $_POST)
+                && array_key_exists('infos', $_POST)
+                && array_key_exists('status', $_POST)
+            ) {
 
                 $addProduct = [
 
@@ -298,12 +303,10 @@ class ProductsController
                 ];
 
 
-                // verification de la validité du token 
+                // verification des 4 champs obligatoires :  catégorie, nom, ref, et etat.
 
                 if (isset($_SESSION['auth']) && $_SESSION['auth'] != $_POST['token'])
                     $errors[] = "Une erreur est apparue lors de l'envoi du formulaire !";
-
-                    // verification des 4 champs obligatoires :  catégorie, nom, ref, et etat.    
 
                 if ($addProduct['addCat'] == '')
                     $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
@@ -317,8 +320,8 @@ class ProductsController
                 if ($addProduct['addStatus'] == '')
                     $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
 
-
                 if (count($errors) == 0) {
+
 
                     // On instancie "Products"
                     $model = new \Models\Products();
@@ -331,21 +334,16 @@ class ProductsController
                     //        --> Vérifier le MIME ( si le contenu correspond à l'extension )
                     // Si TOUT est bon --> On UPLOAD le ficher
                     // Sinon,on N'UPLOAD PAS et on affiche le message d'erreur ( PAS DE INSERT INTO )
-                
+                   
 
                     /**************************************************
                      * Traitement de l'image - cas d'une création 
                      */
-                    if ((!isset($_POST['id'])) && isset($_FILES['picture']) && $_FILES['picture']   ['name'] !== '') {
-
-                        //var_dump(' creation');
-
-                
-                        $dossier = "img_of_products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
+                    if ((!isset($_POST['id'])) && isset($_FILES['picture']) && $_FILES['picture']['name'] !== '') {
+                        $dossier = "img_of_Products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
                         $model = new \Models\Uploads(); // on se sert du model Uploads
-
                         // on appelle  la methode de controle du fichier image qui renvoie le nom concatené avec un uid si tout est ok
-                        // ET qui met à jour le tableau d'erreur (passage par reference de $errors)
+
                         $addProduct['addPicture'] = $model->uploadFile($_FILES['picture'], $dossier, $errors);
                     }
 
@@ -353,55 +351,33 @@ class ProductsController
                      * Traitement de l'image - cas d'une mofification 
                      */
                     if (isset($_POST['id'])) {
-
-                        //var_dump(' Modification');
-
                         // avec un nouveau fichier image //
                         if (isset($_FILES['picture']) && $_FILES['picture']['name'] !== '') {
-
-                            // var_dump(' Avec Nouveau fichier image');
-
+                            // on efface l'ancienne photo 
+                            $toErase = "public/uploads/". (($_POST['photo_recup']));
                            
-                            
-                            // on traite la nouvelle image 
-                            $dossier = "img_of_products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
-                            $model = new \Models\Uploads(); // on se sert du model Uploads
-                         // on appelle  la methode de controle du fichier image qui renvoie le nom concatené avec un uid si tout est ok
-                       
-                            $addProduct['addPicture'] = $model->uploadFile($_FILES['picture'], $dossier, $errors);
-                       
-
-                            // si il n' y a pas d'erreur dans le nouveau fichier image on efface l'ancienne.
-                            // SAUF s'il s'agit de la photo par defaut 
-
-                            if (count($errors) == 0 && ($_POST['photo_recup']!=='default.png')) {
-                                $toErase = "public/uploads/" . (($_POST['photo_recup']));
-                            
-                                if (file_exists($toErase)) {
+                            if (file_exists($toErase)) {
                                     unlink($toErase);
-                                } 
-                            } elseif (count($errors) !== 0) {  // sinon on garde l'ancienne
-                            
-                            $addProduct['addPicture'] = ($_POST['photo_recup']);
-                          
-                            }
+                                }
 
-                        } else {  // sans nouveau fichier image, on garde l'ancienne photo
-
-                        // var_dump(' Sans Nouveau fichier image');
-                        
+                            // on traite la nouvelle image 
+                            $dossier = "img_of_Products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
+                            $model = new \Models\Uploads(); // on se sert du model Uploads
+                            // on appelle  la methode de controle du fichier image qui renvoie le nom concatené avec un uid si tout est ok
+                            $addProduct['addPicture'] = $model->uploadFile($_FILES['picture'], $dossier, $errors);
+                        } else {
+                            // sans nouveau fichier image, on garde l'ancienne photo
                             $addProduct['addPicture'] = ($_POST['photo_recup']);
-                            // var_dump($addProduct['addPicture']);
+                            var_dump($addProduct['addPicture']);
                         }
+
                     }
-                    
+                     
 
                     if (count($errors) == 0) {
 
-                    
-
-                        // On créé notre tableau de datasProd à mettre dans la BDD tableau de type cle/valaveur
-                        $datasProd = [
+                        // On créé notre tableau de datas à mettre dans la BDD tableau de type cle/valaveur
+                        $datas = [
                             'id_category'       => $addProduct['addCat'],
                             'productName'       => $addProduct['addName'],
                             'productRef'        => $addProduct['addRef'],
@@ -412,26 +388,32 @@ class ProductsController
                             'status'            => $addProduct['addStatus']
                         ];
 
+
                         // si il existe $_POST['id'] on est dans le cas de la mofif et non de la création
                         
                         if (isset($_POST['id'])){
-                            $id_product = trim(htmlspecialchars($_POST['id']));
-                        // On appelle la méthode permettant l'INSERT INTO dans la BDD
+                            $id_product = trim(htmlspecialchars($_POST['id']));                      
+
+                        // On instancie notre model "Product"
                         $model = new \Models\Products();
-                        $model->UpdateProduct( $id_product, $datasProd);
+                        // On appelle la méthode permettant l'INSERT INTO dans la BDD
+                        $model->UpdateProduct( $id_product, $datas);
+
                         }
 
                         // ici on est dans le cas d'une création 
                         if (!isset($_POST['id'])) {
-                        // On appelle la méthode permettant l'INSERT INTO dans la BDD
+                        // On instancie notre model "Product"
                         $model = new \Models\Products();
-                        $model->addNewProduct($datasProd);
+                        // On appelle la méthode permettant l'INSERT INTO dans la BDD
+                        $model->addNewProduct($datas);
                         // On affiche un ou plusieurs messages de validation.
                         $valids[] = 'Votre demande de création de compte a bien été enregistrée.';
-                    
+                     
                         }
 
-                        
+
+
                         $model = new \Models\Tools();
                         $token = $model->randomChain(20);
                         $_SESSION['auth'] = $token;
@@ -446,56 +428,23 @@ class ProductsController
                         //     'addPicture'            => ''
                         // ];
 
-                        $_SESSION['message']="insertion ok ";
-
                         new RendersController('homePage');
                         exit();
                     }
                 }
             }
+            var_dump($errors);
+            var_dump('stop ligne 447 ProductController');
+            die;
+            $model = new \Models\Tools();
+            $token = $model->randomChain(20);
+            $_SESSION['auth'] = $token;
 
-
-            
-    /*** --------------------------------------------------------------------------------------------
-     * on est ici dans le cas où il y a des erreurs - on va réafficher le formulaire adéquat
-     * 
-     *  */
-        $data = [];
-        $catAvailable = [];
-        $model = new \Models\Tools();
-        $token = $model->randomChain(20);
-        $_SESSION['auth'] = $token;
-        $modelCat = new \Models\Categories();
-        $catAvailable = $modelCat->getCategoriesByQuery('status', 'actif');
-        $data[0] = $token;
-        $data[1] = $catAvailable;
-    
-     
-     // cas d'un nouveau produit --------------------------------------------------------------------
-     if (!isset($_POST['id'])){
-        new RendersController('admin/productsAdd', $data, $errors);
-     }
-     // cas d'une modification ------------------------------------------------------------------
-     if (isset($_POST['id'])){
-            //  on recupère le produit à modifier 
-            $modelProd = new \Models\Products();
-            $productToModify = $modelProd->findOneProduct($_POST["id"]);
-            // recuperation de toutes les  categories (pour affichage de la catégorie actuelle)
-            $model = new \Models\Categories();
-            $catList = $model->getCategoriesByQuery();
-            // nom de la catégorie actuelle  // besion de la liste de toutes les categories
-            foreach ($catList as $key => $valeur) {
-                if (($productToModify["id_category"]) === ($valeur["id_category"])) {
-                    $currentCat = ($valeur["categoryName"]);
-                }
-            }
-            $data[0] = $token;
-            $data[1] = $catAvailable;
-            $data[2] = $productToModify;
-            $data[3] = $currentCat;
-            // affichage de la vue de la vue de modification de produit 
-            new RendersController('admin/productsModify', $data, $errors);
-     }
+            $template = "formRegister.phtml";
+            include_once 'views/layout.phtml';
     }
+
+  
+
 }
 

@@ -33,7 +33,7 @@ $idProduct = $data[2];
                     <td><?= htmlspecialchars($valeur["stock"]); ?></td>
                     <td><?= htmlspecialchars($valeur["status"]); ?>
                     <td>
-                    <td><a class="bouton" href="?route=Items&action=modifyItems&id=<?= $valeur['id_item']; ?>">Modifier</a></td>
+                    <td><a class="bouton" href="?route=Items&action=modifyItem&id=<?= $valeur['id_item']; ?>">Modifier</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
