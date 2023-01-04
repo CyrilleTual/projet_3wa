@@ -1,46 +1,67 @@
+<div class="headerHaut">
+    <div class="logoEtTitre">
+        <!-- le logo -->
+        <a href="#" class="logo">Logo</a>
+    </div>
+</div>
+
 <nav class="navbar">
-    <ul class="nav">
+
+    <!-- le bouton burger  -->
+    <label for="btn" class="icon">
+        <svg viewBox="0 0 80 80" width="40" height="40">
+            <rect width="80" height="10"></rect>
+            <rect y="30" width="80" height="10"></rect>
+            <rect y="60" width="80" height="10"></rect>
+        </svg>
+    </label>
+    <!-- input a faire disparaitre par un hidden -->
+    <input type="checkbox" id="btn">
+    <!-- la liste de boutons de nav  -->
 
 
-        <li><a href="?view=homePage">
-                Home
-            </a></li>
-        <li><a href="?route=user&action=test">** Test **</a>
-            <ul class="dropdown">
-                <li>Menu 1</li>
-                <li>Menu 2</li>
-                <li>Menu 3</li>
-                <li>Menu 4</li>
-                <li>Menu 5</li>
-                <li>Menu 6</li>
+    <ul class="nav-menu">
+        <li class="nav-item">
+            <a href="?view=homePage">Home</a>
+        </li>
+        <?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
+            <li class="nav-item">
+                <a href="index.php?route=products&action=displayFormProducts"> Gestion produits </a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?route=products&action=displayFormAddProducts">Ajout produit</a>
+            </li>
+        <?php endif ?>
+
+        <li class="nav-item"><a class="pos" href=#>Administration + </a>
+            <ul class="dropdownOnHover">
+                <li class="drop-item"><a href="index.php?route=products&action=displayFormProducts"> Gestion produits </a></li>
+                <li class="drop-item"><a href="index.php?route=products&action=displayFormAddProducts">Ajout produit</a></li>
             </ul>
         </li>
 
 
-        <?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user']))&& (($_SESSION['user'])['role'])==='admin') : ?>
-            <li><a href=#>Administration</a>
-                <ul class="dropdown">
-                    <li><a href="index.php?route=products&action=displayFormProducts"> Gestion produits </a></li>
-                    <li><a href="index.php?route=products&action=displayFormAddProducts">Ajout produit</a></li>
-                </ul>
-            </li>       
 
-        <?php endif ?>
-            <?php if (isset((($_SESSION['user'])['firstName'])) && (!empty($_SESSION['user']))) : ?>
-            <li><a href="?route=User&action=logoutUser">LogOut</a></li>
+        <?php if (isset((($_SESSION['user'])['firstName'])) && (!empty($_SESSION['user']))) : ?>
+            <li class="nav-item"><a href="?route=User&action=logoutUser">LogOut</a></li>
         <?php else : ?>
-            <li><a href="?route=user&action=displayFormRegister">register </a></li>
-            <li><a href="?route=user&action=displayFormConnect"> login </a></li>
+            <li class="nav-item"><a href="?route=user&action=displayFormRegister">register </a></li>
+            <li class="nav-item"><a href="?route=user&action=displayFormConnect"> login </a></li>
         <?php endif ?>
 
+
+        <li class="nav-item">
+            <label for="btn2" class="show">Mon compte +</label>
+            <input type="checkbox" id="btn2">
+            <ul class="dropdown">
+                <li class="drop-item">
+                    <a href="#">Mon Profil</a>
+                </li>
+                <li class="drop-item">
+                    <a href="#">Articles</a>
+                </li>
+            </ul>
+        </li>
 
     </ul>
-
 </nav>
-
-
-
-<?php if (isset((($_SESSION['user'])['firstName']))) : ?>
-    Bienvenu à toi,
-    <?php echo (($_SESSION['user'])['firstName']); ?>
-<?php endif ?>

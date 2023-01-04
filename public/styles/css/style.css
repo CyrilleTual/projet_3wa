@@ -162,7 +162,7 @@ header, footer {
   font-size: 1.8rem;
   min-width: 100%;
   min-height: 20px;
-  background-color: rgb(96, 124, 25);
+  background-color: rgb(41, 87, 9);
   color: rgb(214, 239, 252);
   padding: 10px;
   text-align: center;
@@ -205,21 +205,51 @@ a.bouton:hover {
 /*******************************************************
 ** Mise en Forme de la Nav bar
 **/
-ul.nav {
-  display: flex;
-  position: relative;
-  flex-direction: row;
-  align-items: center;
-  max-width: 70%;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
-  background: rgba(0, 0, 0, 0.1);
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+.logo {
+  color: white;
+  font-size: 2rem;
+  line-height: 70px;
 }
-ul.nav a {
-  color: rgb(214, 239, 252);
+
+.icon {
+  fill: white;
+  margin-right: 0px;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  right: 10px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+}
+
+.navbar input, .nav-menu, .dropdown {
+  display: none;
+  z-index: 50;
+  background-color: rgb(41, 87, 9);
+}
+
+[id^=btn]:checked + ul {
+  display: block;
+}
+
+.nav-menu {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+}
+
+.nav-item a, .drop-item a, .show {
+  color: white;
+  padding: 0 10px;
+  text-decoration: none;
+  background-color: rgb(96, 124, 25);
+  font-size: 1.4rem;
   /* This flexbox code stretches the link's clickable 
    	* area to fit its parent block. */
   display: flex;
@@ -227,7 +257,12 @@ ul.nav a {
   flex-shrink: 1;
   justify-content: center;
 }
-ul.nav li {
+
+.pos {
+  position: relative;
+}
+
+li {
   position: relative;
   flex-grow: 1;
   flex-shrink: 0;
@@ -238,48 +273,50 @@ ul.nav li {
   line-height: 30px;
   letter-spacing: 1px;
   color: rgb(41, 87, 9);
-  cursor: pointer;
-}
-ul.nav li:hover {
-  background: rgba(0, 0, 0, 0.1);
-}
-ul.nav li:hover ul.dropdown {
-  visibility: visible;
-  z-index: 10;
-}
-ul.nav li:first-child {
-  border-top-left-radius: 10px;
-}
-ul.nav li:last-child {
-  border-top-right-radius: 10 px;
-}
-ul.nav ul.dropdown {
-  visibility: hidden;
-  display: flex;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  flex-direction: column;
-  margin: 0;
-  padding: 5px 0 30px;
-  list-style: none;
-  color: black;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  opacity: 1;
-  z-index: 10;
-}
-ul.nav ul.dropdown > li {
-  background: rgb(96, 124, 25);
-  font-size: 14px;
-  cursor: pointer;
-}
-ul.nav ul.dropdown > li:hover {
-  background: rgba(0, 0, 0, 0.6);
-  color: #e7e6f1;
 }
 
+li:hover ul.dropdownOnHover {
+  display: block;
+}
+
+ul.dropdownOnHover {
+  background-color: rgb(76, 158, 29);
+  display: none;
+  color: black;
+  z-index: 100;
+  width: max-content;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(50%);
+}
+
+.nav-menu a:hover, .show:hover {
+  background-color: rgb(76, 158, 29);
+}
+
+@media screen and (min-width: 768px) {
+  .icon {
+    display: none;
+  }
+  .nav-menu {
+    display: initial;
+    position: static;
+  }
+  .nav-item {
+    display: inline-block;
+    position: relative;
+  }
+  .dropdown, ul.dropdownOnHover {
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    width: max-content;
+  }
+  ul.dropdownOnHover {
+    transform: translateX(0%);
+  }
+}
 /*****************************************************
 ** Mise en forme Generique pour les Formulaires 
 **
@@ -387,7 +424,7 @@ form .preview img {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 999;
+  z-index: 1;
   visibility: hidden;
   opacity: 0;
   pointer-events: none;

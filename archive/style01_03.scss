@@ -20,7 +20,7 @@ header, footer {
   font-size: 1.8rem;
   min-width: 100%;
   min-height: 20px;
-  background-color: $color-5;
+  background-color: $color-2;
   color: $color-1;
   padding: 10px;
   text-align: center;
@@ -66,137 +66,98 @@ border: 2px solid #46a28d;
 
 
 
+
+
 /*******************************************************
 ** Mise en Forme de la Nav bar
 **/
 
-.logo{
-    color: white;
-    font-size: 2rem;
-    line-height: 70px;
-	}
-.icon{
-    fill: white;
-	margin-right: 0px;
-    cursor: pointer;
-	position : fixed;
-	top: 20px;
-	right: 10px;
-	}
+ul.nav {
+  
+  	display: flex;
+	position: relative;
+	flex-direction: row;
+	align-items: center;
+	max-width: 70%;
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	background: rgba(0,0,0,0.1);
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 
-
-
-.navbar {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    position: relative;
-}
-
-
-
-.navbar input, .nav-menu, .dropdown{
-    display: none;
-	z-index: 50;
-	 background-color: $color-5;
-}
-// quand on click sur le burger
-[id^=btn]:checked + ul{
-    display: block;
-}
-
-.nav-menu{
-    position: absolute;
-    top: 0px;
-    left: 0;
-    right: 0;
-}
-
-.nav-item a, .drop-item a, .show{
-    color: white;
-	padding: 0 10px;
-    text-decoration: none;
-	background-color: $color-2;
-    font-size: 1.4rem;
+  a{
+    color: $color-1;
 	 /* This flexbox code stretches the link's clickable 
    	* area to fit its parent block. */
 	display:        flex;
 	flex-grow:      1;
 	flex-shrink:    1;
 	justify-content: center;
-	
-}
+	}
 
-.pos{
-	position: relative;
-}
-
-li { 
+	li { 
     position: relative;
 		flex-grow: 1;
 		flex-shrink: 0;
 		height: 30px;
-		
 		font-size: 1.8rem;
 		text-align: center;
 		text-transform: uppercase;
 		line-height: 30px;
 		letter-spacing: 1px;
 		color: $color-5;
-}
-
-
-
-
-li:hover{  
-			ul.dropdownOnHover{
-        		
-				display: block;					
+		cursor: pointer;
+		// Assonbri et demasque le menu secondaire quand avec le hover
+		&:hover{  
+      		background: rgba(0,0,0,0.1);
+			ul.dropdown{
+        		visibility: visible;
+				z-index: 10;   				
     		}	
 		}
-
-// drop down au suvol ////////
- ul.dropdownOnHover{
-		background-color: $color-6;
-		display : none;
+		// nth-child ========= bords arrondis 
+		&:first-child{
+      	border-top-left-radius: 10px;
+    	}	
+		&:last-child{
+      	border-top-right-radius: 10 px;
+    	}
+	}	
+				
+  
+				
+	
+	ul.dropdown{
+		visibility: hidden;
+		display: flex;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		flex-direction: column;
+		margin: 0;
+		padding: 5px 0 30px;
+		list-style: none;
 		color: $font-dark;
-		z-index: 100;
-		width: max-content;
-		position:absolute;
-		top: 0px; left: 50%;
-		transform: translateX(50%);
+		border-bottom-left-radius: 6px;
+		border-bottom-right-radius: 6px;
+		opacity: 1;
+		z-index: 10;
+
+		>li  {
+			background: $color-2;
+			font-size: 14px;
+			cursor: pointer;
+			// CSS State ===========================
+			&:hover{
+				
+				
+				color: $font-light;
+			}
+		}	
 	}
-
-/////
-
-.nav-menu a:hover, .show:hover{
-	background-color: $color-6;
-    
-}
-
-@media screen and (min-width: 768px){
-    .icon{
-        display: none;
-    }
-    .nav-menu{
-        display: initial;
-        position: static;
-    }
-    .nav-item{
-        display: inline-block;
-       
-        position: relative;
-    }
-    .dropdown,  ul.dropdownOnHover{
-        position: absolute;
-        
-        top: 100%; left: 0%;
-        width: max-content;
-    }
-
-	ul.dropdownOnHover{
-		transform: translateX(0%);
-	}
+	
 
 }
 
@@ -322,7 +283,7 @@ display: block;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1;
+  z-index: 999;
   visibility: hidden;
   opacity: 0;
   pointer-events: none;

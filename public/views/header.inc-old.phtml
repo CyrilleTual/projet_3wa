@@ -1,0 +1,46 @@
+<nav class="navbar">
+    <ul class="nav">
+
+
+        <li><a href="?view=homePage">
+                Home
+            </a></li>
+        <li><a href="?route=user&action=test">** Test **</a>
+            <ul class="dropdown">
+                <li>Menu 1</li>
+                <li>Menu 2</li>
+                <li>Menu 3</li>
+                <li>Menu 4</li>
+                <li>Menu 5</li>
+                <li>Menu 6</li>
+            </ul>
+        </li>
+
+
+        <?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user']))&& (($_SESSION['user'])['role'])==='admin') : ?>
+            <li><a href=#>Administration</a>
+                <ul class="dropdown">
+                    <li><a href="index.php?route=products&action=displayFormProducts"> Gestion produits </a></li>
+                    <li><a href="index.php?route=products&action=displayFormAddProducts">Ajout produit</a></li>
+                </ul>
+            </li>       
+
+        <?php endif ?>
+            <?php if (isset((($_SESSION['user'])['firstName'])) && (!empty($_SESSION['user']))) : ?>
+            <li><a href="?route=User&action=logoutUser">LogOut</a></li>
+        <?php else : ?>
+            <li><a href="?route=user&action=displayFormRegister">register </a></li>
+            <li><a href="?route=user&action=displayFormConnect"> login </a></li>
+        <?php endif ?>
+
+
+    </ul>
+
+</nav>
+
+
+
+<?php if (isset((($_SESSION['user'])['firstName']))) : ?>
+    Bienvenu à toi,
+    <?php echo (($_SESSION['user'])['firstName']); ?>
+<?php endif ?>

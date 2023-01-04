@@ -51,3 +51,11 @@ for(var i, j = 0; i = mySelect.options[j]; j++) {
         break;
     }
 }
+
+
+// script dr toogle class pour le bouton burger
+const btn = document.querySelector(".burger");
+btn.addEventListener("click", deploy);
+function deploy() {
+    btn.classList.toggle('active')
+}
