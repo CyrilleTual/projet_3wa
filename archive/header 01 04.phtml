@@ -1,13 +1,3 @@
-<?php
-
-// on recupère les produits disponibles 
-$products = $data['produit'];
-$categories = $data['categories'];
-//var_dump($categories);
-?>
-
-
-
 <div class="headerHaut">
     <div class="logoEtTitre">
         <!-- le logo -->
@@ -33,29 +23,22 @@ $categories = $data['categories'];
     <ul class="nav-menu">
         <li class="nav-item">
             <a href="?view=homePage">Home</a>
-
-            <!--  **************   Liste dynamique des listes disponibles ******************************************************  -->
-
-        <li class="nav-item"><a class="pos" href=#>Nos produits + </a>
-            <ul class="dropdownOnHover">
-                <?php foreach ($categories as $key => $valeur) : ?>
-                    <li class="drop-item"><a href="index.php?route=displays&action=displayOneProduct&cat=<?= htmlspecialchars($valeur["id_category"]); ?>"> <?= htmlspecialchars($valeur["categoryName"]); ?> </a>
-                        <td></td>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </li>
-
-        <!-- *********************************************************************************************** -->
         </li>
         <?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
-            <li class="nav-item"><a class="pos" href=#>Administration + </a>
-                <ul class="dropdownOnHover">
-                    <li class="drop-item"><a href="index.php?route=products&action=displayFormProducts"> Gestion des produits </a></li>
-                    <li class="drop-item"><a href="index.php?route=products&action=displayFormAddProducts">Ajout produit</a></li>
-                </ul>
+            <li class="nav-item">
+                <a href="index.php?route=products&action=displayFormProducts"> Gestion produits </a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?route=products&action=displayFormAddProducts">Ajout produit</a>
             </li>
         <?php endif ?>
+
+        <li class="nav-item"><a class="pos" href=#>Administration + </a>
+            <ul class="dropdownOnHover">
+                <li class="drop-item"><a href="index.php?route=products&action=displayFormProducts"> Gestion produits </a></li>
+                <li class="drop-item"><a href="index.php?route=products&action=displayFormAddProducts">Ajout produit</a></li>
+            </ul>
+        </li>
 
 
 

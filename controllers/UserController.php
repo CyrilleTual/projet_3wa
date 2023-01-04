@@ -15,6 +15,7 @@ class UserController
         $token = $model->randomChain(20);
         $_SESSION['auth'] = $token;
 
+    
         // affichage de la vue d'affichage en passant $token qui sera transmis par le render sous $data 
         new RendersController('formRegister', $token);
     }

@@ -159,6 +159,9 @@ class Products extends Model
         // die;
     }
 
+    /**
+     * selection d'un produit par id
+     */
 
     public function findOneProduct(int $id)
     {

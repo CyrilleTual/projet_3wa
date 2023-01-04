@@ -8,15 +8,28 @@ class RendersController
 {
     private ?string $view;
 
-    public function __construct($view = null, $data = null, $errors = null)
+    public function __construct($view = 'homepage', $input = null, $errors = null)
     {
+        // recupération de la liste des catégories disponibles pour navbar
+        $modelCat = new \Models\Categories();
+        $data['categories'] = $modelCat->getCategoriesByQuery('categories.status', 'actif'); 
 
-        //var_dump("dans le controller", $data);
+        // recupération de la liste des produits disponibles pour navbar
+        $modelProd = new \Models\Products();
+        $data['produit']= $modelProd ->getProductsByQuery('products.status', 'actif'); 
+
+        $data['input'] = $input;
 
         $this->view   = isset($_GET['view']) ? $_GET['view'] : $view;
         $this->data   = $data;
         $this->errors = $errors;
         $this->handleRequest();
+
+       // var_dump($data);
+       //  die;
+
+
+
     }
 
     public function getView(): ?string

@@ -4,9 +4,17 @@ namespace Controllers;
 
 class ProductsController
 {
+    /*******************************************************************************************************
+     * récupération des produits diponibles (actifs)
+     *  */  
+    public function getProductsAvailable()
+    {
+        $model = new \Models\Products();
+        return $model->getProductsByQuery('status', 'actif'); // recup d'un tableau à afficher des produits actives
+    }
 
     /*****************************************************************************************************
-     * Affichage du formulaire de synthèse des produits 
+     * Affichage du formulaire de synthèse des produits actis ou non 
      */
     public function displayFormProducts()
     {
@@ -456,7 +464,7 @@ class ProductsController
 
 
             
-    /*** --------------------------------------------------------------------------------------------
+        /*** --------------------------------------------------------------------------------------------
      * on est ici dans le cas où il y a des erreurs - on va réafficher le formulaire adéquat
      * 
      *  */
