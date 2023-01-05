@@ -24,21 +24,11 @@ class ProductsController
         $model = new \Models\Tools();
         $token = $model->randomChain(20);
         $_SESSION['auth'] = $token;
-
-        $data[0] = $token;
-        $data[1] = $valuesToDisplay;
-
+   
         $model = new \Models\Products();
-
-        //$valuesToDisplay = $model->findAllCat(); // recup d'un tableau à afficher 
         $valuesToDisplay = $model->getProductsByQuery(); // recup d'un tableau à afficher 
-
         $data[0] = $token;
         $data[1] = $valuesToDisplay;
-
-        // var_dump($data);
-        // die;
-        // affichage de la vue d'affichage en passant $token et $ valuesToDisplay par le render sous $data 
 
         new RendersController('admin/productsDisplay', $data);
     }
@@ -505,5 +495,59 @@ class ProductsController
             new RendersController('admin/productsModify', $data, $errors);
      }
     }
+
+    /**
+     * 
+     */
+
+    public function displayProductsOfOneCategory()
+    {
+        $idCat = htmlspecialchars($_GET['cat']);
+
+        // mise en place d'un token pour sécuriser la soumission du formulaire ( quand fonctionnilté commande)
+        $model = new \Models\Tools();
+        $token = $model->randomChain(20);
+        $_SESSION['auth'] = $token;
+
+        //var_dump('id de la catégorie : ', $idCat);
+        $data = [];
+
+        // on selectionne l'ensemble des produits actif
+        $ProductsToDisplay = []; // pour recevoir les données à afficher sous forme d'un array .
+        $model = new \Models\Products();
+        $ProductsToDisplay = $model->getProductsPublic('products.status', 'products.id_category', 'actif',$idCat); // recup d'un tableau à afficher
+
+        /**************************************************************************************
+         *    test de la façon 2
+         */
+
+        $newProductsToDisplay = [] ; 
+
+        foreach ($ProductsToDisplay as $key => $value) {
+            //id des produits actifs
+            $idProd = $value['id_product'];
+            //on va chercher les items disponibles ( actifs ) pour un produit par 
+            $modelitem = new \Models\items();
+            $itemsDispo = $modelitem->getItemsPublic('items.status', 'items.id_product', 'actif', $idProd);
+            // on raccroche le tableau des items dispo au produit
+            $value ['items'] = $itemsDispo;
+            $newProductsToDisplay []= $value;
+        }
+
+        // var_dump($newProductsToDisplay);
+
+
+        $data[0] = $token;
+        $data[1] = $newProductsToDisplay;
+
+
+        new RendersController('displayProductsByCat', $data);
+
+    }
+
+
+
+
+
 }
 

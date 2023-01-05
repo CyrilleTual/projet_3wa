@@ -15,8 +15,8 @@ class RendersController
         $data['categories'] = $modelCat->getCategoriesByQuery('categories.status', 'actif'); 
 
         // recupération de la liste des produits disponibles pour navbar
-        $modelProd = new \Models\Products();
-        $data['produit']= $modelProd ->getProductsByQuery('products.status', 'actif'); 
+        // $modelProd = new \Models\Products();
+        // $data['produit']= $modelProd ->getProductsByQuery('products.status', 'actif'); 
 
         $data['input'] = $input;
 

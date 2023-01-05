@@ -179,6 +179,22 @@ class Products extends Model
     }
 
 
+    public function getProductsPublic(string $crit1 = '1', string $crit2 = '1', string $data1 = '1', string $data2 = '1', string $order = " DESC ", int $limit = 500): array
+    {
+       
+        $sql = 'SELECT  products.id_product, products.productName, products.productRef, products.teaser, products.description, products.infos, products.picture,
+                items.id_item
+                FROM ' . $this->table . '
+                LEFT JOIN items
+                ON products.id_product = items.id_item
+                WHERE ' . $crit1 . ' = ? and ' . $crit2 . ' = ?
+                ORDER BY ' . $this->table . '.' . $this->idName . $order . ' 
+                LIMIT ' . $limit;
+            
+        return $this->findByQuery($sql, [$data1,$data2]);
+    }
+
+
 
 
 

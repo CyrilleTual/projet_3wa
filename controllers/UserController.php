@@ -301,27 +301,27 @@ class UserController
     /**
      * TEST  de la selection selon plusieurs critères sur une table 
      */
-    public function test()
-    {
+    // public function test()
+    // {
 
-        $model = new \Models\Users();
+    //     $model = new \Models\Users();
 
-        $errors = []; // initialisation du tableau des erreurs 
-        $errorsArray = new \Models\ErrorMessages(); // 
-        $messagesErrors = $errorsArray->getMessages();
+    //     $errors = []; // initialisation du tableau des erreurs 
+    //     $errorsArray = new \Models\ErrorMessages(); // 
+    //     $messagesErrors = $errorsArray->getMessages();
 
-        $datas = [
-            'lastName' => 'bonez',
-            'firstName' => 'Jean',
-        ];
-        $result = $model->getUsersByQueryArray($datas, "id_user DESC ", 5);
+    //     $datas = [
+    //         'lastName' => 'bonez',
+    //         'firstName' => 'Jean',
+    //     ];
+    //     $result = $model->getUsersByQueryArray($datas, "id_user DESC ", 5);
 
-        // $result = $model->testo();
+    //     // $result = $model->testo();
 
        
 
-        //$errors[] = $messagesErrors[1];
+    //     //$errors[] = $messagesErrors[1];
 
-        new RendersController('formConnect');
-    }
+    //     new RendersController('formConnect');
+    // }
 }

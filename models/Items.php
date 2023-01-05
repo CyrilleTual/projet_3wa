@@ -144,7 +144,33 @@ class Items extends Model
 	}
 
 
+	/************************************************
+	 * recherche des items actif d'un produit
+	 */
 
+	public function getItemsPublic(string $crit1 = '1', string $crit2 = '1', string $data1 = '1', string $data2 = '1', string $order = " DESC ", int $limit = 500): array
+	{
+		$sql = 'SELECT  items.id_product,items.id_item, items.itemRef, items.pack, items.price
+                FROM ' . $this->table . '                
+                WHERE ' . $crit1 . ' = ? and ' . $crit2 . ' = ?
+                ORDER BY ' . $this->table . '.' . $this->idName . $order . ' 
+                LIMIT ' . $limit;
+		return $this->findByQuery($sql, [$data1, $data2]);
+	}
+
+	/************************************************************
+	 * Methode pour la requète ajax 
+	 */
+
+	public function getItemPrice(string $byColumn = '1', string $datas = '1', string $order = " DESC ", int $limit = 500): array
+	{
+		$sql = 'SELECT  items.price 
+                FROM ' . $this->table . '
+                WHERE ' . $byColumn . ' = ? 
+                ORDER BY ' . $this->table . '.' . $this->idName . $order . ' 
+                LIMIT ' . $limit;
+		return $this->findOneByQuery($sql, [$datas]);
+	}
 
 
 }

@@ -113,6 +113,7 @@ class ItemsController
 
      public function createItemProcess()
     {
+
        
         // initialisation des variables 
         
@@ -217,15 +218,47 @@ class ItemsController
         new RendersController('admin/itemsAdd', $data, $errors);
 
 
-        }
+    }
+
+    /*****************************************************************************
+     * sortie du prix d'un item par l'id (requete Ajax) 
+     */
+    public function ajaxPrice()
+    {
+
+        /**
+         * Pour test
+         */
+        var_dump("coucou");
+        $idToSearch = 21;
+        $model = new \Models\Items();
+        $priceOfItem = $model->getItemPrice("id_item", $idToSearch);
+        var_dump($priceOfItem);   
+        new RendersController('homePage');
+        exit();
+
+        /**
+         * Methode réelle
+         */
+
+        $content = file_get_contents("php://input");
+        $data = json_decode($content, true);
+        $idToSearch = $data['idToFind'];
+        $model = new \Models\Items();
+        $priceOfItem = $model->getItemPrice("id_item", $idToSearch);
+        var_dump($priceOfItem);   
+
+
+    } 
+
+
+
+      
+
+   
+
 
      
-
-
-
-
-
-
 
 
 

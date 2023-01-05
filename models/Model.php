@@ -39,16 +39,33 @@ class Model
     /********************************************************************************************************
      * findByQuery -> Methode permettant des requêtes complexe car attend en paramètre une requète sql et un tableau de paramètres
      * @param:  string $sdl -> requète préparée 
-     * @param:  array $datas -> tableau de clés/valeurs éventuel (pour les contraintes sur le WHERE)
+     * @param:  array $datas -> tableau valeurs  (pour les contraintes sur le WHERE)
      * @return: tableau comprenant les enregistrements trouvés
      */
     protected function findByQuery(string $sql, array $datas = []): array
     {
         $query = $this->pdo->prepare($sql);
         $query->execute($datas);
+        
         return $query->fetchAll();
     }
     // utilisation -> voir le README
+
+
+    /********************************************************************************************************
+     * findOneByQuery -> Methode permettant des requêtes complexe car attend en paramètre une requète sql et un tableau de paramètres
+     * @param:  string $sdl -> requète préparée 
+     * @param:  array $datas -> tableau valeurs  (pour les contraintes sur le WHERE)
+     * @return: tableau comprenant l'enregistrement trouvé
+     * ---- ATTENTION DIFFERENCE avec la précédente FETCH et non FETCH ALL  adapté pour 1 seul retour
+     */
+    protected function findOneByQuery(string $sql, array $datas = []): array
+    {
+        $query = $this->pdo->prepare($sql);
+        $query->execute($datas);
+
+        return $query->fetch();
+    }
 
 
     /*************************************************************************************************
@@ -218,4 +235,11 @@ class Model
      * Utilisation : $this->hydrate($datas) ( voir le README pour plus d'indormations)
      * penser aussi que "$this->create($this->hydrate($datas));" est possible 
      */
+
+
+
+
+
+
+
 }

@@ -1,7 +1,7 @@
 <?php
 
 // on recupère les produits disponibles 
-$products = $data['produit'];
+//$products = $data['produit'];
 $categories = $data['categories'];
 //var_dump($categories);
 ?>
@@ -39,7 +39,7 @@ $categories = $data['categories'];
         <li class="nav-item"><a class="pos" href=#>Nos produits + </a>
             <ul class="dropdownOnHover">
                 <?php foreach ($categories as $key => $valeur) : ?>
-                    <li class="drop-item"><a href="index.php?route=displays&action=displayOneProduct&cat=<?= htmlspecialchars($valeur["id_category"]); ?>"> <?= htmlspecialchars($valeur["categoryName"]); ?> </a>
+                    <li class="drop-item"><a href="index.php?route=products&action=displayProductsOfOneCategory&cat=<?= htmlspecialchars($valeur["id_category"]); ?>"> <?= htmlspecialchars($valeur["categoryName"]); ?> </a>
                         <td></td>
                     </li>
                 <?php endforeach; ?>
