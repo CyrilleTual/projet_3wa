@@ -208,7 +208,7 @@ class ProductsController
     }
 
     /*********************************************************************************************
-     * Modification d'un produit Affichage du formulaire 
+     * Modification d'un produit Affichage du formulaire  - admin
      */
     public function editProduct()
     {
@@ -253,7 +253,7 @@ class ProductsController
 
 
     /*********************************************************************************************
-     * Création ou Modification d'un produit traitement du formulaire 
+     * Création ou Modification d'un produit traitement du formulaire  - admin
      */
 
     public function AddOrModifyProductProcess()
@@ -496,52 +496,59 @@ class ProductsController
      }
     }
 
-    /**
-     * 
+    /*************************************************************************************************************
+     * Affichage des produits - public
      */
 
     public function displayProductsOfOneCategory()
     {
         $idCat = htmlspecialchars($_GET['cat']);
 
-        // mise en place d'un token pour sécuriser la soumission du formulaire ( quand fonctionnilté commande)
+        // mise en place d'un token pour sécuriser la soumission du formulaire (future fonctionnilté commande)
         $model = new \Models\Tools();
         $token = $model->randomChain(20);
         $_SESSION['auth'] = $token;
 
         //var_dump('id de la catégorie : ', $idCat);
         $data = [];
+        
+        // verifie si la catégorie existe et si oui on recupère le nom de la catégorie.
+        $modelCat = new \Models\Categories();
+        $categorie = ($modelCat->getCategoriesByQuery('id_category',$idCat))[0];
+        
+        if (!empty($categorie)){
+            // on selectionne l'ensemble des produits actif
+            $ProductsToDisplay = []; // pour recevoir les données à afficher sous forme d'un array .
+            $model = new \Models\Products();
+            $ProductsToDisplay = $model->getProductsPublic('products.status', 'products.id_category', 'actif', $idCat); // recup d'un tableau à afficher
 
-        // on selectionne l'ensemble des produits actif
-        $ProductsToDisplay = []; // pour recevoir les données à afficher sous forme d'un array .
-        $model = new \Models\Products();
-        $ProductsToDisplay = $model->getProductsPublic('products.status', 'products.id_category', 'actif',$idCat); // recup d'un tableau à afficher
+            $newProductsToDisplay = [];
+            foreach ($ProductsToDisplay as $key => $value) {
+                //id des produits actifs
+                $idProd = $value['id_product'];
+                //on va chercher les items disponibles ( actifs ) pour un produit par 
+                $modelitem  = new \Models\items();
+                $itemsDispo = $modelitem->getItemsPublic('items.status', 'items.id_product', 'actif', $idProd);
+                // on raccroche le tableau des items dispo au produit en ajoutant la clé 'items'
+                $value['items'] = $itemsDispo;
+                $newProductsToDisplay[] = $value;
+            }
+            $data[0] = $token;
+            $data[1] = $newProductsToDisplay;
+            $data[2] = $categorie;
 
-        /**************************************************************************************
-         *    test de la façon 2
-         */
-
-        $newProductsToDisplay = [] ; 
-
-        foreach ($ProductsToDisplay as $key => $value) {
-            //id des produits actifs
-            $idProd = $value['id_product'];
-            //on va chercher les items disponibles ( actifs ) pour un produit par 
-            $modelitem = new \Models\items();
-            $itemsDispo = $modelitem->getItemsPublic('items.status', 'items.id_product', 'actif', $idProd);
-            // on raccroche le tableau des items dispo au produit
-            $value ['items'] = $itemsDispo;
-            $newProductsToDisplay []= $value;
+            new RendersController('displayProductsByCat', $data);
+        } else {
+           // new RendersController();
         }
 
-        // var_dump($newProductsToDisplay);
+
+        
 
 
-        $data[0] = $token;
-        $data[1] = $newProductsToDisplay;
 
 
-        new RendersController('displayProductsByCat', $data);
+        
 
     }
 

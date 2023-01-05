@@ -225,18 +225,6 @@ class ItemsController
      */
     public function ajaxPrice()
     {
-
-        /**
-         * Pour test
-         */
-        var_dump("coucou");
-        $idToSearch = 21;
-        $model = new \Models\Items();
-        $priceOfItem = $model->getItemPrice("id_item", $idToSearch);
-        var_dump($priceOfItem);   
-        new RendersController('homePage');
-        exit();
-
         /**
          * Methode réelle
          */
@@ -245,9 +233,25 @@ class ItemsController
         $data = json_decode($content, true);
         $idToSearch = $data['idToFind'];
         $model = new \Models\Items();
-        $priceOfItem = $model->getItemPrice("id_item", $idToSearch);
-        var_dump($priceOfItem);   
+        $item = $model->getItemPrice("id_item", $idToSearch);
+        $priceOfItem = $item['price'];
+        // include du template
+        include 'public/views/price.phtml';
 
+
+
+
+        // /**
+        //  * Pour test
+        //  */
+        // include 'public/views/price.phtml';
+        // var_dump("coucou");
+        // $idToSearch = 21;
+        // $model = new \Models\Items();
+        // $Item = $model->getItemPrice("id_item", $idToSearch);
+        // var_dump($Item['price']);
+        // new RendersController('homePage');
+        // exit();
 
     } 
 

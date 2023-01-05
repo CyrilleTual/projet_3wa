@@ -7,6 +7,7 @@ namespace Controllers;
 class RendersController
 {
     private ?string $view;
+    
 
     public function __construct($view = 'homepage', $input = null, $errors = null)
     {

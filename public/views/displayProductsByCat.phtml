@@ -1,43 +1,59 @@
-<h1> les produits d'une catégorie</h1>
-
 <?php
-
 $data = $data['input'];
 $token = $data[0];
 $ProductsToDisplay = $data[1];
-// var_dump($ProductsToDisplay[1]);
+$categorie = $data[2];
+
 
 ?>
 
+<div class="pageProductPublic">
 
-<?php foreach ($ProductsToDisplay as $key => $valeur) : ?>
+    <h1><?= htmlspecialchars($categorie['categoryName']); ?></h1>
 
-
-    <h1><?= htmlspecialchars($valeur["productName"]); ?></h1>
-    <p><?= htmlspecialchars($valeur["description"]); ?></p>
-    <img class=" vignette" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+    <?php foreach ($ProductsToDisplay as $key => $valeur) : ?>
 
 
-    <?php
-    // affichage des items diponible avec les prix 
+        <article>
+            <div class="contImg">
+                <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+            </div>
 
-    $items = $valeur['items'];
-    // verification de l'existance d'items actifs 
-    if (!empty($items)) {
-        // remplissage d'une liste déroulante avec chaque item 
-        $id = "idFormItem" . $valeur['id_product'];
-        echo " Conditionnement :";
-        echo " <select class='selectItems' name='item' id='$id'>";
-        foreach ($items as $key => $item) {
-            if ($valeur['id_product'] == $item['id_product']) : ?>
-                <option value="<?= htmlspecialchars($item["id_item"]); ?>"><?= htmlspecialchars($item["pack"]); ?></option>
-    <?php endif;
-        }
-        echo "</select>";
-        $idPrix = "idPrix" . $valeur['id_product'];
-        echo"<div id='$idPrix'>ici le prix </div>";
-    }
-    ?>
+            <div class="texteProd">
+                <div>
+                    <h2><?= htmlspecialchars($valeur["productName"]); ?></h2>
+                    <p><?= htmlspecialchars($valeur["description"]); ?></p>
+                </div>
+                <div>
+                    <?php
+                    // affichage des items diponible avec les prix
+                    $items = $valeur['items'];
+                    // verification de l'existance d'items actifs 
+                    if (!empty($items)) {
+                        // remplissage d'une liste déroulante avec chaque item 
+                        $id = "idFormItem" . $valeur['id_product'];
+                        // recupération du prix du premier item pour affichage initial
+                        $firstPrice = $valeur['items'][0]['price'];
+                        echo " Conditionnement :";
+                        echo " <select class='selectItems' name='item' id='$id'>";
+                        foreach ($items as $key => $item) {
+                            if ($valeur['id_product'] == $item['id_product']) : ?>
+                                <option value="<?= htmlspecialchars($item["id_item"]); ?>"><?= htmlspecialchars($item["pack"]); ?></option>
+                    <?php endif;
+                        }
+                        echo "</select>";
+                        $idPrix = "idPrix" . $valeur['id_product'];
+                        // zone d'affichage du prix
+                        echo "<div id='$idPrix'>Prix : $firstPrice Euros</div>";
+                    }
+                    ?>
+
+                </div>
+            </div>
 
 
-<?php endforeach; ?>
+        </article>
+
+    <?php endforeach; ?>
+
+</div>

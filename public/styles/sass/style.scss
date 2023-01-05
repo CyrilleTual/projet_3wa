@@ -8,7 +8,17 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;  // permet d'occuper 100% de la hauteur visible
-  font-size: 1.6rem;
+  line-height: 1;
+  font-size: map-get($policeSize, basic);
+}
+
+h1{
+	font-size: map-get($policeSize, grosTitre);
+	text-align: center;
+}
+
+h2{
+	font-size: map-get($policeSize, moyenTitre);
 }
 
 a{
@@ -32,6 +42,7 @@ main {
   margin: 0 auto;
   position: 0, 0;
   max-width: 1000px;
+  line-height: 1.8;
 //   background-color: $color-1;
   @extend %flex-center;
   flex-direction: column;
@@ -202,7 +213,6 @@ li:hover{
 
 /*****************************************************
 ** Mise en forme Generique pour les Formulaires 
-**
 */
 
 form{
@@ -345,16 +355,35 @@ display: block;
   }
 }
 .visible{
-	
 	visibility: visible;
     opacity: 1;
     pointer-events: auto;
+}
+
+.pageProductPublic{
+
+	width: 100%;
+
+	article{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	background-color: rgb(226, 207, 207);
+
+	.contImg{
+		width: 33%;
+	}
+	.textProd{
+		flex-basis: 45%;
+	}
+
+
 	
+
 }
 
 
 
 
  
-
-

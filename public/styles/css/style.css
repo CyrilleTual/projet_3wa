@@ -94,17 +94,8 @@ video {
   -webkit-font-smoothing: antialiased;
 }
 
-footer,
-header,
-nav,
-section,
 html {
   font-size: 62.5%;
-}
-
-body {
-  line-height: 1;
-  font-size: 1.6rem;
 }
 
 ol,
@@ -150,7 +141,17 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  line-height: 1;
   font-size: 1.6rem;
+}
+
+h1 {
+  font-size: 3.2rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.5rem;
 }
 
 a {
@@ -173,6 +174,7 @@ main {
   margin: 0 auto;
   position: 0, 0;
   max-width: 1000px;
+  line-height: 1.8;
   flex-direction: column;
 }
 
@@ -319,7 +321,6 @@ ul.dropdownOnHover {
 }
 /*****************************************************
 ** Mise en forme Generique pour les Formulaires 
-**
 */
 form {
   margin-top: 30px;
@@ -450,4 +451,20 @@ form .preview img {
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
+}
+
+.pageProductPublic {
+  width: 100%;
+  background-color: rgb(226, 207, 207);
+}
+.pageProductPublic article {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pageProductPublic .contImg {
+  width: 33%;
+}
+.pageProductPublic .textProd {
+  flex-basis: 45%;
 }/*# sourceMappingURL=style.css.map */

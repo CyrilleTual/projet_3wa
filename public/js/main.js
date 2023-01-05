@@ -79,30 +79,38 @@ function deploy() {
 if (document.querySelectorAll(".selectItems") !== null){
   const myForms =document.querySelectorAll(".selectItems")
 
-myForms.forEach(function(form) {
+  myForms.forEach(function(form) {
 
-  // recupère l'id et la valeur selectionnée (par défaut) pour chaque form 
-  const id    = form.id
-  const value = form.value
-  console.log (id, value);
-
-  // ecoute d'évenement change sur les formulaires 
-  form.addEventListener('change',()=>{
+    // recupère l'id et la valeur selectionnée (par défaut) pour chaque form 
     const id    = form.id
     const value = form.value
-    console.log (id, value); 
+    console.log (id, value);
 
-    // on cherche le prix qui correspond à value (qui est l'id de l'item )
+    // ecoute d'évenement change sur les formulaires 
+    form.addEventListener('change',()=>{
+      const id    = form.id
+      const value = form.value
+      // on reconstitue l'id de l'affichage :
+      const idAffichage = "idPrix"+id.substring(10)
+      //console.log (id, value, idAffichage); 
 
-    let requestPrice = new Request ('index.php?route=items&action=ajaxPrice',{
-      method : 'POST',
-      body : JSON.stringify({ idToFind : value})
+      // on cherche le prix qui correspond à value (qui est l'id de l'item )
+
+      let requestPrice = new Request ('index.php?route=items&action=ajaxPrice',{
+        method : 'POST',
+        body : JSON.stringify({ idToFind : value})
+      })
+      // traitement de la promesse > recup du texte et affichage dans div cible
+      fetch(requestPrice)
+      .then(res => res.text())
+      .then(res => {
+        document.getElementById(idAffichage).innerHTML = res; 
+      })
     })
-
-    console.log ("prix", requestPrice);
-
   })
-})
+
+
+
 }
 
 
