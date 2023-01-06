@@ -142,7 +142,6 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  line-height: 1;
   font-size: 1.6rem;
 }
 
@@ -174,7 +173,7 @@ main {
   position: relative;
   margin: 0 auto;
   position: 0, 0;
-  max-width: 1000px;
+  width: 1024px;
   line-height: 1.8;
   flex-direction: column;
 }
@@ -460,6 +459,9 @@ form .preview img {
 .pageProductPublic {
   width: 100%;
   background-color: rgba(211, 211, 211, 0.3);
+  /***
+  * Page 404 
+  */
 }
 .pageProductPublic .contImg {
   flex-basis: 33%;
@@ -474,4 +476,7 @@ form .preview img {
 .pageProductPublic .textProd {
   padding: 20 px;
   flex-basis: 45%;
+}
+.pageProductPublic .page404 {
+  line-height: 1;
 }/*# sourceMappingURL=style.css.map */

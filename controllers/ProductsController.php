@@ -502,22 +502,29 @@ class ProductsController
 
     public function displayProductsOfOneCategory()
     {
-        $idCat = htmlspecialchars($_GET['cat']);
+        // verification de l'existance d'une cat en GET
+        if (!array_key_exists('cat', $_GET) or !is_numeric($_GET['cat']) or (($_GET['cat'])<1))  {
+            new RendersController('homePage');
+            exit;
+        }
 
-        // mise en place d'un token pour sécuriser la soumission du formulaire (future fonctionnilté commande)
-        $model = new \Models\Tools();
-        $token = $model->randomChain(20);
-        $_SESSION['auth'] = $token;
+        $idCat = trim($_GET['cat']);
 
-        //var_dump('id de la catégorie : ', $idCat);
-        $data = [];
-        
-        // verifie si la catégorie existe et si oui on recupère le nom de la catégorie.
+        // verifie si la catégorie existe et si oui on recupère directement le nom de la catégorie.
         $modelCat = new \Models\Categories();
-        $categorie = ($modelCat->getCategoriesByQuery('id_category',$idCat))[0];
-        
+        $categorie = ($modelCat->getOneCategoriesByQuery('id_category', $idCat));  
+
         if (!empty($categorie)){
-            // on selectionne l'ensemble des produits actif
+
+            // mise en place d'un token pour sécuriser la soumission du formulaire (future fonctionnilté commande)
+            $model = new \Models\Tools();
+            $token = $model->randomChain(20);
+            $_SESSION['auth'] = $token;
+
+            // tableau regroupant les datas envoyées à la vue via le render
+            $data = [];
+
+            // on selectionne l'ensemble des produits actif de la bonne catégorie
             $ProductsToDisplay = []; // pour recevoir les données à afficher sous forme d'un array .
             $model = new \Models\Products();
             $ProductsToDisplay = $model->getProductsPublic('products.status', 'products.id_category', 'actif', $idCat); // recup d'un tableau à afficher
@@ -539,16 +546,10 @@ class ProductsController
 
             new RendersController('displayProductsByCat', $data);
         } else {
-           // new RendersController();
+            new RendersController('homePage'); // categorie sans produit actif -> pas 
         }
 
 
-        
-
-
-
-
-        
 
     }
 

@@ -1,54 +1,48 @@
-<?php
+<!-- //$token = $data['input'][0]; -->
+<?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
 
-
-$data = $data['input'];
-$token = $data[0];
-$valuesToDisplay = $data[1];
-$idProduct = $data[2];
-
-
-
-?>
-
-<?php if ((isset($valuesToDisplay)) && !empty($valuesToDisplay)) : ?>
-    <h2> Articles de type <?= htmlspecialchars($valuesToDisplay[0]["productName"]); ?></h2>
-    <p> Dans la catégorie <?= htmlspecialchars($valuesToDisplay[0]["categoryName"]); ?></p>
-    <table class='catalog'>
-        <thead>
-            <tr>
-                <th>Référence</th>
-                <th>Conditionnement</th>
-                <th>Prix unitaire</th>
-                <th>TVA</th>
-                <th>Stock</th>
-                <th>statut</th>
-                <th></th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php foreach ($valuesToDisplay as $key => $valeur) : ?>
+    <?php if ((isset($data['input'][1])) && !empty($data['input'][1])) : ?>
+        <h2> Articles de type <?= htmlspecialchars($data['input'][1][0]["productName"]); ?></h2>
+        <p> Dans la catégorie <?= htmlspecialchars($data['input'][1][0]["categoryName"]); ?></p>
+        <table class='catalog'>
+            <thead>
                 <tr>
-                    <td><?= htmlspecialchars($valeur["itemRef"]); ?></td>
-                    <td><?= htmlspecialchars($valeur["pack"]); ?></td>
-                    <td><?= htmlspecialchars($valeur["price"]); ?></td>
-                    <td><?= htmlspecialchars($valeur["name"]); ?></td>
-                    <td><?= htmlspecialchars($valeur["stock"]); ?></td>
-                    <td><?= htmlspecialchars($valeur["status"]); ?>
-                    <td>
-                    <td><a class="bouton" href="?route=Items&action=modifyItem&id=<?= $valeur['id_item']; ?>">Modifier</a></td>
+                    <th>Référence</th>
+                    <th>Conditionnement</th>
+                    <th>Prix unitaire</th>
+                    <th>TVA</th>
+                    <th>Stock</th>
+                    <th>statut</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
+            </thead>
 
-    </table>
+            <tbody>
+                <?php foreach ($data['input'][1] as $key => $valeur) : ?>
+                    <tr>
+                        <td><?= htmlspecialchars($valeur["itemRef"]); ?></td>
+                        <td><?= htmlspecialchars($valeur["pack"]); ?></td>
+                        <td><?= htmlspecialchars($valeur["price"]); ?></td>
+                        <td><?= htmlspecialchars($valeur["name"]); ?></td>
+                        <td><?= htmlspecialchars($valeur["stock"]); ?></td>
+                        <td><?= htmlspecialchars($valeur["status"]); ?>
+                        <td>
+                        <td><a class="bouton" href="?route=Items&action=modifyItem&id=<?= $valeur['id_item']; ?>">Modifier</a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+        </table>
+    <?php endif; ?>
+
+    <?php if ((isset($data['input'][1])) && empty($data['input'][1])) : ?>
+        <p> Il n'existe encore aucune reférence pour ce produit </p>
+    <?php endif; ?>
+
+
+    <div>
+        <a class="bouton" href="?route=Items&action=createItem&idProduct=<?= htmlspecialchars($data['input'][2]); ?>">Créer une nouvelle référence </a>
+    </div>
+
+<?php else : ?>
+    <h2> Affichage non autorisé </h2>
 <?php endif; ?>
-
-<?php if ((isset($valuesToDisplay)) && empty($valuesToDisplay)) : ?>
-    <p> Il n'existe encore aucune reférence pour ce produit </p>
-<?php endif; ?>
-
-
-<div>
-    <a class="bouton" href="?route=Items&action=createItem&idProduct=<?= htmlspecialchars($idProduct); ?>">Créer une nouvelle référence </a>
-</div>

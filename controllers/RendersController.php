@@ -6,72 +6,56 @@ namespace Controllers;
 
 class RendersController
 {
-    private ?string $view;
+    private ?string $view; // view à appeler
+    private ?array $data;  // array regroupant les informations à tranmettre vers la vue sauf les erreurs
+    private ?array $errors; // array eventuel des erreurs à tramsmettre à la vue 
     
 
-    public function __construct($view = 'homepage', $input = null, $errors = null)
+    public function __construct($view = 'homePage', $input = null, $errors = null)
     {
         // recupération de la liste des catégories disponibles pour navbar
         $modelCat = new \Models\Categories();
         $data['categories'] = $modelCat->getCategoriesByQuery('categories.status', 'actif'); 
-
-        // recupération de la liste des produits disponibles pour navbar
-        // $modelProd = new \Models\Products();
-        // $data['produit']= $modelProd ->getProductsByQuery('products.status', 'actif'); 
-
         $data['input'] = $input;
 
+        // hydratation de l'objet RendersController créé
         $this->view   = isset($_GET['view']) ? $_GET['view'] : $view;
         $this->data   = $data;
         $this->errors = $errors;
-        $this->handleRequest();
-
-       // var_dump($data);
-       //  die;
-
-
-
+        $this->handleRequest(); // appel de la methode de traitement
     }
 
-    public function getView(): ?string
-    {
-        return $this->view;
-    }
-    public function getData(): ?string
-
-    {
-        return $this->data;
-    }
 
     private function handleRequest()
     {
-
-        if ($this->getView() === null) {
-            $this->render('homePage');
+        if ($this->view === null) {    //getView() retourne la vue passée en argument 
+            $this->render('homePage');      // si pas de vue, la methode render est appelée avec "homePage"
         } else {
-            switch ($this->PageNotFound()) {
+            switch ($this->PageExist()) {  // true si la page existe bien dans le site 
                 case true:
-                    $this->render($this->view, $this->data, $this->errors);
+                    $this->render($this->view, $this->data, $this->errors); // déclanche la méthode render 
                     break;
                 case false:
-                    $this->render('page404');
+                    $this->render('page404', $this->data, $this->errors); // la page demandée n'existe pas -> on affiche la page 404.phtml
                     break;
                 default:
-                    $this->render('homePage');
+                    $this->render('homePage', $this->data, $this->errors); // comportement par defaut -> homePage
                     break;
             }
         }
     }
+    
 
+    // méthode déclachant l'affichage 
     private function render($view, $data = null, $errors = null): void
     {
-
         require "public/template/layout.phtml";
     }
 
-    private function PageNotFound(): bool
+    // methode vérifiant l'existance d'une vue 
+    private function PageExist(): bool
     {
-        if (file_exists("public/views/{$this->getView()}.phtml"))
+        if (file_exists("public/views/{$this->view}.phtml"))
             return true;
         else
             return false;

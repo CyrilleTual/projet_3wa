@@ -1,18 +1,10 @@
-<?php
-$data = $data['input'];
-$token = $data[0];
-$ProductsToDisplay = $data[1];
-$categorie = $data[2];
-
-
-?>
+<!-- si besion pour commande token = $data['input'][0] -->
 
 <div class="pageProductPublic">
 
-    <h1><?= htmlspecialchars($categorie['categoryName']); ?></h1>
+    <h1><?= htmlspecialchars($data['input'][2]['categoryName']); ?></h1>
 
-    <?php foreach ($ProductsToDisplay as $key => $valeur) : ?>
-
+    <?php foreach ($data['input'][1] as $key => $valeur) : ?>
 
         <article>
             <div class="contImg">
@@ -50,10 +42,6 @@ $categorie = $data[2];
 
                 </div>
             </div>
-
-
         </article>
-
     <?php endforeach; ?>
-
 </div>

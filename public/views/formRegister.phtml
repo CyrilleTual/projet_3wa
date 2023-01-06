@@ -1,11 +1,5 @@
 <h1>Création d'un compte !</h1>
-<?php require_once('errors.inc.phtml');
-
-$token = $data['input'];                                                         
-?>
-
-
-<!-- ?php require_once('_valids.phtml'); ?-->
+<?php require_once('errors.inc.phtml'); ?>
 
 <form class="tablo" action="?route=user&action=register" method="POST">
 
@@ -13,13 +7,13 @@ $token = $data['input'];
 
         <legend>Merci de renseigner les information suivantes :</legend>
 
-        <input id="token" name="token" type="hidden" value="<?= $token ?>" />
+        <input id="token" name="token" type="hidden" value="<?= $data['input'] ?>" />
 
         <label for="firstname">Entrez votre prénom</label>
-        <input type="text" name="firstname" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['firstname'])) ? ($_POST['firstname']) : ""; ?>"><br>
+        <input type="text" name="firstname" size="30" minlength="2" maxlength="30" placeholder="autorisés lettres ' et -" pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['firstname'])) ? ($_POST['firstname']) : ""; ?>"><br>
         <!-- entre 2 et 30 caractères - pattern : lettres, espaces, tirets et apostrophes -->
         <label for="lastname">Entrez votre nom</label>
-        <input type="text" name="lastname" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['lastname'])) ? ($_POST['lastname']) : ""; ?>"><br>
+        <input type="text" name="lastname" size="30" minlength="2" maxlength="30" placeholder="autorisés lettres ' et -"  pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['lastname'])) ? ($_POST['lastname']) : ""; ?>"><br>
 
         <label for="email">Entrez votre email</label>
         <input type="email" name="email" size="30" required value="<?php echo (isset($_POST['email'])) ? ($_POST['email']) : ""; ?>"><br>

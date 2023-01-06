@@ -46,11 +46,29 @@ class Categories extends Model
      * @param int $ limit : nombre maxi d'enregistrements retournés
      * @return array : tableau des enregistrements trouvés 
      */
-    public function getCategoriesByQuery(string $byColumn = '1', string $datas = '1', string $order = " DESC ", int $limit = 500): array
+    public function getCategoriesByQuery(string $byColumn = '1', string $datas = '1', string $order = " DESC ", int $limit = 500): array |false
     {
         $sql = 'SELECT  *
                 FROM ' . $this->table . '
                 WHERE ' . $byColumn . ' = ? ORDER BY ' . $this->table . '.' . $this->idName . $order . ' LIMIT ' . $limit;
         return $this->findByQuery($sql, [$datas]);
     }
+
+    /**
+     * recheche d'une seule catégorie 
+     */
+    public function getOneCategoriesByQuery(string $byColumn = '1', string $datas = '1', string $order = " DESC ", int $limit = 500): array |false
+    {
+        $sql = 'SELECT  *
+                FROM ' . $this->table . '
+                WHERE ' . $byColumn . ' = ? ORDER BY ' . $this->table . '.' . $this->idName . $order . ' LIMIT ' . $limit;
+        return $this->findOneByQuery($sql, [$datas]);
+    }
+
+
+
+
+
+
+
 }

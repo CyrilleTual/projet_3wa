@@ -28,7 +28,7 @@ class Model
      * @param : aucun, se sert de l'objet sur lequel la méthode est utilisée
      * @return array Tableau des enregistrements trouvés  
      */
-    protected function findAll(): array
+    protected function findAll(): array | false
     {
         $query = $this->pdo->prepare("SELECT * FROM $this->table ");
         $query->execute();
@@ -42,7 +42,7 @@ class Model
      * @param:  array $datas -> tableau valeurs  (pour les contraintes sur le WHERE)
      * @return: tableau comprenant les enregistrements trouvés
      */
-    protected function findByQuery(string $sql, array $datas = []): array
+    protected function findByQuery(string $sql, array $datas = []): array | false
     {
         $query = $this->pdo->prepare($sql);
         $query->execute($datas);
@@ -59,7 +59,7 @@ class Model
      * @return: tableau comprenant l'enregistrement trouvé
      * ---- ATTENTION DIFFERENCE avec la précédente FETCH et non FETCH ALL  adapté pour 1 seul retour
      */
-    protected function findOneByQuery(string $sql, array $datas = []): array
+    protected function findOneByQuery(string $sql, array $datas = []): array | false
     {
         $query = $this->pdo->prepare($sql);
         $query->execute($datas);
@@ -73,7 +73,7 @@ class Model
      *  @param array $ tableau ['champ1'=>'value1', 'champ2=>value2' etc...]
      *  @return array Tableau  ['string de champs','tableau des valeurs']
      */
-    protected function split(array $toSplit): array
+    protected function split(array $toSplit): array 
     {
         // On boucle pour éclater $params -> stockage des champs et des values indépendament
         $champs = [];
@@ -116,7 +116,7 @@ class Model
      * @return array Tableau des enregistrements trouvés  
      */
 
-    protected function findBy(array $params = []): array
+    protected function findBy(array $params = []): array | false
     {
         // on appel la methode split pour  transformer le tableau de critère 
         [$liste_champs, $valeurs] = $this->split($params);

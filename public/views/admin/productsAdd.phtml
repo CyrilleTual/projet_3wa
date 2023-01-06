@@ -1,25 +1,18 @@
+<?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
 
-<h1> Formulaire Produits </h1>
+    <h1> Formulaire Produits </h1>
 
+    <?php require_once('public/views/errors.inc.phtml'); ?>
 
-<?php
-$data = $data['input'];
-$token = $data[0];
-$values = $data[1]; // recup des catégories disponibles 
-?>
-<?php require_once('public/views/errors.inc.phtml'); ?>
+    <form method="post" enctype="multipart/form-data" action=" ?route=Products&action=AddOrModifyProductProcess" enctype="multipart/form-data">
 
 
-<!-- <form method="post" enctype="multipart/form-data" action=" ?route=Products&action=addProduct" enctype="multipart/form-data"> -->
-<form method="post" enctype="multipart/form-data" action=" ?route=Products&action=AddOrModifyProductProcess" enctype="multipart/form-data">
-
-    <fieldset>
-        <input id="token" name="token" type="hidden" value="<?= $token ?>">
+        <input id="token" name="token" type="hidden" value="<?= $data['input'][0] ?>">
 
         <label for="categorie">Categorie</label>
 
         <select name="category" id="category">
-            <?php foreach ($values as $key => $valeur) : ?>
+            <?php foreach ($data['input'][1] as $key => $valeur) : ?>
                 <option value="<?= htmlspecialchars($valeur["id_category"]); ?>"><?= htmlspecialchars($valeur["categoryName"]); ?></option>
             <?php endforeach; ?>
         </select><br>
@@ -57,7 +50,8 @@ $values = $data[1]; // recup des catégories disponibles
 
         <input type="submit" value="enregistrement">
 
+    </form>
 
-
-
-</form>
+<?php else : ?>
+    <h2> Affichage non autorisé </h2>
+<?php endif; ?>

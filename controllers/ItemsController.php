@@ -255,6 +255,10 @@ class ItemsController
 
     } 
 
+    public function test(){
+    new RendersController('homePage');
+    }
+
 
 
       

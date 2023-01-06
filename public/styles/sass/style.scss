@@ -8,7 +8,7 @@ body {
   min-height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;  // permet d'occuper 100% de la hauteur visible
-  line-height: 1;
+  //line-height: 1;
   font-size: map-get($policeSize, basic);
 }
 
@@ -41,7 +41,7 @@ main {
   position: relative;
   margin: 0 auto;
   position: 0, 0;
-  max-width: 1000px;
+  width: 1024px;
   line-height: 1.8;
 //   background-color: $color-1;
   @extend %flex-center;
@@ -185,7 +185,7 @@ li:hover{
     
 }
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: map-get($breakPoints, mobile)){
     .icon{
         display: none;
     }
@@ -199,8 +199,7 @@ li:hover{
         position: relative;
     }
     .dropdown,  ul.dropdownOnHover{
-        position: absolute;
-        
+        position: absolute;        
         top: 100%; left: 0%;
         width: max-content;
     }
@@ -388,6 +387,14 @@ display: block;
 	.textProd{
 		padding : 20 px;
 		flex-basis: 45%;
+	}
+
+	/***
+	* Page 404 
+	*/
+
+	.page404{
+		line-height: 1 ;
 	}
 
 

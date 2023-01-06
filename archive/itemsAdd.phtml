@@ -1,32 +1,34 @@
-<?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
-    
 <?php require_once('public/views/errors.inc.phtml'); ?>
 <h1> Formulaire de création d'items </h1>
 
 
 <?php
-if (isset($data['input'][3]) && (!empty($data['input'][3]))) {
-    $item = $data['input'][3];
+$data = $data['input'];
+$token = $data[0];
+$vat = $data[1]; // recup des tva disponibles 
+$product = $data[2];
+if (isset($data[3]) && (!empty($data[3]))) {
+    $item = $data[3];
 };
-?>
 
+if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
 
 
 
     <div>
-        <h2>Vous voulez créer un item pour le produit <?= htmlspecialchars($data['input'][2]["productName"]); ?></h2>
+        <h2>Vous voulez créer un item pour le produit <?= htmlspecialchars($product["productName"]); ?></h2>
     </div>
 
-    <img class=" vignette" src=' public/uploads/<?= htmlspecialchars($data['input'][2]['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($data['input'][2]['picture']); ?>')" />
-    <div id="<?= htmlspecialchars($data['input'][2]['picture']); ?>" class="modal-window">
-        <img src=' public/uploads/<?= htmlspecialchars($data['input'][2]['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($data['input'][2]['picture']); ?>')" />
+    <img class=" vignette" src=' public/uploads/<?= htmlspecialchars($product['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($product['picture']); ?>')" />
+    <div id="<?= htmlspecialchars($product['picture']); ?>" class="modal-window">
+        <img src=' public/uploads/<?= htmlspecialchars($product['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($product['picture']); ?>')" />
     </div>
 
 
     <form class="tablo" action="?route=items&action=createItemProcess" method="POST">
 
-        <input id="token" name="token" type="hidden" value="<?= $data['input'][0]?>">
-        <input id="idProduct" name="idProduct" type="hidden" value="<?= htmlspecialchars($data['input'][2]['id_product']) ?>">
+        <input id="token" name="token" type="hidden" value="<?= $token ?>">
+        <input id="idProduct" name="idProduct" type="hidden" value="<?= htmlspecialchars($product['id_product']) ?>">
 
 
         <?php if (isset($item['itemRef'])) : ?>
@@ -39,7 +41,9 @@ if (isset($data['input'][3]) && (!empty($data['input'][3]))) {
         <fieldset>
 
             <legend>Merci de renseigner les information suivantes :</legend>
-           
+
+            <input id="token" name="token" type="hidden" value="<?= $token ?>" />
+
             <label for="vatRef">Entrez la référence </label>
 
             <input type="text" name="ref" size="30" minlength="2" maxlength="30" pattern="^[a-zA-Z0-9 '-]+$" required value="<?php echo (isset($item['itemRef'])) ? htmlspecialchars($item['itemRef']) : ""; ?>"><br>
@@ -55,7 +59,7 @@ if (isset($data['input'][3]) && (!empty($data['input'][3]))) {
 
             <label for="vat">Tva applicable </label>
             <select name="vat" id="vat">
-                <?php foreach ($data['input'][1] as $key => $valeur) : ?>
+                <?php foreach ($vat as $key => $valeur) : ?>
                     <option value="<?= ($valeur["id_vat"]); ?>" <?php if ((isset($item['itemRef'])) && (($item["id_vat"]) === ($valeur["id_vat"]))) echo "selected"; ?>><?= htmlspecialchars($valeur["name"]); ?>
                     </option>
                 <?php endforeach; ?>

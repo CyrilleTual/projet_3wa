@@ -1,33 +1,22 @@
 <h1>Se connecter !</h1>
 
-<?php require_once('errors.inc.phtml'); 
-
-
-
-$token=$data['input'];
-
-
-?>
-
-
+<?php require_once('errors.inc.phtml');?>
 
 <form action="index.php?route=user&action=checkAndConnect" method="POST">
 
     <fieldset>
-
         <legend>Connexion</legend>
 
         <label for="email">Entrez votre email</label>
-        <input type="text" name="email" size="30" value="<?php echo htmlspecialchars(isset($_POST['email'])) ?  $_POST['email'] : ""; ?>"> <br>
+        <input type="text" id='email' name="email" size="30" value="<?php echo htmlspecialchars(isset($_POST['email'])) ?   htmlspecialchars($_POST['email']) : ""; ?>"> <br>
 
-        <label for="email">Entrez votre mot de passe</label>
-        <input type="password" name="password" size="30" id="password_1" />
+        <label for="password">Entrez votre mot de passe</label>
+        <input type="password" id="password" name="password" size="30" id="password_1" />
 
         <!-- ajout du token -->
-        <input id="token" name="token" type="hidden" value="<?= $token ?>" /> <br>
+        <input id="token" name="token" type="hidden" value="<?= $data['input'] ?>" /> <br>
 
         <input type="submit" value="Valider" />
-
     </fieldset>
 
 </form>
