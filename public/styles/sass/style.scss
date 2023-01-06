@@ -321,7 +321,7 @@ form{
 
 }
 
-/*****************************************************
+/**********************************************************************
 ** affichage en grand d'un miniature au click sur la vignette
 */
 .modal-window {
@@ -360,21 +360,33 @@ display: block;
     pointer-events: auto;
 }
 
+
+/********************************************************************
+** page des produits coté public
+*/
+
 .pageProductPublic{
 
 	width: 100%;
 
 	article{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		@extend %flex-center;
 	}
-	background-color: rgb(226, 207, 207);
+	background-color: rgb(211, 211, 211, 0.3 ) ;
 
 	.contImg{
-		width: 33%;
+		flex-basis: 33%;
+		img {
+		display: block;
+		height: 250px;
+		object-fit: contain;
+		margin: auto;
+		cursor: pointer;
+		}
+		
 	}
 	.textProd{
+		padding : 20 px;
 		flex-basis: 45%;
 	}
 

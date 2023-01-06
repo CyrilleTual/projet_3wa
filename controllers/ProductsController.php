@@ -65,147 +65,147 @@ class ProductsController
      * VERIFICATION ET SOUMISSION DU FORMULAIRE DE  ajout de produit
      */
 
-    public function addProduct()
-    {
+    //public function addProduct()
+    // {
 
-        $errors = []; // tableau des erreurs 
+    //     $errors = []; // tableau des erreurs 
 
-        $addProduct = [
-            'addCat'            => '',
-            'addName'           => '',
-            'addRef'            => '',
-            'addTeaser'         => '',
-            'addDescription'    => '',
-            'addInfos'          => '',
-            'addPicture'        => '',
-            'addStatus'         => ''
-        ];
+    //     $addProduct = [
+    //         'addCat'            => '',
+    //         'addName'           => '',
+    //         'addRef'            => '',
+    //         'addTeaser'         => '',
+    //         'addDescription'    => '',
+    //         'addInfos'          => '',
+    //         'addPicture'        => '',
+    //         'addStatus'         => ''
+    //     ];
 
-        if (
-            array_key_exists('category', $_POST)
-            && array_key_exists('productName', $_POST)
-            && array_key_exists('reference', $_POST)
-            && array_key_exists('teaser', $_POST)
-            && array_key_exists('description', $_POST)
-            && array_key_exists('infos', $_POST)
-            && array_key_exists('status', $_POST)
-        ) {
+    //     if (
+    //         array_key_exists('category', $_POST)
+    //         && array_key_exists('productName', $_POST)
+    //         && array_key_exists('reference', $_POST)
+    //         && array_key_exists('teaser', $_POST)
+    //         && array_key_exists('description', $_POST)
+    //         && array_key_exists('infos', $_POST)
+    //         && array_key_exists('status', $_POST)
+    //     ) {
 
-            $addProduct = [
-                'addCat'                => trim($_POST['category']),
-                'addName'               => trim($_POST['productName']),
-                'addRef'                => trim($_POST['reference']),
-                'addTeaser'             => trim($_POST['teaser']),
-                'addDescription'        => trim($_POST['description']),
-                'addInfos'              => trim($_POST['infos']),
-                'addPicture'            => 'default.png',
-                'addStatus'              => trim($_POST['status']),
-            ];
+    //         $addProduct = [
+    //             'addCat'                => trim($_POST['category']),
+    //             'addName'               => trim($_POST['productName']),
+    //             'addRef'                => trim($_POST['reference']),
+    //             'addTeaser'             => trim($_POST['teaser']),
+    //             'addDescription'        => trim($_POST['description']),
+    //             'addInfos'              => trim($_POST['infos']),
+    //             'addPicture'            => 'default.png',
+    //             'addStatus'              => trim($_POST['status']),
+    //         ];
 
-            // verification des 4 champs obligatoires :  catégorie, nom, ref, et etat.
+    //         // verification des 4 champs obligatoires :  catégorie, nom, ref, et etat.
 
-            if (isset($_SESSION['auth']) && $_SESSION['auth'] != $_POST['token'])
-                $errors[] = "Une erreur est apparue lors de l'envoi du formulaire !";
+    //         if (isset($_SESSION['auth']) && $_SESSION['auth'] != $_POST['token'])
+    //             $errors[] = "Une erreur est apparue lors de l'envoi du formulaire !";
 
-            if ($addProduct['addCat'] == '')
-                $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
+    //         if ($addProduct['addCat'] == '')
+    //             $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
 
-            if ($addProduct['addName'] == '')
-                $errors[] = "Veuillez renseigner un nom SVP!";
+    //         if ($addProduct['addName'] == '')
+    //             $errors[] = "Veuillez renseigner un nom SVP!";
 
-            if ($addProduct['addRef'] == '')
-                $errors[] = "Veuillez renseigner une Référence SVP !";
+    //         if ($addProduct['addRef'] == '')
+    //             $errors[] = "Veuillez renseigner une Référence SVP !";
 
-            if ($addProduct['addStatus'] == '')
-                $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
+    //         if ($addProduct['addStatus'] == '')
+    //             $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
 
-            if (count($errors) == 0) {
-
-
+    //         if (count($errors) == 0) {
 
 
 
-                // On instancie "Products"
-                $model = new \Models\Products();
-
-                // Vérifier si l'utilisateur a chargé une image dans le formulaire
-                // Si NON --> On garde "default.png"
-
-                // Si OUI --> Vérifier sa taille ( inférieur à 2Mo )
-                //        --> Vérifier l'extension ( si on veut une image, on doit recevoir une image )
-                //        --> Vérifier le MIME ( si le contenu correspond à l'extension )
-                // Si TOUT est bon --> On UPLOAD le ficher
-                // Sinon,on N'UPLOAD PAS et on affiche le message d'erreur ( PAS DE INSERT INTO )
-                if (isset($_FILES['picture']) && $_FILES['picture']['name'] !== '') {
 
 
+    //             // On instancie "Products"
+    //             $model = new \Models\Products();
 
-                    $dossier = "img_of_products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
+    //             // Vérifier si l'utilisateur a chargé une image dans le formulaire
+    //             // Si NON --> On garde "default.png"
 
-
-                    $model = new \Models\Uploads(); // on se sert du model Uploads
-
-                    // on appelle  la methode de controle du fichier image qui renvoie le nom concatené avec un uid si tout est ok
-
-                    $addProduct['addPicture'] = $model->uploadFile($_FILES['picture'], $dossier, $errors);
-                }
-
-                if (count($errors) == 0) {
-
-                    // On créé notre tableau de datasProdProd à mettre dans la BDD tableau de type cle/valaveur
-                    $datasProd = [
-                        'id_category'       => $addProduct['addCat'],
-                        'productName'       => $addProduct['addName'],
-                        'productRef'        => $addProduct['addRef'],
-                        'teaser'            => $addProduct['addTeaser'],
-                        'description'       => $addProduct['addDescription'],
-                        'infos'             => $addProduct['addInfos'],
-                        'picture'           => $addProduct['addPicture'],
-                        'status'            => $addProduct['addStatus']
-                    ];
-
-                    // On instancie notre model "Product"
-                    $model = new \Models\Products();
-                    // On appelle la méthode permettant l'INSERT INTO dans la BDD
-                    $model->addNewProduct($datasProd);
-
-                    // On affiche un ou plusieurs messages de validation.
-                    $valids[] = 'Votre demande de création de compte a bien été enregistrée.';
+    //             // Si OUI --> Vérifier sa taille ( inférieur à 2Mo )
+    //             //        --> Vérifier l'extension ( si on veut une image, on doit recevoir une image )
+    //             //        --> Vérifier le MIME ( si le contenu correspond à l'extension )
+    //             // Si TOUT est bon --> On UPLOAD le ficher
+    //             // Sinon,on N'UPLOAD PAS et on affiche le message d'erreur ( PAS DE INSERT INTO )
+    //             if (isset($_FILES['picture']) && $_FILES['picture']['name'] !== '') {
 
 
-                    // var_dump('178 product controller');
-                    // die;
+
+    //                 $dossier = "img_of_products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
 
 
-                    $model = new \Models\Tools();
-                    $token = $model->randomChain(20);
-                    $_SESSION['auth'] = $token;
+    //                 $model = new \Models\Uploads(); // on se sert du model Uploads
 
-                    unset($addUser);
-                    // $addUser = [
-                    //     'addNom'                => '',
-                    //     'addPrenom'             => '',
-                    //     'addEmail'              => '',
-                    //     'addPassword'           => '',
-                    //     'addPassword_confirme'  => '',
-                    //     'addPicture'            => ''
-                    // ];
+    //                 // on appelle  la methode de controle du fichier image qui renvoie le nom concatené avec un uid si tout est ok
 
-                    new RendersController('homePage');
-                    exit();
-                }
-            }
-        }
-        var_dump($errors);
-        var_dump('stop ligne 210 ProductController');
-        die;
-        $model = new \Models\Tools();
-        $token = $model->randomChain(20);
-        $_SESSION['auth'] = $token;
+    //                 $addProduct['addPicture'] = $model->uploadFile($_FILES['picture'], $dossier, $errors);
+    //             }
 
-        $template = "formRegister.phtml";
-        include_once 'views/layout.phtml';
-    }
+    //             if (count($errors) == 0) {
+
+    //                 // On créé notre tableau de datasProdProd à mettre dans la BDD tableau de type cle/valaveur
+    //                 $datasProd = [
+    //                     'id_category'       => $addProduct['addCat'],
+    //                     'productName'       => $addProduct['addName'],
+    //                     'productRef'        => $addProduct['addRef'],
+    //                     'teaser'            => $addProduct['addTeaser'],
+    //                     'description'       => $addProduct['addDescription'],
+    //                     'infos'             => $addProduct['addInfos'],
+    //                     'picture'           => $addProduct['addPicture'],
+    //                     'status'            => $addProduct['addStatus']
+    //                 ];
+
+    //                 // On instancie notre model "Product"
+    //                 $model = new \Models\Products();
+    //                 // On appelle la méthode permettant l'INSERT INTO dans la BDD
+    //                 $model->addNewProduct($datasProd);
+
+    //                 // On affiche un ou plusieurs messages de validation.
+    //                 $valids[] = 'Votre demande de création de compte a bien été enregistrée.';
+
+
+    //                 // var_dump('178 product controller');
+    //                 // die;
+
+
+    //                 $model = new \Models\Tools();
+    //                 $token = $model->randomChain(20);
+    //                 $_SESSION['auth'] = $token;
+
+    //                 unset($addUser);
+    //                 // $addUser = [
+    //                 //     'addNom'                => '',
+    //                 //     'addPrenom'             => '',
+    //                 //     'addEmail'              => '',
+    //                 //     'addPassword'           => '',
+    //                 //     'addPassword_confirme'  => '',
+    //                 //     'addPicture'            => ''
+    //                 // ];
+
+    //                 new RendersController('homePage');
+    //                 exit();
+    //             }
+    //         }
+    //     }
+    //     var_dump($errors);
+    //     var_dump('stop ligne 210 ProductController');
+    //     die;
+    //     $model = new \Models\Tools();
+    //     $token = $model->randomChain(20);
+    //     $_SESSION['auth'] = $token;
+
+    //     $template = "formRegister.phtml";
+    //     include_once 'views/layout.phtml';
+    // }
 
     /*********************************************************************************************
      * Modification d'un produit Affichage du formulaire  - admin

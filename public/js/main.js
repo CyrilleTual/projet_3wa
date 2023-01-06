@@ -25,35 +25,35 @@ function toggleClass(id){
  * @param  def  : id de la catégorie 
  */
 
-function selecCatDefault(def){
+// function selecCatDefault(def){
 
-  console.log(def);
-        // script de set de valeur par defaut correcte 
-  var temp = def;
-  var mySelect = document.getElementById('category');
+//   console.log(def);
+//         // script de set de valeur par defaut correcte 
+//   var temp = def;
+//   var mySelect = document.getElementById('category');
 
-  for(var i, j = 0; i = mySelect.options[j]; j++) {
-      if(i.value == temp) {
-          mySelect.selectedIndex = j;
-          break;
-      }
-  }
+//   for(var i, j = 0; i = mySelect.options[j]; j++) {
+//       if(i.value == temp) {
+//           mySelect.selectedIndex = j;
+//           break;
+//       }
+//   }
    
-}
+// }
 
 // script de set de valeur par defaut correcte form de modif produit
 
-if(document.getElementById('category')!== null){
-    var temp = "Les Miels";
-  var mySelect = document.getElementById('category');
-  for(var i, j = 0; i = mySelect.options[j]; j++) {
-      if(i.value == temp) {
-          mySelect.selectedIndex = j;
-          break;
-      }
-  }
+// if(document.getElementById('category')!== null){
+//     var temp = "Les Miels";
+//   var mySelect = document.getElementById('category');
+//   for(var i, j = 0; i = mySelect.options[j]; j++) {
+//       if(i.value == temp) {
+//           mySelect.selectedIndex = j;
+//           break;
+//       }
+//   }
 
-}
+// }
 
 
 
