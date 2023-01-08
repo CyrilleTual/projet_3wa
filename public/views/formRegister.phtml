@@ -13,16 +13,16 @@
         <input type="text" name="firstname" size="30" minlength="2" maxlength="30" placeholder="autorisés lettres ' et -" pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['firstname'])) ? ($_POST['firstname']) : ""; ?>"><br>
         <!-- entre 2 et 30 caractères - pattern : lettres, espaces, tirets et apostrophes -->
         <label for="lastname">Entrez votre nom</label>
-        <input type="text" name="lastname" size="30" minlength="2" maxlength="30" placeholder="autorisés lettres ' et -"  pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['lastname'])) ? ($_POST['lastname']) : ""; ?>"><br>
+        <input type="text" name="lastname" size="30" minlength="2" maxlength="50" placeholder="autorisés lettres ' et -" pattern="^[a-zA-Z '-]+$" required value="<?php echo (isset($_POST['lastname'])) ? ($_POST['lastname']) : ""; ?>"><br>
 
         <label for="email">Entrez votre email</label>
-        <input type="email" name="email" size="30" required value="<?php echo (isset($_POST['email'])) ? ($_POST['email']) : ""; ?>"><br>
+        <input type="email" name="email" size="30" maxlength="50" required value="<?php echo (isset($_POST['email'])) ? ($_POST['email']) : ""; ?>"><br>
 
         <label for="password">Choisissez un mot de passe</label>
-        <input type="password" name="password" id="pwd1" placeholder="6 caractères Mini,  Maj +Min +Chiffre " pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])+$" size="30" minlength="6" maxlength="16" required><br>
+        <input type="password" name="password" id="pwd1" placeholder="8 caractères Mini,  Maj +Min +Chiffre " pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])+$" size="30" minlength="8" maxlength="16" required><br>
 
         <label for="password_verify">Confirmez le mot de passe choisi</label>
-        <input type="password" name="passwordConfirm" id="pwd2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])+$" size="30" minlength="6" maxlength="16" required><br>
+        <input type="password" name="passwordConfirm" id="pwd2" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])+$" size="30" minlength="8" maxlength="16" required><br>
 
         <input type="submit" value="Valider" /> <br>
 

@@ -504,7 +504,7 @@ class ProductsController
     {
         // verification de l'existance d'une cat en GET
         if (!array_key_exists('cat', $_GET) or !is_numeric($_GET['cat']) or (($_GET['cat'])<1))  {
-            new RendersController('homePage');
+            new RendersController('page404');
             exit;
         }
 
@@ -546,7 +546,7 @@ class ProductsController
 
             new RendersController('displayProductsByCat', $data);
         } else {
-            new RendersController('homePage'); // categorie sans produit actif -> pas 
+            new RendersController('page404'); // categorie sans produit actif -> pas 
         }
 
 

@@ -14,27 +14,25 @@
             <div class="textProd">
                 <div>
                     <h2><?= htmlspecialchars($valeur["productName"]); ?></h2>
-                    <p><?= htmlspecialchars($valeur["description"]); ?></p>
+                    <p><?=  htmlspecialchars($valeur["description"]); ?></p>
                 </div>
                 <div>
                     <?php
-                    // affichage des items diponible avec les prix
-                    $items = $valeur['items'];
                     // verification de l'existance d'items actifs 
-                    if (!empty($items)) {
+                    if (!empty($valeur['items'])) {
                         // remplissage d'une liste déroulante avec chaque item 
-                        $id = "idFormItem" . $valeur['id_product'];
+                        $id = "idFormItem" . htmlspecialchars($valeur['id_product']);
                         // recupération du prix du premier item pour affichage initial
-                        $firstPrice = $valeur['items'][0]['price'];
+                        $firstPrice = htmlspecialchars($valeur['items'][0]['price']);
                         echo " Conditionnement :";
                         echo " <select class='selectItems' name='item' id='$id'>";
-                        foreach ($items as $key => $item) {
+                        foreach ($valeur['items'] as $key => $item) {
                             if ($valeur['id_product'] == $item['id_product']) : ?>
                                 <option value="<?= htmlspecialchars($item["id_item"]); ?>"><?= htmlspecialchars($item["pack"]); ?></option>
                     <?php endif;
                         }
                         echo "</select>";
-                        $idPrix = "idPrix" . $valeur['id_product'];
+                        $idPrix = "idPrix" . htmlspecialchars($valeur['id_product']);
                         // zone d'affichage du prix
                         echo "<div id='$idPrix'>Prix : $firstPrice Euros</div>";
                     }
