@@ -1,9 +1,10 @@
-<!-- //$token = $data['input'][0]; -->
+<!-- //$token = $data['input']['input'][0]; -->
 <?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
 
-    <?php if ((isset($data['input'][1])) && !empty($data['input'][1])) : ?>
-        <h2> Articles de type <?= htmlspecialchars($data['input'][1][0]["productName"]); ?></h2>
-        <p> Dans la catégorie <?= htmlspecialchars($data['input'][1][0]["categoryName"]); ?></p>
+
+    <?php if ((isset($data['input']['valuesToDisplay'])) && !empty($data['input']['valuesToDisplay'])) : ?>
+        <h2> Articles de type <?= htmlspecialchars($data['input']['valuesToDisplay'][0]["productName"]); ?></h2>
+        <p> Dans la catégorie <?= htmlspecialchars($data['input']['valuesToDisplay'][0]["categoryName"]); ?></p>
         <table class='catalog'>
             <thead>
                 <tr>
@@ -17,7 +18,7 @@
             </thead>
 
             <tbody>
-                <?php foreach ($data['input'][1] as $key => $valeur) : ?>
+                <?php foreach ($data['input']['valuesToDisplay'] as $key => $valeur) : ?>
                     <tr>
                         <td><?= htmlspecialchars($valeur["itemRef"]); ?></td>
                         <td><?= htmlspecialchars($valeur["pack"]); ?></td>
@@ -34,13 +35,14 @@
         </table>
     <?php endif; ?>
 
-    <?php if ((isset($data['input'][1])) && empty($data['input'][1])) : ?>
+    <?php if ((isset($data['input']['valuesToDisplay'])) && empty($data['input']['valuesToDisplay'])) : ?>
         <p> Il n'existe encore aucune reférence pour ce produit </p>
     <?php endif; ?>
 
 
+
     <div>
-        <a class="bouton" href="?route=Items&action=createItem&idProduct=<?= htmlspecialchars($data['input'][2]); ?>">Créer une nouvelle référence </a>
+        <a class="bouton" href="?route=Items&action=createItem&id=<?= htmlspecialchars($data['input']['idProduct']); ?>">Créer une nouvelle référence </a>
     </div>
 
 <?php else : ?>

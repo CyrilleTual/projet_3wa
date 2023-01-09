@@ -1,0 +1,37 @@
+<?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
+
+    <h1> Formulaire Carrousel </h1>
+
+    <?php require_once('public/views/errors.inc.phtml'); ?>
+
+    <form method="post" enctype="multipart/form-data" action=" ?route=carouselsPics&action=AddOrModifyCarouselPic" enctype="multipart/form-data">
+
+        <input id="token" name="token" type="hidden" value="<?= $data['input']['token'] ?>">
+
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description" placeholder=" description "><br>
+
+
+
+        <label for="picture">Photo</label>
+        <input type="file" id="uploadImage" name="picture" onchange="PreviewImage(event)"><br>
+
+        <fieldset>
+            <legend>Produit actif? </legend>
+            <label class="radio" for=" actif">Actif</label>
+            <input type="radio" id="actif" name="status" value="actif" checked>
+            <label class="radio" for="actif">Inactif</label>
+            <input type="radio" id="inactif" name="status" value="inactif">
+        </fieldset>
+
+        <div class="preview">
+            <img id="uploadPreview">
+        </div>
+
+        <input type="submit" value="enregistrement">
+
+    </form>
+
+<?php else : ?>
+    <h2> Affichage non autorisé </h2>
+<?php endif; ?>

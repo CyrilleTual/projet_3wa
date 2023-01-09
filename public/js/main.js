@@ -84,7 +84,7 @@ if (document.querySelectorAll(".selectItems") !== null){
     // recupère l'id et la valeur selectionnée (par défaut) pour chaque form 
     const id    = form.id
     const value = form.value
-    console.log (id, value);
+   
 
     // ecoute d'évenement change sur les formulaires 
     form.addEventListener('change',()=>{
@@ -109,9 +109,57 @@ if (document.querySelectorAll(".selectItems") !== null){
     })
   })
 
+  /********************************************************************
+   * Ecoute d'évenement si la page est chargée et que l'on est 
+   * sur la homePage
+   */
+
+  window.addEventListener("DOMContentLoaded", () =>{
+    // recupération de la page courant pour savoir si l'on est sur homePage
+    let curentUrl=document.location.href;
+    // on recupère la position du caractère / 
+    let endOfUrl = curentUrl.substring(curentUrl.lastIndexOf ("?")+1);
+    if (endOfUrl=="view=homePage"){
+
+     
+      // sur la page acceuil on va chercher les photos à passer au slider 
+      let requestPics = new Request ('index.php?route=carouselsPics&action=ajaxPics',{
+        method : 'POST'
+      })
+
+       // traitement de la promesse ->  affichage dans div cible
+      fetch(requestPics)
+      .then(res => res.text())
+      .then(res => {
+        document.getElementById("displaySlider").innerHTML = res; 
+      })
+      // 
+      .then(
+        window.onload= function (){
+            $(".my-flipster").flipster({
+            style: 'carousel',
+            spacing: -0.5,
+            nav: false,
+            buttons: true,
+            })
+        }
+      )
+
+    }
+  })
+
+
+
+
+
+
+
+
+
 
 
 }
+
 
 
 

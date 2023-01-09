@@ -263,7 +263,7 @@ a.bouton:hover {
   position: relative;
 }
 
-.navbar li {
+li {
   position: relative;
   flex-grow: 1;
   flex-shrink: 0;
@@ -478,4 +478,4 @@ form .preview img {
 }
 .pageProductPublic .page404 {
   line-height: 1;
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style copy.css.map */

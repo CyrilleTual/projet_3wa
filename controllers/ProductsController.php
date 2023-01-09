@@ -4,8 +4,31 @@ namespace Controllers;
 
 class ProductsController
 {
+
+    /**************************************************************************
+     * Methode de vérification de la validité d'in id de produit passé en GET (atention sert également pour créer item ( voir itemscontroller))
+     */
+    public function idProductByGetIsOK (){
+        // verification de l'existance d'un id en GET , que c'est un numeric et > 0 
+        if (!array_key_exists('id', $_GET) or !is_numeric($_GET['id']) or (($_GET['id']) < 1)) {
+            new RendersController('page404');
+            exit;
+        }
+        $idProd = trim($_GET['id']);
+        // verifie si le produit  existe dans la DB et on le recupère 
+        $modelProd = new \Models\Products();
+        $product = ($modelProd->findOneProduct($idProd));
+
+        if (!empty($product)) {
+            return $product;    
+        } else {
+            new RendersController('page404'); // pas de produit matchant avec l'id reçu en GET
+        }
+    }
+   
+
     /*******************************************************************************************************
-     * récupération des produits diponibles (actifs)
+     * récupération des produits diponibles (actifs) 
      *  */  
     public function getProductsAvailable()
     {
@@ -40,7 +63,6 @@ class ProductsController
     public function displayFormAddProducts()
     {
         $data = [];
-
         $catAvailable = [];
 
         // pour recevoir les données à afficher sous forme d'un array .
@@ -61,151 +83,7 @@ class ProductsController
         new RendersController('admin/productsAdd', $data);
     }
 
-    /*****************************************************************************************************
-     * VERIFICATION ET SOUMISSION DU FORMULAIRE DE  ajout de produit
-     */
-
-    //public function addProduct()
-    // {
-
-    //     $errors = []; // tableau des erreurs 
-
-    //     $addProduct = [
-    //         'addCat'            => '',
-    //         'addName'           => '',
-    //         'addRef'            => '',
-    //         'addTeaser'         => '',
-    //         'addDescription'    => '',
-    //         'addInfos'          => '',
-    //         'addPicture'        => '',
-    //         'addStatus'         => ''
-    //     ];
-
-    //     if (
-    //         array_key_exists('category', $_POST)
-    //         && array_key_exists('productName', $_POST)
-    //         && array_key_exists('reference', $_POST)
-    //         && array_key_exists('teaser', $_POST)
-    //         && array_key_exists('description', $_POST)
-    //         && array_key_exists('infos', $_POST)
-    //         && array_key_exists('status', $_POST)
-    //     ) {
-
-    //         $addProduct = [
-    //             'addCat'                => trim($_POST['category']),
-    //             'addName'               => trim($_POST['productName']),
-    //             'addRef'                => trim($_POST['reference']),
-    //             'addTeaser'             => trim($_POST['teaser']),
-    //             'addDescription'        => trim($_POST['description']),
-    //             'addInfos'              => trim($_POST['infos']),
-    //             'addPicture'            => 'default.png',
-    //             'addStatus'              => trim($_POST['status']),
-    //         ];
-
-    //         // verification des 4 champs obligatoires :  catégorie, nom, ref, et etat.
-
-    //         if (isset($_SESSION['auth']) && $_SESSION['auth'] != $_POST['token'])
-    //             $errors[] = "Une erreur est apparue lors de l'envoi du formulaire !";
-
-    //         if ($addProduct['addCat'] == '')
-    //             $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
-
-    //         if ($addProduct['addName'] == '')
-    //             $errors[] = "Veuillez renseigner un nom SVP!";
-
-    //         if ($addProduct['addRef'] == '')
-    //             $errors[] = "Veuillez renseigner une Référence SVP !";
-
-    //         if ($addProduct['addStatus'] == '')
-    //             $errors[] = "Un problème est survenu lors de l'envoi du formulaire";
-
-    //         if (count($errors) == 0) {
-
-
-
-
-
-    //             // On instancie "Products"
-    //             $model = new \Models\Products();
-
-    //             // Vérifier si l'utilisateur a chargé une image dans le formulaire
-    //             // Si NON --> On garde "default.png"
-
-    //             // Si OUI --> Vérifier sa taille ( inférieur à 2Mo )
-    //             //        --> Vérifier l'extension ( si on veut une image, on doit recevoir une image )
-    //             //        --> Vérifier le MIME ( si le contenu correspond à l'extension )
-    //             // Si TOUT est bon --> On UPLOAD le ficher
-    //             // Sinon,on N'UPLOAD PAS et on affiche le message d'erreur ( PAS DE INSERT INTO )
-    //             if (isset($_FILES['picture']) && $_FILES['picture']['name'] !== '') {
-
-
-
-    //                 $dossier = "img_of_products"; // Nom du dossier dans lequel on va mettre l'image uploadée.
-
-
-    //                 $model = new \Models\Uploads(); // on se sert du model Uploads
-
-    //                 // on appelle  la methode de controle du fichier image qui renvoie le nom concatené avec un uid si tout est ok
-
-    //                 $addProduct['addPicture'] = $model->uploadFile($_FILES['picture'], $dossier, $errors);
-    //             }
-
-    //             if (count($errors) == 0) {
-
-    //                 // On créé notre tableau de datasProdProd à mettre dans la BDD tableau de type cle/valaveur
-    //                 $datasProd = [
-    //                     'id_category'       => $addProduct['addCat'],
-    //                     'productName'       => $addProduct['addName'],
-    //                     'productRef'        => $addProduct['addRef'],
-    //                     'teaser'            => $addProduct['addTeaser'],
-    //                     'description'       => $addProduct['addDescription'],
-    //                     'infos'             => $addProduct['addInfos'],
-    //                     'picture'           => $addProduct['addPicture'],
-    //                     'status'            => $addProduct['addStatus']
-    //                 ];
-
-    //                 // On instancie notre model "Product"
-    //                 $model = new \Models\Products();
-    //                 // On appelle la méthode permettant l'INSERT INTO dans la BDD
-    //                 $model->addNewProduct($datasProd);
-
-    //                 // On affiche un ou plusieurs messages de validation.
-    //                 $valids[] = 'Votre demande de création de compte a bien été enregistrée.';
-
-
-    //                 // var_dump('178 product controller');
-    //                 // die;
-
-
-    //                 $model = new \Models\Tools();
-    //                 $token = $model->randomChain(20);
-    //                 $_SESSION['auth'] = $token;
-
-    //                 unset($addUser);
-    //                 // $addUser = [
-    //                 //     'addNom'                => '',
-    //                 //     'addPrenom'             => '',
-    //                 //     'addEmail'              => '',
-    //                 //     'addPassword'           => '',
-    //                 //     'addPassword_confirme'  => '',
-    //                 //     'addPicture'            => ''
-    //                 // ];
-
-    //                 new RendersController('homePage');
-    //                 exit();
-    //             }
-    //         }
-    //     }
-    //     var_dump($errors);
-    //     var_dump('stop ligne 210 ProductController');
-    //     die;
-    //     $model = new \Models\Tools();
-    //     $token = $model->randomChain(20);
-    //     $_SESSION['auth'] = $token;
-
-    //     $template = "formRegister.phtml";
-    //     include_once 'views/layout.phtml';
-    // }
+    
 
     /*********************************************************************************************
      * Modification d'un produit Affichage du formulaire  - admin
@@ -213,12 +91,8 @@ class ProductsController
     public function editProduct()
     {
 
-        //  on recupère le produit à modifier 
-        $model = new \Models\Products();
-
-        //$productToModify=$model->findOneProduct($_POST["id"]);
-
-        $productToModify = $model->findOneProduct($_GET["id"]);
+        // on verifie la validité de l'id passé en get et si c'est ok on recupère le produit 
+        $productToModify = self::idProductByGetIsOK();
 
         // recuperation de toutes les  categories (pour affichage de la catégorie actuelle)
         $model = new \Models\Categories();
@@ -497,17 +371,16 @@ class ProductsController
     }
 
     /*************************************************************************************************************
-     * Affichage des produits - public
+     * Affichage des produits - public  Methode appellée par la barre de navigation 
      */
 
     public function displayProductsOfOneCategory()
     {
-        // verification de l'existance d'une cat en GET
+        // verification de l'existance d'une cat en GET , que c'est un numeric et > 0 
         if (!array_key_exists('cat', $_GET) or !is_numeric($_GET['cat']) or (($_GET['cat'])<1))  {
             new RendersController('page404');
             exit;
         }
-
         $idCat = trim($_GET['cat']);
 
         // verifie si la catégorie existe et si oui on recupère directement le nom de la catégorie.
@@ -534,7 +407,7 @@ class ProductsController
                 //id des produits actifs
                 $idProd = $value['id_product'];
                 //on va chercher les items disponibles ( actifs ) pour un produit par 
-                $modelitem  = new \Models\items();
+                $modelitem  = new \Models\Items();
                 $itemsDispo = $modelitem->getItemsPublic('items.status', 'items.id_product', 'actif', $idProd);
                 // on raccroche le tableau des items dispo au produit en ajoutant la clé 'items'
                 $value['items'] = $itemsDispo;
