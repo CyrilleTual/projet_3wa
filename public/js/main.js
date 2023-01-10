@@ -22,22 +22,61 @@ if(document.querySelector("#uploadImage")!== null){
   }
 }
 
-
-
-/****************************************************************************
- * pour de ou re-masquer l'image en grand (toggle de classe) (au click)
+/*********************************************************************
+ * pour de-masquer une grande image (toggle de classe) / modal
+ * ---- pour ne pas utiliser le onclick ---------
  */
-function toggleClass(id){ 
-  document.getElementById(id).classList.toggle("visible")
+if(document.querySelectorAll(".vignette")!== null){
+
+  const btns = document.querySelectorAll(".vignette");
+
+  btns.forEach(function(btn) {
+    // ecoute d'évenement click sur les vignettes
+    btn.addEventListener('click',()=>{
+      // on récupère la valeur de la src de la vignette 
+      const info  = btn.src;
+      // on reconstitue la valeur de l'id du modal en recupérant le texte
+      // du chemin src depuis le mot "public"
+      var result = info.indexOf('public/uploads/')
+      var place = result+15 // longeur de la chaine "public/uploads/"
+      var idModal = info.slice(place); 
+      document.getElementById(idModal).classList.toggle("visible")
+    });
+  });
+}
+
+/*********************************************************************
+ * pour re-masquer une grande image (toggle de classe) / modal
+ */
+if(document.querySelectorAll(".modal-window")!== null){
+  const modals = document.querySelectorAll('.modal-window')
+  // ecoute du click sur les modals
+  modals.forEach(function(modal){
+     modal.addEventListener('click',()=>{
+      // recupération de l'id 
+      const idModal = modal.id;
+      //toggle de la classe visible 
+      document.getElementById(idModal).classList.toggle("visible")
+    });
+  }
+  );
 }
 
 
 
 
+
+
+/****************************************************************************
+ * pour de ou re-masquer l'image en grand (toggle de classe) (au click)
+ */
+// function toggleClass(id){ 
+//   document.getElementById(id).classList.toggle("visible")
+// }
+
 /***********************************************************************
  * script de toogle class pour le bouton burger
  */
-
 if(document.querySelector(".burger")!== null){
   const btn = document.querySelector(".burger");
 btn.addEventListener("click", deploy);
@@ -86,7 +125,7 @@ if (document.querySelectorAll(".selectItems") !== null){
 
   /********************************************************************
    * Ecoute d'évenement si la page est chargée et que l'on est 
-   * sur la homePage
+   * sur la homePage pour chargement du slider
    */
 
   window.addEventListener("DOMContentLoaded", () =>{

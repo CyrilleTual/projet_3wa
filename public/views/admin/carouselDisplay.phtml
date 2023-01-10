@@ -23,10 +23,10 @@
                     <td><?= htmlspecialchars($valeur["description"]); ?> </td>
                     <td><?= htmlspecialchars($valeur["status"]); ?></td>
 
-                    <td><img class=" vignette" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+                    <td><img class="vignette" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit"  />
                     </td>
                     <div id="<?= htmlspecialchars($valeur['picture']); ?>" class="modal-window">
-                        <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+                        <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="produit" />
                     </div>
                     <td>
                         <a class="bouton" href="?route=carouselsPics&action=modifyPic&id=<?= htmlspecialchars($valeur['id_carousel']); ?>">Modifier</a>
