@@ -39,7 +39,7 @@
         <div id="oldPic" class="modal-window">
             <img src=' public/uploads/<?= htmlspecialchars($data['input'][2]['picture']); ?>' alt="produit" onclick="toggleClass('oldPic')" />
         </div>
-        <input type="file" id="uploadImage" name="picture" onchange="PreviewImage(event)"><br>
+        <input type="file" id="uploadImage" name="picture" ><br>
             <!-- Pour pouvoir recuperer l'ancienne photo si pas de changement -->
         <input type="hidden" id="photo_recup" name="photo_recup" value="<?= htmlspecialchars($data['input'][2]['picture']); ?>">
 

@@ -133,6 +133,7 @@ img {
 .pageProductPublic article, main {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -172,7 +173,7 @@ main {
   position: relative;
   margin: 0 auto;
   position: 0, 0;
-  width: 1024px;
+  max-width: 1024px;
   line-height: 1.8;
   flex-direction: column;
 }
@@ -370,10 +371,11 @@ form .radio {
   width: 50px;
 }
 form .preview {
-  display: block;
+  display: none;
   background-color: rgb(241, 247, 249);
 }
 form .preview img {
+  display: block;
   margin: auto;
   height: 200px;
   width: auto;

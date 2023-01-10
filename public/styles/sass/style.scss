@@ -42,7 +42,7 @@ main {
   position: relative;
   margin: 0 auto;
   position: 0, 0;
-  width: 1024px;
+  max-width: 1024px;
   line-height: 1.8;
 //   background-color: $color-1;
   @extend %flex-center;
@@ -75,6 +75,8 @@ border: 2px solid #46a28d;
 		color:red;
 	}
 }
+
+
 
 
 
@@ -270,9 +272,10 @@ form{
 	}
 
 	.preview{
-		display: block;
+		display: none;
 		background-color: rgb(241, 247, 249);
 		img{
+		display: block;
 		margin: auto;
 		height: 200px;
 		width: auto;
@@ -397,11 +400,9 @@ display: block;
 	.page404{
 		line-height: 1 ;
 	}
-
-
-	
-
 }
+
+
 
 
 

@@ -1,0 +1,44 @@
+<!-- $token = $data['input'][0]; -->
+<?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
+
+    <h1> images du carroussel</h1>
+    <a class="bouton" href="index.php?route=carouselsPics&action=displayFormAddPic">ajouter une image</a>
+   
+
+    <table class='catalog'>
+        <thead>
+            <tr>
+                <th>description</th>
+                <th>statut</th>
+                <th>image</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            <?php foreach ($data['input']['values'] as $key => $valeur) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($valeur["description"]); ?> </td>
+                    <td><?= htmlspecialchars($valeur["status"]); ?></td>
+
+                    <td><img class=" vignette" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+                    </td>
+                    <div id="<?= htmlspecialchars($valeur['picture']); ?>" class="modal-window">
+                        <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+                    </div>
+                    <td>
+                        <a class="bouton" href="?route=carouselsPics&action=modifyPic&id=<?= htmlspecialchars($valeur['id_carousel']); ?>">Modifier</a>
+                    </td>
+                    <td>
+                        <a class="bouton" href="?route=carouselsPics&action=deletePic&id=<?= htmlspecialchars($valeur['id_carousel']); ?>">supprimer</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+<?php else : ?>
+    <h2> Affichage non autorisé </h2>
+<?php endif; ?>

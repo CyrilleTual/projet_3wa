@@ -77,6 +77,35 @@ class CarouselPics extends Model
 		return $this->findByQuery($sql, [$datas]);
 	}
 
+	/*****************************************************************
+	 * selection d'une photo par id
+	 */
+
+	public function findOnePic(int $id)
+	{
+		return $this->findOne($id);
+	}
+
+	/****************************************************************
+	 * Methode composée pour update de photos
+	 */
+	public function updatePic(int $id_product, array $datas)
+	{
+		return $this->update($id_product, ($this->hydrate($datas)));
+	}
+
+
+	/**
+	 * Effacement d'un enregistrement dans la Base
+	 */
+
+	public function delOnePic(int $id)
+	{
+		return $this->delete($id);
+	}
+
+
+
 
 
 

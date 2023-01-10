@@ -1,16 +1,28 @@
-console.log("test de liaison js ");
-/*****************************************************************************
- * fonction preview pour images lors du chargement d'une image (upload) 
- * déclanché par "onChange" dans l'input de type file (creation / modif de produit)
+//console.log("test de liaison js ");
+
+/*******************************************************
+ *fonction preview pour images lors du chargement d'une image (upload) 
+ * ---- écoute d'évenement pour remplacer le onchange ---- 
+ * pages->  productAdd, ProductModify, carouselAddOrModify
  */
+
+if(document.querySelector("#uploadImage")!== null){
+  const input = document.querySelector("#uploadImage");
+  input.addEventListener("change", PreviewImage);
   function PreviewImage(event){
-  if(event.target.files.length > 0){
-    var src = URL.createObjectURL(event.target.files[0]);
-    var preview = document.getElementById("uploadPreview"); // vise zone d'affichage 
-    preview.src = src;
-    preview.style.display = "block"; // demasque l'affichage 
+      if(event.target.files.length > 0){
+        var src = URL.createObjectURL(event.target.files[0]);
+        // on cible et remplie la zone de préview.
+        var contener = document.querySelector("form .preview");
+        var preview = document.getElementById("uploadPreview"); 
+        contener.style.display = "block"; // demasque l'affichage 
+        preview.src = src;
+       
+      }
   }
 }
+
+
 
 /****************************************************************************
  * pour de ou re-masquer l'image en grand (toggle de classe) (au click)
@@ -19,41 +31,6 @@ function toggleClass(id){
   document.getElementById(id).classList.toggle("visible")
 }
 
-
-/*****************************************************************************
- * Set une selection par defaut correcte form de modif produit
- * @param  def  : id de la catégorie 
- */
-
-// function selecCatDefault(def){
-
-//   console.log(def);
-//         // script de set de valeur par defaut correcte 
-//   var temp = def;
-//   var mySelect = document.getElementById('category');
-
-//   for(var i, j = 0; i = mySelect.options[j]; j++) {
-//       if(i.value == temp) {
-//           mySelect.selectedIndex = j;
-//           break;
-//       }
-//   }
-   
-// }
-
-// script de set de valeur par defaut correcte form de modif produit
-
-// if(document.getElementById('category')!== null){
-//     var temp = "Les Miels";
-//   var mySelect = document.getElementById('category');
-//   for(var i, j = 0; i = mySelect.options[j]; j++) {
-//       if(i.value == temp) {
-//           mySelect.selectedIndex = j;
-//           break;
-//       }
-//   }
-
-// }
 
 
 
@@ -67,7 +44,6 @@ btn.addEventListener("click", deploy);
 function deploy() {
     btn.classList.toggle('active')
 }
-
 }
 
 
@@ -85,7 +61,6 @@ if (document.querySelectorAll(".selectItems") !== null){
     const id    = form.id
     const value = form.value
    
-
     // ecoute d'évenement change sur les formulaires 
     form.addEventListener('change',()=>{
       const id    = form.id
@@ -144,16 +119,8 @@ if (document.querySelectorAll(".selectItems") !== null){
             })
         }
       )
-
     }
   })
-
-
-
-
-
-
-
 
 
 

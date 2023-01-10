@@ -1,13 +1,11 @@
 
-
-    <div class="my-flipster">
-        <ul>
+<div class="my-flipster">
+    <ul>
+        <?php foreach ($picsToDisplay as $key => $valeur) : ?>
             <li>
-                <img src="public/uploads/slider/1.png" alt="promo noel">
+                <img src="public/uploads/<?= htmlspecialchars($valeur["picture"]); ?>" ' 
+                alt="<?= htmlspecialchars($valeur["description"]); ?>">
             </li>
-            <li>
-                <img src="public/uploads/slider/fleur.jpg" alt="promo noel">
-            </li>
-
-        </ul>
-    </div>
+        <?php endforeach; ?>
+    </ul>
+</div>

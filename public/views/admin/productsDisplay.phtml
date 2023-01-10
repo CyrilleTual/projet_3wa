@@ -14,7 +14,6 @@
                 <th>Infos</th>
                 <th></th>
                 <th></th>
-
             </tr>
         </thead>
 
@@ -28,10 +27,14 @@
                     <td><?= htmlspecialchars($valeur["teaser"]); ?></td>
                     <td><?= htmlspecialchars($valeur["description"]); ?></td>
                     <td><?= htmlspecialchars($valeur["infos"]); ?></td>
-                    <td><img class=" vignette" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+                    <td><img class="vignette" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' 
+                            alt=" produit" 
+                            onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
                     </td>
-                    <div id="<?= htmlspecialchars($valeur['picture']); ?>" class="modal-window">
-                        <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+                    <div id="<?= htmlspecialchars($valeur['picture']); ?>" 
+                        class="modal-window"><img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' 
+                        alt="produit" 
+                        onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
                     </div>
                     <td>
                         <a class="bouton" href="?route=Items&action=displayItems&id=<?= htmlspecialchars($valeur['id_product']); ?>">Items</a>
