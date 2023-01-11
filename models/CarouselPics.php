@@ -64,7 +64,7 @@ class CarouselPics extends Model
 
 
 	/******************************************************************
-	 * recupération des photos avec le statut actif
+	 * recupération des photos avec eventuel critère
 	 */
 	public function getPicsByQuery(string $byColumn = '1', string $datas = '1', string $order = " DESC ", int $limit = 500): array
 	{

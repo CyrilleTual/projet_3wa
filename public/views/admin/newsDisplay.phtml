@@ -1,0 +1,56 @@
+<!-- $token = $data['input'][0]; -->
+<?php if (isset((($_SESSION['user'])['role'])) && (!empty($_SESSION['user'])) && (($_SESSION['user'])['role']) === 'admin') : ?>
+
+    <h1>Gestion des news </h1>
+ 
+    <p> <a class="bouton" href="index.php?route=news&action=displayFormAddNews">ajouter une news</a>  Au minimum une information S.V.P. </p>
+
+
+    <table class='catalog'>
+        <thead>
+            <tr>
+                <th>titre</th>
+                <th>texte</th>
+                <th>image</th>
+                <th>date</th>
+                <th>statut</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            <?php foreach ($data['input']['values'] as $key => $valeur) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($valeur["title"]); ?> </td>
+                    <td><?= htmlspecialchars($valeur["text"]); ?></td>
+
+                    <!-- condition si pas de photo -->
+                    <?php if ((($valeur['picture'])) !== '') : ?>
+                        <td><img class="vignette modal-trigger" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" />
+                        </td>
+                    <?php else : ?>
+                        <td></td>
+                    <?php endif; ?>
+                    <!-- fin traitement affichage  photo -->
+
+                    <div id="<?= htmlspecialchars($valeur['picture']); ?>" class="modal-window">
+                        <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="produit" />
+                    </div>
+                    <td><?= htmlspecialchars($valeur["status"]); ?> </td>
+                    <td><?= htmlspecialchars($valeur["date"]); ?></td>
+                    <td>
+                        <a class="bouton" href="?route=news&action=modifyNews&id=<?= htmlspecialchars($valeur['id_news']); ?>">Modifier</a>
+                    </td>
+                    <td>
+                        <a class="bouton" href="?route=news&action=deleteNews&id=<?= htmlspecialchars($valeur['id_news']); ?>">supprimer</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+<?php else : ?>
+    <h2> Affichage non autorisé </h2>
+<?php endif; ?>

@@ -6,7 +6,7 @@
 
     <!-- Affichage de l'image si modification -->
     <?php if (isset($data['input']['pic'])) : ?>
-        <img class=" vignette" src=' public/uploads/<?= htmlspecialchars($data['input']['pic']['picture']); ?>' alt="image"  />
+        <img class=" vignette modal-trigger" src=' public/uploads/<?= htmlspecialchars($data['input']['pic']['picture']); ?>' alt="image"  />
         <div id="<?= htmlspecialchars($data['input']['pic']['picture']); ?>" class="modal-window">
             <img src=' public/uploads/<?= htmlspecialchars($data['input']['pic']['picture']); ?>' alt="image"  />
         </div>

@@ -1,0 +1,20 @@
+<div class="pageNews">
+    <ul>
+        <?php foreach ($newsToDisplay as $key => $news) : ?>
+
+
+
+            <p> News N° <?= htmlspecialchars($news["id_news"]); ?> du <?= htmlspecialchars($news["date"]); ?> </p>
+            <h2><?= htmlspecialchars($news["title"]); ?></h2>
+            <p><?= htmlspecialchars($news["text"]); ?></p>
+
+            <!-- condition si pas de photo -->
+            <?php if ((($news['picture'])) !== '') : ?>
+                <img class="imgNews" src=' public/uploads/<?= htmlspecialchars($news['picture']); ?>' alt="photo <?= htmlspecialchars($news["title"]); ?>" />
+            <?php endif; ?>
+            <!-- fin traitement affichage  photo -->
+
+
+        <?php endforeach; ?>
+    </ul>
+</div>

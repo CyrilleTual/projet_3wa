@@ -28,8 +28,6 @@ class CarouselsPicsController
 
 
 
-
-
     /*****************************************************************************************************
      * Affichage du formulaire d'ajout - admin
      */

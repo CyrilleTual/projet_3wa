@@ -1,20 +1,24 @@
 <!-- si besion pour commande token = $data['input'][0] -->
 
 <div class="pageProductPublic">
-    
+
     <h1><?= htmlspecialchars($data['input'][2]['categoryName']); ?></h1>
 
     <?php foreach ($data['input'][1] as $key => $valeur) : ?>
 
         <article>
             <div class="contImg">
-                <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt=" produit" onclick="toggleClass('<?= htmlspecialchars($valeur['picture']); ?>')" />
+                <img class="modal-trigger" src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="petite photo <?= htmlspecialchars($valeur["productName"]); ?>" />
+            </div>
+
+            <div id="<?= htmlspecialchars($valeur['picture']); ?>" class="modal-window">
+                <img src=' public/uploads/<?= htmlspecialchars($valeur['picture']); ?>' alt="grande photo <?= htmlspecialchars($valeur["productName"]); ?>" />
             </div>
 
             <div class="textProd">
                 <div>
                     <h2><?= htmlspecialchars($valeur["productName"]); ?></h2>
-                    <p><?=  htmlspecialchars($valeur["description"]); ?></p>
+                    <p><?= htmlspecialchars($valeur["description"]); ?></p>
                 </div>
                 <div>
                     <?php

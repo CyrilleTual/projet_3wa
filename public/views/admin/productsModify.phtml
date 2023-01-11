@@ -34,21 +34,22 @@
         <input type="text" id="infos" name="infos" value="<?= htmlspecialchars($data['input'][2]["infos"] ?? ""); ?>" placeholder="infos"> <br>
 
         <label for="picture">Photo</label>
-        <img class="vignette" src=' public/uploads/<?= htmlspecialchars($data['input'][2]['picture'] ?? ""); ?>' alt=" produit" onclick="toggleClass('oldPic')" />
+        <img class="vignette modal-trigger" src=' public/uploads/<?= htmlspecialchars($data['input'][2]['picture'] ?? ""); ?>' alt=" produit" onclick="toggleClass('oldPic')" />
 
-        <div id="oldPic" class="modal-window">
-            <img src=' public/uploads/<?= htmlspecialchars($data['input'][2]['picture']); ?>' alt="produit" onclick="toggleClass('oldPic')" />
+        <div id="<?= htmlspecialchars($data['input'][2]['picture']); ?>" class="modal-window">
+            <img src=' public/uploads/<?= htmlspecialchars($data['input'][2]['picture']); ?>' alt="produit" onclick="toggleClass('<?= htmlspecialchars($data['input'][2]['picture']); ?>')" />
         </div>
-        <input type="file" id="uploadImage" name="picture" ><br>
-            <!-- Pour pouvoir recuperer l'ancienne photo si pas de changement -->
+
+        <input type="file" id="uploadImage" name="picture"><br>
+        <!-- Pour pouvoir recuperer l'ancienne photo si pas de changement -->
         <input type="hidden" id="photo_recup" name="photo_recup" value="<?= htmlspecialchars($data['input'][2]['picture']); ?>">
 
         <fieldset>
             <legend>Produit actif? </legend>
-                <label class="radio" for=" actif">Actif</label>
-                <input type="radio" id="actif" name="status" value="actif" <?php if (($data['input'][2]["status"]) === ("actif")) echo "checked"; ?>>
-                <label class="radio" for="actif">Inactif</label>
-                <input type="radio" id="inactif" name="status" value="inactif" <?php if (($data['input'][2]["status"]) === ("inactif")) echo "checked"; ?>>
+            <label class="radio" for=" actif">Actif</label>
+            <input type="radio" id="actif" name="status" value="actif" <?php if (($data['input'][2]["status"]) === ("actif")) echo "checked"; ?>>
+            <label class="radio" for="actif">Inactif</label>
+            <input type="radio" id="inactif" name="status" value="inactif" <?php if (($data['input'][2]["status"]) === ("inactif")) echo "checked"; ?>>
         </fieldset>
 
         <div class="preview">

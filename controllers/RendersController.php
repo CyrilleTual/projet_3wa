@@ -28,7 +28,7 @@ class RendersController
 
     private function handleRequest()
     {
-        if ($this->view === null) {    //getView() retourne la vue passée en argument 
+        if ($this->view === null) {   
             $this->render('homePage');      // si pas de vue, la methode render est appelée avec "homePage"
         } else {
             switch ($this->PageExist()) {  // true si la page existe bien dans le site 

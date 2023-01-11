@@ -14,7 +14,7 @@ if (isset($data['input']['item']) && (!empty($data['input']['item']))) {
         <h2>Produit  : <?= htmlspecialchars($data['input']['product']["productName"]); ?></h2>
     </div>
 
-    <img class=" vignette" src=' public/uploads/<?= htmlspecialchars($data['input']['product']['picture']); ?>' alt=" produit"  />
+    <img class=" vignette modal-trigger" src=' public/uploads/<?= htmlspecialchars($data['input']['product']['picture']); ?>' alt=" produit"  />
     <div id="<?= htmlspecialchars($data['input']['product']['picture']); ?>" class="modal-window">
         <img src=' public/uploads/<?= htmlspecialchars($data['input']['product']['picture']); ?>' alt="produit"  />
     </div>
